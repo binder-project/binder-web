@@ -31,15 +31,15 @@ module.exports = function (state) {
   <div style=${style.container}>
     <div style=${style.top}>
       ${back()}
-      ${selection(state)}
+      ${selection(state.selection)}
       ${info()}
     </div>
     <div style=${style.bottom}>
-      ${progress(state)}
-      ${logs(state)}
+      ${progress(state.selection)}
+      ${logs(state.logs)}
       <div style=${style.side}>
-        ${badge(state)}
-        ${template(state)}
+        ${badge(state.selection)}
+        ${template(state.template)}
       </div>
     </div>
   </div>`

@@ -1,23 +1,40 @@
 module.exports = {
-  selection: null,
-  binders: [
-    {
-      name: 'binder-project/example-requirements',
-      stage: 'building',
-      deployed: 9,
-      visible: true
+  view: 'overview',
+  detail: {
+    selection: {},
+    logs: {
+      entries: [],
+      loading: false
     },
-    {
-      name: 'binder-project/example-dockerfile',
-      stage: 'deployed',
-      deployed: 5,
-      visible: true
+    template: {
+      fields: {}, 
+      loading: false
     },
-    {
-      name: 'binder-project/example-conda',
-      stage: 'error',
-      deployed: 25,
-      visible: true
+    progress: {}
+  },
+  overview: {
+    list: {
+      loading: true,
+      entries: [
+        {
+          name: 'binder-project/example-requirements',
+          stage: 'building',
+          deployed: 9,
+          visible: true
+        },
+        {
+          name: 'binder-project/example-dockerfile',
+          stage: 'deployed',
+          deployed: 5,
+          visible: true
+        },
+        {
+          name: 'binder-project/example-conda',
+          stage: 'error',
+          deployed: 25,
+          visible: true
+        }
+      ]
     }
-  ]
+  }
 }

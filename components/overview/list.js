@@ -13,10 +13,17 @@ module.exports = function (state) {
       paddingBottom: '2%'
     }
   }
-  return hx`
-  <div style=${style.list}>
-  ${state.map(function (item) {
-    return binder(item)
-  })}
-  </div>`
+  console.log(state.loading)
+  if (!state.loading) {
+    return hx`
+    <div style=${style.list}>
+    ${state.entries.map(function (item) {
+      return binder(item)
+    })}
+    </div>`
+  } else {
+    return hx`
+    <div style=${style.list}>loading</div>`
+  }
+  
 }
