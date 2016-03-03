@@ -14,9 +14,43 @@ module.exports = function (state) {
     })
   }
 
-  return hx`<div ref=${function () {console.log('foo')}}>
-    <div>build a repo</div>
-    <input id='submission'>
-    <button onclick=${onclick}>submit</button>
+  var styles = {
+    container: {
+      width: '90%',
+      background: 'rgb(210, 210, 210)',
+      borderRadius: '8px',
+      height: '80px',
+      textAlign: 'left',
+      padding: '3%',
+      marginBottom: '5%'
+    },
+    message: {
+      marginBottom: '3%',
+      fontSize: '180%'
+    },
+    input: {
+      background: 'rgb(250, 250, 250)',
+      borderRadius: '8px',
+      border: 'none',
+      height: '40%',
+      width: '70%',
+      marginRight: '5%',
+      paddingLeft: '12px',
+      fontSize: '110%'
+    },
+    button: {
+      background: 'rgb(250, 250, 250)',
+      borderRadius: '8px',
+      border: 'none',
+      height: '40%',
+      width: '20%',
+      fontSize: '110%'
+    }
+  }
+
+  return hx`<div style=${styles.container}>
+    <div style=${styles.message}>build a repo</div>
+    <input id='submission' style=${styles.input}'>
+    <button onclick=${onclick} style=${styles.button}>submit</button>
   </div>`
 }

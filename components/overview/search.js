@@ -6,7 +6,22 @@ module.exports = function (state) {
     dx({ type: 'SEARCH', props: {value: event.target.value}})
   }
 
-  return hx`<div>
-    <span>search</span><input oninput=${oninput}>
+  var style = {
+    container: {
+      width: '90%',
+      height: '100%',
+      textAlign: 'left',
+      padding: '3%'
+    },
+    input: {
+      border: 'none',
+      fontSize: '120%'
+    }
+  }
+
+  return hx`
+  <div style=${style.container}>
+    <span>search</span>
+    <input style=${style.input} oninput=${oninput}>
   </div>`
 }
