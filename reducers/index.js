@@ -1,12 +1,7 @@
 var actions = require('./actions')
 
 var initial = {
-  selection: {
-      name: 'binder-project/example-requirements',
-      stage: 'building',
-      deployed: 9,
-      visible: true
-    },
+  selection: null,
   binders: [
     {
       name: 'binder-project/example-requirements',
