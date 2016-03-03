@@ -1,0 +1,5 @@
+module.exports = {
+  SHOW_DETAIL: 'SHOW_DETAIL',
+  HIDE_DETAIL: 'HIDE_DETAIL',
+  SEARCH: 'SEARCH'
+}

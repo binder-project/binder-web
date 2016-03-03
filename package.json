@@ -1,0 +1,32 @@
+{
+  "name": "binder-web-react",
+  "version": "1.0.0",
+  "description": "client-side web app for managing a binder deployment",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binder-project/binder-web-react.git"
+  },
+  "keywords": [
+    "jupyter",
+    "spark",
+    "kubernetes",
+    "react",
+    "redux"
+  ],
+  "author": "freeman-lab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/binder-project/binder-web-react/issues"
+  },
+  "dependencies": {
+    "redux": "^3.0.0"
+  },
+  "devDependencies": {
+    "budo": "^8.0.4"
+  },
+  "homepage": "https://github.com/binder-project/binder-web-react#readme"
+}
