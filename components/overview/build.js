@@ -30,7 +30,7 @@ module.exports = function (state) {
       fontSize: '180%'
     },
     input: {
-      background: 'rgb(250, 250, 250)',
+      background: 'rgb(254, 254, 254)',
       borderRadius: '8px',
       border: 'none',
       height: '40%',
@@ -40,7 +40,7 @@ module.exports = function (state) {
       fontSize: '110%'
     },
     button: {
-      background: 'rgb(250, 250, 250)',
+      background: 'rgb(254, 254, 254)',
       borderRadius: '8px',
       border: 'none',
       height: '40%',
