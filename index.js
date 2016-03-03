@@ -4,6 +4,6 @@ var createStore = require('redux').createStore
 var reducer = require('./reducers/index')
 var store = createStore(reducer)
 
-var app = require('./components')
+var components = require('./components')
 
-hxdx.render(app, store)
+hxdx.render(components, store)
