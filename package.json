@@ -23,6 +23,7 @@
     "url": "https://github.com/binder-project/binder-web-react/issues"
   },
   "dependencies": {
+    "object-assign": "^4.0.1",
     "redux": "^3.0.0"
   },
   "devDependencies": {
