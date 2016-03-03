@@ -9,7 +9,8 @@ module.exports = function (state) {
       props: {
         name: value, 
         stage: 'building', 
-        deployed: 10
+        deployed: 10,
+        visible: true
       }
     })
   }
@@ -21,7 +22,7 @@ module.exports = function (state) {
       borderRadius: '8px',
       height: '100px',
       textAlign: 'left',
-      padding: '4%',
+      padding: '5%',
       marginBottom: '5%'
     },
     message: {

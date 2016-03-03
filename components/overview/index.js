@@ -4,7 +4,8 @@ var search = require('./search.js')
 var list = require('./list.js')
 
 module.exports = function (state) {
-  return hx`<div>
+  return hx`
+  <div>
     ${build()}
     ${search()}
     ${list(state)}

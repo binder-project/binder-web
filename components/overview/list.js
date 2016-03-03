@@ -4,7 +4,7 @@ var binder = require('./binder')
 module.exports = function (state) {
   var style = {
     list: {
-      width: '90%',
+      width: '93%',
       borderRadius: '8px',
       border: 'solid 5px rgb(210, 210, 210)',
       height: '100%',

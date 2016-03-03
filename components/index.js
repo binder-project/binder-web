@@ -4,33 +4,50 @@ var detail = require('./detail')
 
 module.exports = function (state) {
   var style = {
-    container: {
+    overview: {
       width: '50%',
       marginLeft: '25%',
-      marginRight: '25%',
-      textAlign: 'center'
+      marginRight: '25%'
+    },
+    detail: {
+      width: '80%',
+      marginLeft: '10%',
+      marginRight: '10%'
+    },
+    header: {
+      width: '80%',
+      marginLeft: '10%',
+      marginRight: '10%',
+      textAlign: 'center',
+      marginBottom: '3%',
+      marginTop: '3%'
     },
     logo: {
-      width: '350px',
-      marginBottom: '5%',
-      marginTop: '5%'
+      width: '350px'
     }
   }
 
-  var logo = hx`<img style=${style.logo} src='./assets/images/logo.svg'></img>`
+  var logo = hx`
+  <div style=${style.header}>
+    <img style=${style.logo} src='./assets/images/logo.svg'></img>
+  </div>`
 
   if (state.selection) {
     return hx`
-    <div style=${style.container}>
-    ${logo}
-    ${detail(state.selection)}
+    <div>
+      ${logo}
+      <div style=${style.detail}>
+        ${detail(state.selection)}
+      </div>
     </div>
     `
   } else {
     return hx`
-    <div style=${style.container}>
-    ${logo}
-    ${overview(state.binders)}
+    <div>
+      ${logo}
+      <div style=${style.overview}>
+        ${overview(state.binders)}
+      </div>
     </div>
     `
   }

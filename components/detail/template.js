@@ -1,22 +1,22 @@
 var hx = require('hxdx').hx
-var binder = require('../overview/binder')
+var dx = require('hxdx').dx
 
-module.exports = function (state) { 
+module.exports = function (state) {
   var style = {
     container: {
-      width: '55%',
-      height: '26%',
-      marginLeft: '2%',
-      marginRight: '2%',
+      width: '100%',
+      height: '42%',
+      padding: '2%',
       display: 'inline-block',
       verticalAlign: 'top',
+      background: 'rgb(210, 210, 210)',
       borderRadius: '8px',
       border: 'solid 5px rgb(210, 210, 210)',
-      padding: '2%'
     }
   }
+
   return hx`
   <div style=${style.container}>
-    ${binder(state)}
+    <span>template</span>
   </div>`
 }
