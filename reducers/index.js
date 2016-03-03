@@ -14,6 +14,12 @@ var initial = {
       stage: 'deployed',
       deployed: 5,
       visible: true
+    },
+    {
+      name: 'binder-project/example-conda',
+      stage: 'error',
+      deployed: 25,
+      visible: true
     }
   ]
 }
@@ -32,6 +38,14 @@ module.exports = function (state, action) {
 
     case actions.HIDE_DETAIL:
       return Object.assign(state, {selection: null})
+
+    case actions.SHOW_ALL:
+      var all = state.binders.map(function (binder) {
+        return Object.assign(binder, {
+          visible: true
+        })
+      })
+      return Object.assign(state, {binders: all})
 
     case actions.SEARCH:
       var filtered = state.binders.map(function (binder) {

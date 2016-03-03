@@ -6,6 +6,9 @@ module.exports = function (state) {
     dx({
       type: 'HIDE_DETAIL'
     })
+    dx({
+      type: 'SHOW_ALL'
+    })
   }
 
   return hx`<div>

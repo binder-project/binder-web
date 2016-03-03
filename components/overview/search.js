@@ -17,6 +17,7 @@ module.exports = function (state) {
       border: 'none',
       fontSize: '120%',
       height: '60%',
+      width: '85%',
       paddingLeft: '12px'
     },
     icon: {
@@ -27,7 +28,7 @@ module.exports = function (state) {
 
   return hx`
   <div style=${style.container}>
-    <img style=${style.icon} src='./assets/search.svg'>
+    <img style=${style.icon} src='./assets/images/search.svg'>
     <input style=${style.input} oninput=${oninput}>
   </div>`
 }

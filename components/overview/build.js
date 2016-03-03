@@ -19,9 +19,9 @@ module.exports = function (state) {
       width: '90%',
       background: 'rgb(210, 210, 210)',
       borderRadius: '8px',
-      height: '80px',
+      height: '100px',
       textAlign: 'left',
-      padding: '3%',
+      padding: '4%',
       marginBottom: '5%'
     },
     message: {
@@ -49,8 +49,8 @@ module.exports = function (state) {
   }
 
   return hx`<div style=${styles.container}>
-    <div style=${styles.message}>build a repo</div>
-    <input id='submission' style=${styles.input}'>
+    <div style=${styles.message}>build a repository</div>
+    <input id='submission' onchange=${onclick} style=${styles.input}'>
     <button onclick=${onclick} style=${styles.button}>submit</button>
   </div>`
 }

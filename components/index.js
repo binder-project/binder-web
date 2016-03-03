@@ -5,9 +5,9 @@ var detail = require('./detail')
 module.exports = function (state) {
   var style = {
     container: {
-      width: '60%',
-      marginLeft: '20%',
-      marginRight: '20%',
+      width: '50%',
+      marginLeft: '25%',
+      marginRight: '25%',
       textAlign: 'center'
     },
     logo: {
@@ -17,7 +17,7 @@ module.exports = function (state) {
     }
   }
 
-  var logo = hx`<img style=${style.logo} src='./assets/logo.svg'></img>`
+  var logo = hx`<img style=${style.logo} src='./assets/images/logo.svg'></img>`
 
   if (state.selection) {
     return hx`
