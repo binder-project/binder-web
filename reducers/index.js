@@ -19,14 +19,14 @@ var initial = {
 }
 
 module.exports = function (state, action) {
-	if (typeof state === 'undefined') state = initial
+  if (typeof state === 'undefined') state = initial
 
   console.log('state:')
   console.log(state)
   console.log('action:')
   console.log(action)
 
-	switch (action.type) {
+  switch (action.type) {
     case actions.SHOW_DETAIL:
       return Object.assign(state, {selection: action.props})
 
@@ -44,5 +44,5 @@ module.exports = function (state, action) {
 
     default:
       return state
-	}
+  }
 }
