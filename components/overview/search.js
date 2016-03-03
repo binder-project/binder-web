@@ -9,19 +9,25 @@ module.exports = function (state) {
   var style = {
     container: {
       width: '90%',
-      height: '100%',
+      height: '50px',
       textAlign: 'left',
-      padding: '3%'
+      padding: '1%'
     },
     input: {
       border: 'none',
-      fontSize: '120%'
+      fontSize: '120%',
+      height: '60%',
+      paddingLeft: '12px'
+    },
+    icon: {
+      width: '30px',
+      verticalAlign: 'middle'
     }
   }
 
   return hx`
   <div style=${style.container}>
-    <span>search</span>
+    <img style=${style.icon} src='./assets/search.svg'>
     <input style=${style.input} oninput=${oninput}>
   </div>`
 }
