@@ -1,6 +1,4 @@
 module.exports = {
-
-  // DB state
   binders: {
     loading: false,
     failed: false,
@@ -32,8 +30,6 @@ module.exports = {
     binderId: null,
     status: null
   },
-
-  // UI state
 
   detail: {
     selection: null,

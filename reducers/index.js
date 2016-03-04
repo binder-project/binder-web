@@ -1,9 +1,11 @@
 var combineReducers = require('redux').combineReducers
 var actions = require('./actions')
 var assign = require('object-assign')
+var initial = require('./initial')
 
-// UI-only reducers
 var overview = function (overview, action) {
+  if (typeof overview === 'undefined') overview = initial.overview
+
   switch (action.type) {
     case actions.SHOW_OVERVIEW:
       var all = overview.list.entries.map(function (binder) {
@@ -30,6 +32,8 @@ var overview = function (overview, action) {
 }
 
 var detail = function (detail, action) {
+  if (typeof detail === 'undefined') detail = initial.detail
+
   switch (action.type) {
     case actions.SHOW_DETAIL:
       return assign({}, detail, {selection: action.props})
@@ -42,17 +46,20 @@ var detail = function (detail, action) {
   }
 }
 
-// DB-only reducers
-const binders = function (binders, action) {
+var binders = function (binders, action) {
+  if (typeof binders === 'undefined') binders = initial.binders
+
   switch (action.type) {
-    case actions.BINDERS:
+    case actions.GET_BINDERS:
       return assign({}, binders, { loading: true, failed: false })
     default:
       return binders
   }
 }
 
-const selected = function (selected, action) {
+var selected = function (selected, action) {
+  if (typeof selected === 'undefined') selected = initial.selected
+
   switch (action.type) {
     case actions.BUILD_STATUS:
       return assign({}, selected, { loading: true, failed: false })
@@ -61,18 +68,14 @@ const selected = function (selected, action) {
   }
 }
 
-// DB/UI helper functions
-const 
-
-// binders/overview reducers
-const bo = {}
+var bo = {}
 bo[actions.BINDERS_FAILED] = function (state, action) {
-  const newState = assign({}, state.binders.bindersByName, [])
+  var newState = assign({}, state.binders.bindersByName, [])
   assign(newState.binders, {
     loading: false,
     failed: true
   })
-  const list = newState.overview.list
+  var list = newState.overview.list
   if (list) {
     list.entries = []
   }
@@ -80,40 +83,35 @@ bo[actions.BINDERS_FAILED] = function (state, action) {
 }
 
 bo[actions.BINDERS_SUCCEEDED] = function (state, action) {
-  const newState = assign({}, state.binders.bindersByName, action.props)
+  var newState = assign({}, state.binders.bindersByName, action.props)
   assign(newState.binders, {
     loading: false,
     failed: false
   })
-  const list = newState.overview.list
+  var list = newState.overview.list
   if (list) {
     list.entries = Object.keys(action.props.keys)
   }
   return newState
 }
 
-// selected/detailed reducers
-const so = {}
-so[actions.BUILD_STATE_SUCCEEDED] = function (state, action) {
-}
-so[actions.BUILD_STATE_FAILED] = function (state, action) {
-}
+var so = {}
+so[actions.BUILD_STATE_SUCCEEDED] = function (state, action) {}
+so[actions.BUILD_STATE_FAILED] = function (state, action) {}
 
-const combined = combineReducers([
-  binders,
-  selected,
-  overview,
-  detail
-])
+var combined = combineReducers({
+  binders: binders,
+  selected: selected,
+  overview: overview,
+  detail: detail
+})
 
 module.exports = function (state, action) {
   if (action in bo) {
-    bo[action](state, action)
+    return bo[action](state, action)
   } else if (action in so) {
-    so[action](state, action)
+    return so[action](state, action)
   } else {
-    combined(state, action)
+    return combined(state, action)
   }
 }
-
-module.exports = rootReducer

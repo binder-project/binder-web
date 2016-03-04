@@ -31,24 +31,25 @@ module.exports = function (state) {
   <div style=${style.header}>
     <img style=${style.logo} src='./assets/images/logo.svg'></img>
   </div>`
+  return logo
 
-  if (state.view === 'detail') {
-    return hx`
-    <div>
-      ${logo}
-      <div style=${style.detail}>
-        ${detail(state.detail)}
-      </div>
-    </div>
-    `
-  } else if (state.view === 'overview') {
-    return hx`
-    <div>
-      ${logo}
-      <div style=${style.overview}>
-        ${overview(state.overview)}
-      </div>
-    </div>
-    `
-  }
+  // if (state.view === 'detail') {
+  //   return hx`
+  //   <div>
+  //     ${logo}
+  //     <div style=${style.detail}>
+  //       ${detail(state.detail)}
+  //     </div>
+  //   </div>
+  //   `
+  // } else if (state.view === 'overview') {
+  //   return hx`
+  //   <div>
+  //     ${logo}
+  //     <div style=${style.overview}>
+  //       ${overview(state.overview)}
+  //     </div>
+  //   </div>
+  //   `
+  // }
 }
