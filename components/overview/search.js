@@ -1,9 +1,9 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 
-module.exports = function (state) { 
+module.exports = function () { 
   function oninput (event) {
-    dx({ type: 'SEARCH', props: {value: event.target.value}})
+    dx({ type: 'FILTER', props: {value: event.target.value} })
   }
 
   var style = {

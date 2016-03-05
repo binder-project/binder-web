@@ -1,7 +1,11 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 
-module.exports = function (state) {
+module.exports = function (item) {
+  function onclick () {
+    dx({ type: 'SHOW_DETAIL', props: item })
+  }
+  
   var color = function (stage) {
     switch (stage) {
       case 'building':
@@ -15,7 +19,7 @@ module.exports = function (state) {
 
   var style = {
     container: {
-      display: state.visible ? '' : 'none',
+      display: item.visible ? '' : 'none',
       marginBottom: '2%'
     },
     group: {
@@ -28,7 +32,7 @@ module.exports = function (state) {
       display: 'inline-block'
     },
     stage: {
-      backgroundColor: color(state.stage),
+      backgroundColor: color(item.stage),
       borderRadius: '8px',
       width: '20px',
       height: '20px',
@@ -51,9 +55,9 @@ module.exports = function (state) {
 
   return hx`
   <div style=${style.container}>
-    <div style=${style.name} onclick=${onclick}>${state.name}</div>
+    <div style=${style.name} onclick=${onclick}>${item.name}</div>
     <div style=${style.group}>
-      <span style=${style.deployed}>${state.deployed}</span>
+      <span style=${style.deployed}>${item.deployed}</span>
       <span style=${style.stage}></span>
       <span style=${style.rebuild}>R</span>
       <span style=${style.launch}>L</span>

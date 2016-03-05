@@ -1,13 +1,13 @@
 var hx = require('hxdx').hx
 var back = require('./back')
-var info = require('./info')
+var more = require('./more')
 var logs = require('./logs')
 var progress = require('./progress')
 var badge = require('./badge')
 var template = require('./template')
-var selection = require('./selection')
+var info = require('./info')
 
-module.exports = function (state) {
+module.exports = function (selection) {
   var style = {
     container: {
       width: '100%',
@@ -31,15 +31,15 @@ module.exports = function (state) {
   <div style=${style.container}>
     <div style=${style.top}>
       ${back()}
-      ${selection(state.selection)}
-      ${info()}
+      ${info(selection.entry)}
+      ${more()}
     </div>
     <div style=${style.bottom}>
-      ${progress(state.selection)}
-      ${logs(state.logs)}
+      ${progress(selection.entry.stage)}
+      ${logs(selection.logs)}
       <div style=${style.side}>
-        ${badge(state.selection)}
-        ${template(state.template)}
+        ${badge(selection.entry)}
+        ${template(selection.entry)}
       </div>
     </div>
   </div>`

@@ -1,7 +1,7 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 
-module.exports = function (state) { 
+module.exports = function () { 
   function onclick () {
     var value = document.querySelector('#submission').value
     dx({

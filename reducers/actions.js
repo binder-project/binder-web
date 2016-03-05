@@ -2,5 +2,6 @@ module.exports = {
   SHOW_DETAIL: 'SHOW_DETAIL',
   HIDE_DETAIL: 'HIDE_DETAIL',
   SHOW_ALL: 'SHOW_ALL',
-  SEARCH: 'SEARCH'
+  FILTER: 'FILTER',
+  FETCH: 'FETCH'
 }

@@ -1,7 +1,7 @@
 var hx = require('hxdx').hx
 var binder = require('./binder')
 
-module.exports = function (state) {
+module.exports = function (collection) {
   var style = {
     list: {
       width: '93%',
@@ -13,17 +13,16 @@ module.exports = function (state) {
       paddingBottom: '2%'
     }
   }
-  console.log(state.loading)
-  if (!state.loading) {
+
+  if (!collection.loading) {
     return hx`
     <div style=${style.list}>
-    ${state.entries.map(function (item) {
+    ${collection.entries.map(function (item) {
       return binder(item)
     })}
     </div>`
   } else {
     return hx`
     <div style=${style.list}>loading</div>`
-  }
-  
+  } 
 }

@@ -32,21 +32,21 @@ module.exports = function (state) {
     <img style=${style.logo} src='./assets/images/logo.svg'></img>
   </div>`
 
-  if (state.view === 'detail') {
+  if (state.selection.entry) {
     return hx`
     <div>
       ${logo}
       <div style=${style.detail}>
-        ${detail(state.detail)}
+        ${detail(state.selection)}
       </div>
     </div>
     `
-  } else if (state.view === 'overview') {
+  } else {
     return hx`
     <div>
       ${logo}
       <div style=${style.overview}>
-        ${overview(state.overview)}
+        ${overview(state.collection)}
       </div>
     </div>
     `
