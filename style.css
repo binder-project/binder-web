@@ -47,12 +47,11 @@ input:focus {
 }
 
 .button:active {
-  background-color: rgb(255,255,255);
+  color: rgb(40,40,40);
 }
 
 .button {
   color: rgb(150,150,150);
-  background-color: rgb(253,253,253);
 }
 
 .label {

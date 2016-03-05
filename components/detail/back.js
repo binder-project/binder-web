@@ -24,6 +24,7 @@ module.exports = function (state) {
       border: 'solid 5px rgb(210, 210, 210)',
     },
     button: {
+      background: 'rgb(255, 255, 255)',
       borderRadius: '8px',
       border: 'none',
       height: '80%',

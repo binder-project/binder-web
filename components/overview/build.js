@@ -24,7 +24,7 @@ module.exports = function () {
       color: 'rgb(50,50,50)'
     },
     input: {
-      background: 'rgb(253, 253, 253)',
+      background: 'rgb(255, 255, 255)',
       borderRadius: '8px',
       border: 'none',
       height: '40%',
@@ -35,6 +35,7 @@ module.exports = function () {
       color: 'rgb(50,50,50)'
     },
     button: {
+      background: 'rgb(255, 255, 255)',
       borderRadius: '8px',
       border: 'none',
       height: '40%',
