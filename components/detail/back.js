@@ -24,7 +24,6 @@ module.exports = function (state) {
       border: 'solid 5px rgb(210, 210, 210)',
     },
     button: {
-      background: 'rgb(250, 250, 250)',
       borderRadius: '8px',
       border: 'none',
       height: '80%',
@@ -37,6 +36,6 @@ module.exports = function (state) {
   return hx`
   <div style=${style.container}>
     <span>arrow</span>
-    <button style=${style.button} onclick=${onclick}>back</button>
+    <button style=${style.button} className='button' onclick=${onclick}>back</button>
   </div>`
 }

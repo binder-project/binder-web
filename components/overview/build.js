@@ -20,20 +20,21 @@ module.exports = function () {
     },
     message: {
       marginBottom: '3%',
-      fontSize: '180%'
+      fontSize: '180%',
+      color: 'rgb(50,50,50)'
     },
     input: {
-      background: 'rgb(254, 254, 254)',
+      background: 'rgb(253, 253, 253)',
       borderRadius: '8px',
       border: 'none',
       height: '40%',
       width: '70%',
       marginRight: '5%',
       paddingLeft: '12px',
-      fontSize: '110%'
+      fontSize: '110%',
+      color: 'rgb(50,50,50)'
     },
     button: {
-      background: 'rgb(254, 254, 254)',
       borderRadius: '8px',
       border: 'none',
       height: '40%',
@@ -46,6 +47,6 @@ module.exports = function () {
   return hx`<div style=${styles.container}>
     <div style=${styles.message}>build a repository</div>
     <input id='submission' onchange=${onclick} style=${styles.input}'>
-    <button onclick=${onclick} style=${styles.button}>submit</button>
+    <button onclick=${onclick} className='button' style=${styles.button}>submit</button>
   </div>`
 }

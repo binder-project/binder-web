@@ -58,7 +58,7 @@ module.exports = function (entry) {
 
   return hx`
   <div style=${style.container}>
-    <div style=${style.name} onclick=${onclick}>${entry.name}</div>
+    <div style=${style.name} className='label' onclick=${onclick}>${entry.name}</div>
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.stage}></span>
