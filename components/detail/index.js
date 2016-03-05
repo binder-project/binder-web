@@ -31,15 +31,15 @@ module.exports = function (selection) {
   <div style=${style.container}>
     <div style=${style.top}>
       ${back()}
-      ${info(selection.entry)}
+      ${info(selection)}
       ${more()}
     </div>
     <div style=${style.bottom}>
-      ${progress(selection.entry.stage)}
+      ${progress(selection)}
       ${logs(selection.logs)}
       <div style=${style.side}>
-        ${badge(selection.entry)}
-        ${template(selection.entry)}
+        ${badge(selection)}
+        ${template(selection)}
       </div>
     </div>
   </div>`

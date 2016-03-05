@@ -1,18 +1,11 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
+var ax = require('../../reducers/actions')
 
 module.exports = function () { 
   function onclick () {
     var value = document.querySelector('#submission').value
-    dx({
-      type: 'SHOW_DETAIL', 
-      props: {
-        name: value, 
-        stage: 'building', 
-        deployed: 10,
-        visible: true
-      }
-    })
+    ax.submit(value)(dx)
   }
 
   var styles = {

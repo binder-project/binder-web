@@ -2,17 +2,21 @@ var combine = require('redux').combineReducers
 var actions = require('./actions')
 var initial = require('./initial')
 var assign = require('object-assign')
+var o = actions.constants
 
 var selection = function (state, action) {
   if (typeof state == 'undefined') state = initial.selection
 
   switch (action.type) {
 
-    case actions.SHOW_DETAIL:
-      return assign({}, state, {entry: action.props})
+    case o.SHOW_DETAIL:
+      return assign({}, state, {loading: false}, {entry: action.entry})
 
-    case actions.HIDE_DETAIL:
+    case o.HIDE_DETAIL:
       return assign({}, state, {entry: null})
+
+    case o.SHOW_LOADING:
+      return assign({}, state, {loading: true}, {entry: {}})
 
     default:
       return state
@@ -24,20 +28,20 @@ var collection = function (state, action) {
 
   switch (action.type) {
 
-    case actions.SHOW_ALL:
+    case o.SHOW_ALL:
       var all = state.entries.map(function (item) {
         return assign({}, item, {visible: true})
       })
       return assign({}, state, {entries: all})
 
-    case actions.FILTER:
+    case o.FILTER:
       var filtered = state.entries.map(function (item) {
         var found = item.name.indexOf(action.props.value) > -1 
         return assign({}, item, {visible: found || action.props.value === ''})
       })
       return assign({}, state, {entries: filtered})
 
-    case actions.FETCH:
+    case o.FETCH:
       return assign({}, state, {loading: false, entries: action.entries})
 
     default:

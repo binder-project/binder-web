@@ -5,9 +5,8 @@ module.exports = {
   },
 
   selection: {
-    loading: true,
+    loading: false,
     entry: null,
-    logs: [],
-    template: null
+    logs: []
   }
 }

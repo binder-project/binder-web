@@ -1,7 +1,7 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 
-module.exports = function (state) {
+module.exports = function (selection) {
   var style = {
     container: {
       width: '100%',
@@ -15,8 +15,13 @@ module.exports = function (state) {
     }
   }
 
-  return hx`
-  <div style=${style.container}>
-    <span>template</span>
-  </div>`
+  if (!selection.loading) {
+    return hx`
+    <div style=${style.container}>
+      ${selection.entry.template}
+    </div>`
+  } else {
+    return hx`
+    <div style=${style.container}>loading</div>`
+  }
 }

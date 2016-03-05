@@ -1,9 +1,9 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 
-module.exports = function (item) {
+module.exports = function (entry) {
   function onclick () {
-    dx({ type: 'SHOW_DETAIL', props: item })
+    dx({ type: 'SHOW_DETAIL', entry: entry })
   }
 
   var color = function (stage) {
@@ -19,7 +19,7 @@ module.exports = function (item) {
 
   var style = {
     container: {
-      display: item.visible ? '' : 'none',
+      display: entry.visible ? '' : 'none',
       marginBottom: '2%',
       position: 'relative'
     },
@@ -35,7 +35,7 @@ module.exports = function (item) {
       cursor: 'pointer'
     },
     stage: {
-      backgroundColor: color(item.stage),
+      backgroundColor: color(entry.stage),
       borderRadius: '8px',
       width: '20px',
       height: '20px',
@@ -58,9 +58,9 @@ module.exports = function (item) {
 
   return hx`
   <div style=${style.container}>
-    <div style=${style.name} onclick=${onclick}>${item.name}</div>
+    <div style=${style.name} onclick=${onclick}>${entry.name}</div>
     <div style=${style.group}>
-      <span style=${style.deployed}>${item.deployed}</span>
+      <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.stage}></span>
       <span style=${style.rebuild}>R</span>
       <span style=${style.launch}>L</span>

@@ -17,8 +17,8 @@ module.exports = function (collection) {
   if (!collection.loading) {
     return hx`
     <div style=${style.list}>
-    ${collection.entries.map(function (item) {
-      return binder(item)
+    ${collection.entries.map(function (entry) {
+      return binder(entry)
     })}
     </div>`
   } else {
