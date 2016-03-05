@@ -45,7 +45,8 @@ module.exports = function () {
       border: 'none',
       height: '40%',
       width: '20%',
-      fontSize: '110%'
+      fontSize: '110%',
+      cursor: 'pointer'
     }
   }
 

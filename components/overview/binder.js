@@ -5,7 +5,7 @@ module.exports = function (item) {
   function onclick () {
     dx({ type: 'SHOW_DETAIL', props: item })
   }
-  
+
   var color = function (stage) {
     switch (stage) {
       case 'building':
@@ -20,16 +20,19 @@ module.exports = function (item) {
   var style = {
     container: {
       display: item.visible ? '' : 'none',
-      marginBottom: '2%'
+      marginBottom: '2%',
+      position: 'relative'
     },
     group: {
       textAlign: 'right',
+      right: '2%',
+      position: 'absolute',
       display: 'inline-block',
       width: '30%'
     },
     name: {
-      width: '65%',
-      display: 'inline-block'
+      display: 'inline-block',
+      cursor: 'pointer'
     },
     stage: {
       backgroundColor: color(item.stage),

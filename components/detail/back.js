@@ -29,7 +29,8 @@ module.exports = function (state) {
       border: 'none',
       height: '80%',
       width: '50%',
-      fontSize: '110%'
+      fontSize: '110%',
+      cursor: 'pointer'
     }
   }
 
