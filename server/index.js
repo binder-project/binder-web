@@ -2,12 +2,14 @@ var path = require('path')
 
 var binder = require('./binder')
 var express = require('express')
+var bodyParser = require('body-parser')
 var app = express()
 
 var port = 3000
 var staticPath = path.join(__dirname, '../public')
 
 app.use(express.static(staticPath))
+app.use(bodyParser.json())
 
 // Public endpoints
 app.get('/', function (req, res) {
@@ -63,8 +65,8 @@ app.get('/api/builds/:imageName', function (req, res) {
 })
 
 app.post('/api/builds', function (req, res) {
-  var name = req.json['image-name']
-  binder.startBuild(name, function (err, status) {
+  var repo = req.body['repo']
+  binder.startBuild(repo, function (err, status) {
     if (err) return res.status(500).send('could not build binder')
     return res.json(status)
   })

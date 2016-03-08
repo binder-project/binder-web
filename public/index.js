@@ -66515,9 +66515,9 @@ module.exports = function (entry) {
   var color = function (stage) {
     switch (stage) {
       case 'building':
-        return 'rgb(91,186,71)'
-      case 'completed':
         return 'rgb(243,162,83)'
+      case 'completed':
+        return 'rgb(91,186,71)'
       case 'error':
         return 'rgb(208,102,129)'
     }
@@ -66728,8 +66728,12 @@ var constants = {
   SHOW_LOADING: 'SHOW_LOADING',
   SHOW_ALL: 'SHOW_ALL',
   FILTER: 'FILTER',
+
   OVERVIEW_SEND: 'OVERVIEW_SEND',
-  OVERVIEW_RCV: 'OVERVIEW_RCV'
+  OVERVIEW_RCV: 'OVERVIEW_RCV',
+
+  BUILD_SEND: 'BUILD_SEND',
+  BUILD_RCV: 'BUILD_RCV'
 }
 
 /*
@@ -66742,18 +66746,19 @@ var host = 'http://localhost:3000'
 
 function fetch () {
   return function (dx) {
+    dx({ type: constants.OVERVIEW_SEND })
     request({
       url: host + '/api/overview',
       json: true
     }, function (err, rsp, body) {
-      var templates = body
-      console.log('templates: ' + JSON.stringify(templates))
       if (err) {
         return dx({
           type: constants.OVERVIEW_RCV,
           success: false
         })
       }
+      var templates = body
+      console.log('templates: ' + JSON.stringify(templates))
       // for now, make them all visible
       templates.map(function (t) {
         t.visible = true
@@ -66770,19 +66775,32 @@ function fetch () {
 
 function submit (value) {
   return function (dx) {
-    dx({ type: constants.SHOW_LOADING })
-    setTimeout(function () {
-      dx({
-        type: constants.SHOW_DETAIL,
+    console.log('submitting value: ' + value)
+    dx({ type: constants.BUILD_SEND })
+    request({
+      method: 'POST',
+      url: host + '/api/builds',
+      json: true,
+      body: { 'repo': value }
+    }, function (err, rsp, body) {
+      if (err) {
+        return dx({
+          type: constants.BUILD_RCV,
+          success: false
+        })
+      }
+      return dx({
+        type: constants.BUILD_RCV,
+        success: true,
         entry: {
-          name: 'binder-project/example-requirements',
+          name: body['image-name'],
           stage: 'building',
-          deployed: 9,
-          visible: true,
-          template: 'language: python'
+          visible: 'true'
+          // TODO: other information?
         }
       })
-    }, 400)
+    })
+    // TODO: resume here
   }
 }
 
@@ -66813,6 +66831,12 @@ var selection = function (state, action) {
     case o.SHOW_LOADING:
       return assign({}, state, {loading: true}, {entry: {}})
 
+    case o.BUILD_SEND:
+      return assign({}, state, {loading: true, entry: {}, success: false})
+
+    case o.BUILD_RCV:
+      return assign({}, state, {loading: false, success: action.success, entry: action.entry})
+
     default:
       return state
   }
@@ -66842,6 +66866,7 @@ var collection = function (state, action) {
     case o.OVERVIEW_RCV:
       console.log('action.entries: ' + JSON.stringify(action.entries))
       return assign({}, state, {loading: false, entries: action.entries, success: action.success})
+
 
     default:
       return state

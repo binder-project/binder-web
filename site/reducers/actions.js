@@ -6,8 +6,12 @@ var constants = {
   SHOW_LOADING: 'SHOW_LOADING',
   SHOW_ALL: 'SHOW_ALL',
   FILTER: 'FILTER',
+
   OVERVIEW_SEND: 'OVERVIEW_SEND',
-  OVERVIEW_RCV: 'OVERVIEW_RCV'
+  OVERVIEW_RCV: 'OVERVIEW_RCV',
+
+  BUILD_SEND: 'BUILD_SEND',
+  BUILD_RCV: 'BUILD_RCV'
 }
 
 /*
@@ -20,6 +24,7 @@ var host = 'http://localhost:3000'
 
 function fetch () {
   return function (dx) {
+    dx({ type: constants.OVERVIEW_SEND })
     request({
       url: host + '/api/overview',
       json: true
@@ -48,11 +53,13 @@ function fetch () {
 
 function submit (value) {
   return function (dx) {
-    reqeust({
+    console.log('submitting value: ' + value)
+    dx({ type: constants.BUILD_SEND })
+    request({
       method: 'POST',
       url: host + '/api/builds',
       json: true,
-      body: { 'image-name': value }
+      body: { 'repo': value }
     }, function (err, rsp, body) {
       if (err) {
         return dx({
@@ -63,23 +70,15 @@ function submit (value) {
       return dx({
         type: constants.BUILD_RCV,
         success: true,
-          
+        entry: {
+          name: body['image-name'],
+          stage: 'building',
+          visible: 'true'
+          // TODO: other information?
+        }
       })
     })
     // TODO: resume here
-    dx({ type: constants.SHOW_LOADING })
-    setTimeout(function () {
-      dx({
-        type: constants.SHOW_DETAIL,
-        entry: {
-          name: 'binder-project/example-requirements',
-          stage: 'building',
-          deployed: 9,
-          visible: true,
-          template: 'language: python'
-        }
-      })
-    }, 400)
   }
 }
 

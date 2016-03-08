@@ -26,8 +26,7 @@ function startBuild (repo, cb) {
   var opts = assign({}, buildOpts, { repository: repo })
   binder.build.start(opts, function (err, body) {
     if (err) return cb(err)
-    var imageName = body['image-name']
-    return cb(null, imageName)
+    return cb(null, body)
   })
 }
 
@@ -92,6 +91,11 @@ function getBuildStatus (imageName, cb) {
   var opts = assign({}, buildOpts, { 'image-name': imageName })
   binder.build.status(opts, function (err, status) {
     if (err) return cb(err)
+    if ((status.phase === 'building') && (status.status === 'running')) {
+      status.status = 'building'
+    } else if ((status.phase === 'building') && (status.status === 'completed')) {
+      status.status = 'completed'
+    }
     return cb(null, status)
   })
 }

@@ -18,6 +18,12 @@ var selection = function (state, action) {
     case o.SHOW_LOADING:
       return assign({}, state, {loading: true}, {entry: {}})
 
+    case o.BUILD_SEND:
+      return assign({}, state, {loading: true, entry: {}, success: false})
+
+    case o.BUILD_RCV:
+      return assign({}, state, {loading: false, success: action.success, entry: action.entry})
+
     default:
       return state
   }
@@ -47,6 +53,7 @@ var collection = function (state, action) {
     case o.OVERVIEW_RCV:
       console.log('action.entries: ' + JSON.stringify(action.entries))
       return assign({}, state, {loading: false, entries: action.entries, success: action.success})
+
 
     default:
       return state
