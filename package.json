@@ -4,7 +4,8 @@
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js"
+    "build": "browserify site/index.js -o public/index.js",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,21 @@
     "url": "https://github.com/binder-project/binder-web-react/issues"
   },
   "dependencies": {
+    "express": "^4.13.4",
+    "lodash.filter": "^4.2.1",
+    "lodash.map": "^4.2.1",
+    "lodash.partial": "^4.1.2",
     "object-assign": "^4.0.1",
-    "redux": "^3.0.0"
+    "redux": "^3.0.0",
+    "request": "^2.69.0"
   },
   "devDependencies": {
-    "budo": "^8.0.4"
+    "budo": "^8.0.4",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.5",
+    "through2": "^2.0.1"
   },
   "homepage": "https://github.com/binder-project/binder-web-react#readme"
 }

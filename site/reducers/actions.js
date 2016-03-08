@@ -1,4 +1,3 @@
-var assign = require('object-assign')
 var request = require('request')
 
 var constants = {
@@ -7,7 +6,7 @@ var constants = {
   SHOW_LOADING: 'SHOW_LOADING',
   SHOW_ALL: 'SHOW_ALL',
   FILTER: 'FILTER',
-  OVERVIEW_SEND: 'OVERVIEW_SEND'
+  OVERVIEW_SEND: 'OVERVIEW_SEND',
   OVERVIEW_RCV: 'OVERVIEW_RCV'
 }
 
@@ -16,29 +15,58 @@ var constants = {
  * TODO: move into a separate file
  */
 
+// TODO: config?
+var host = 'http://localhost:3000'
+
 function fetch () {
   return function (dx) {
-    request('/api/overview')
-    .then(function success (templates) {
-      dx({
+    request({
+      url: host + '/api/overview',
+      json: true
+    }, function (err, rsp, body) {
+      if (err) {
+        return dx({
+          type: constants.OVERVIEW_RCV,
+          success: false
+        })
+      }
+      var templates = body
+      console.log('templates: ' + JSON.stringify(templates))
+      // for now, make them all visible
+      templates.map(function (t) {
+        t.visible = true
+        t.stage = t.build.status
+      })
+      return dx({
         type: constants.OVERVIEW_RCV,
         success: true,
-        entries: templates.map(function (t) {
-          // for now, make them all visible
-          t.visible = true
-        })
-      })
-    }, function error (err) {
-      dx({
-        type: constants.OVERVIEW_RCV,
-        success: false
+        entries: templates
       })
     })
   }
 }
-  
+
 function submit (value) {
   return function (dx) {
+    reqeust({
+      method: 'POST',
+      url: host + '/api/builds',
+      json: true,
+      body: { 'image-name': value }
+    }, function (err, rsp, body) {
+      if (err) {
+        return dx({
+          type: constants.BUILD_RCV,
+          success: false
+        })
+      }
+      return dx({
+        type: constants.BUILD_RCV,
+        success: true,
+          
+      })
+    })
+    // TODO: resume here
     dx({ type: constants.SHOW_LOADING })
     setTimeout(function () {
       dx({

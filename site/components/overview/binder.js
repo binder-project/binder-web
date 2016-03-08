@@ -10,7 +10,7 @@ module.exports = function (entry) {
     switch (stage) {
       case 'building':
         return 'rgb(91,186,71)'
-      case 'deployed':
+      case 'completed':
         return 'rgb(243,162,83)'
       case 'error':
         return 'rgb(208,102,129)'

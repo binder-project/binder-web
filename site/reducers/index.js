@@ -45,6 +45,7 @@ var collection = function (state, action) {
       return assign({}, state, {loading: true, entries: [], success: false})
 
     case o.OVERVIEW_RCV:
+      console.log('action.entries: ' + JSON.stringify(action.entries))
       return assign({}, state, {loading: false, entries: action.entries, success: action.success})
 
     default:
