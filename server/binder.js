@@ -13,7 +13,7 @@ var buildOpts = {
 }
 var registryOpts = {
   host: '104.197.23.111',
-  port: '8083',
+  port: '8082',
   'api-key': '60dc798d55521d0552334c70797cb15f'
 }
 var deployOpts = {

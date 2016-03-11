@@ -32,9 +32,9 @@ app.get('/loading/:imageName', function (req, res) {
  */
 app.get('/:templateName', function (req, res) {
   var name = req.params.templateName
-  binder.getOneTemplate(name, function (err, template) {
+  binder.deployBinder(name, function (err, status) {
     if (err) return res.status(500).end()
-    return res.json(template)
+    return res.json(status)
   })
 })
 
@@ -50,7 +50,7 @@ app.get('/api/overview', function (req, res) {
 
 app.get('/api/templates/:templateName', function (req, res) {
   var name = req.params.templateName
-  binder.getOneTemplate(name, function (err, template) {
+  binder.getFullTemplate(name, function (err, template) {
     if (err) return res.status(500).send('could not get template')
     return res.json(template)
   })
