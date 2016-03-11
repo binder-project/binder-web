@@ -61176,7 +61176,6 @@ var constants = {
 var host = 'http://localhost:3000'
 
 function fetch () {
-  console.log('fetching')
   return function (dx) {
     dx({ type: constants.OVERVIEW_SEND })
     request({
@@ -61293,7 +61292,6 @@ var collection = function (state, action) {
       return assign({}, state, {entries: filtered})
 
     case o.OVERVIEW_SEND:
-      console.log('setting loading to true')
       return assign({}, state, {loading: true, entries: [], success: false})
 
     case o.OVERVIEW_RCV:

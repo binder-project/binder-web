@@ -1,8 +1,10 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
+var ax = require('../../reducers/actions')
 
 module.exports = function (state) {
   function onclick () {
+    ax.fetch()(dx)
     dx({
       type: 'HIDE_DETAIL'
     })
