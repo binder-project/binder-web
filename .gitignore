@@ -35,3 +35,5 @@ node_modules
 # Vim files
 .swp
 .un~
+
+public/index.js
