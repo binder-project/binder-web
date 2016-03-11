@@ -24,6 +24,10 @@ var selection = function (state, action) {
     case o.BUILD_RCV:
       return assign({}, state, {loading: false, success: action.success, entry: action.entry})
 
+    case o.APPEND_LOG:
+      var prefix = state.logs == '' ? '' : '\n'
+      return assign({}, state, {logs: state.logs + prefix + action.entry})
+
     default:
       return state
   }

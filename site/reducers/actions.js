@@ -5,6 +5,7 @@ var constants = {
   HIDE_DETAIL: 'HIDE_DETAIL',
   SHOW_LOADING: 'SHOW_LOADING',
   SHOW_ALL: 'SHOW_ALL',
+  APPEND_LOG: 'APPEND_LOG',
   FILTER: 'FILTER',
 
   OVERVIEW_SEND: 'OVERVIEW_SEND',
@@ -51,9 +52,16 @@ function fetch () {
   }
 }
 
+function logs () {
+  return function (dx) {
+    setInterval(function () {
+      dx({ type: constants.APPEND_LOG, entry: 'mhvjkhfghjkgfk' })
+    }, 10)
+  }
+}
+
 function submit (value) {
   return function (dx) {
-    console.log('submitting value: ' + value)
     dx({ type: constants.BUILD_SEND })
     request({
       method: 'POST',
@@ -85,5 +93,6 @@ function submit (value) {
 module.exports = {
   constants: constants,
   fetch: fetch,
-  submit: submit
+  submit: submit,
+  logs: logs
 }
