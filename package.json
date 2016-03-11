@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify site/index.js -o public/index.js",
-    "start": "node server/index.js"
+    "start": "watchify site/index.js -o public/index.js & node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -35,10 +35,6 @@
   },
   "devDependencies": {
     "budo": "^8.0.4",
-    "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-watch": "^4.3.5",
     "through2": "^2.0.1"
   },
   "homepage": "https://github.com/binder-project/binder-web-react#readme"
