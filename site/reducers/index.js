@@ -18,13 +18,19 @@ var selection = function (state, action) {
     case o.SHOW_LOADING:
       return assign({}, state, {loading: true}, {entry: {}})
 
+    case o.BUILD_SEND:
+      return assign({}, state, {loading: true, entry: {}, success: false})
+
+    case o.BUILD_RCV:
+      return assign({}, state, {loading: false, success: action.success, entry: action.entry})
+
     default:
       return state
   }
 }
 
 var collection = function (state, action) {
-  if (typeof state == 'undefined') state = initial.collection
+  if (typeof state === 'undefined') state = initial.collection
 
   switch (action.type) {
 
@@ -36,13 +42,18 @@ var collection = function (state, action) {
 
     case o.FILTER:
       var filtered = state.entries.map(function (item) {
-        var found = item.name.indexOf(action.props.value) > -1 
+        var found = item.name.indexOf(action.props.value) > -1
         return assign({}, item, {visible: found || action.props.value === ''})
       })
       return assign({}, state, {entries: filtered})
 
-    case o.FETCH:
-      return assign({}, state, {loading: false, entries: action.entries})
+    case o.OVERVIEW_SEND:
+      return assign({}, state, {loading: true, entries: [], success: false})
+
+    case o.OVERVIEW_RCV:
+      console.log('action.entries: ' + JSON.stringify(action.entries))
+      return assign({}, state, {loading: false, entries: action.entries, success: action.success})
+
 
     default:
       return state
