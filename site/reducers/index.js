@@ -24,9 +24,18 @@ var selection = function (state, action) {
     case o.BUILD_RCV:
       return assign({}, state, {loading: false, success: action.success, entry: action.entry})
 
-    case o.APPEND_LOG:
-      var prefix = state.logs == '' ? '' : '\n'
-      return assign({}, state, {logs: state.logs + prefix + action.entry})
+    case o.STOP_LOGS:
+      var stream = state.logs.stream
+      if (stream) stream.destroy()
+      return assign({}, state, {logs: {loading: false, success: false, stream: null, msgs: ''}})
+
+    case o.LOGS_SEND:
+      return assign({}, state, {logs: {loading: true, success: false, stream: action.stream, msgs: ''}})
+
+    case o.LOGS_RCV:
+      var msg = (action.data) ? action.data : ''
+      var newMsgs = state.logs.msgs + msg
+      return assign({}, state, {logs: {loading: false, success: action.success, msgs: newMsgs}})
 
     default:
       return state

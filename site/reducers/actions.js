@@ -1,4 +1,5 @@
 var request = require('request')
+var getReader = require('binder-logging/lib/reader')
 
 var constants = {
   SHOW_DETAIL: 'SHOW_DETAIL',
@@ -12,7 +13,11 @@ var constants = {
   OVERVIEW_RCV: 'OVERVIEW_RCV',
 
   BUILD_SEND: 'BUILD_SEND',
-  BUILD_RCV: 'BUILD_RCV'
+  BUILD_RCV: 'BUILD_RCV',
+
+  STOP_LOGS: 'STOP_LOGS',
+  LOGS_SEND: 'LOGS_SEND',
+  LOGS_RCV: 'LOGS_RCV'
 }
 
 /*
@@ -22,6 +27,7 @@ var constants = {
 
 // TODO: config?
 var host = 'http://localhost:3000'
+var apiServer = '104.197.23.111'
 
 function fetch () {
   return function (dx) {
@@ -37,7 +43,6 @@ function fetch () {
         })
       }
       var templates = body
-      console.log('templates: ' + JSON.stringify(templates))
       // for now, make them all visible
       templates.map(function (t) {
         t.visible = true
@@ -52,11 +57,26 @@ function fetch () {
   }
 }
 
-function logs () {
+function logs (app) {
   return function (dx) {
-    setInterval(function () {
-      dx({ type: constants.APPEND_LOG, entry: 'mhvjkhfghjkgfk' })
-    }, 10)
+    var reader = getReader({ host: apiServer })
+    var stream = reader.streamLogs({ app: app })
+    dx({ type: constants.LOGS_SEND,
+         stream: stream
+    })
+    stream.on('data', function (data) {
+      return dx({
+        type: constants.LOGS_RCV,
+        success: true,
+        data: data
+      })
+    })
+    stream.on('error', function (err) {
+      return dx({
+        type: constants.LOGS_RCV,
+        success: false
+      })
+    })
   }
 }
 

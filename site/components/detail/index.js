@@ -36,7 +36,7 @@ module.exports = function (selection) {
     </div>
     <div style=${style.bottom}>
       ${progress(selection)}
-      ${logs(selection.logs)}
+      ${logs(selection)}
       <div style=${style.side}>
         ${badge(selection)}
         ${template(selection)}

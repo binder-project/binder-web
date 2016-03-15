@@ -9,6 +9,9 @@ module.exports = function (state) {
       type: 'HIDE_DETAIL'
     })
     dx({
+      type: 'STOP_LOGS'
+    })
+    dx({
       type: 'SHOW_ALL'
     })
   }
@@ -23,7 +26,7 @@ module.exports = function (state) {
       verticalAlign: 'top',
       background: 'rgb(210, 210, 210)',
       borderRadius: '8px',
-      border: 'solid 5px rgb(210, 210, 210)',
+      border: 'solid 5px rgb(210, 210, 210)'
     },
     button: {
       background: 'rgb(255, 255, 255)',

@@ -1,6 +1,10 @@
-var hx = require('hxdx').hx
+var hxdx = require('hxdx')
+var hx = hxdx.hx
+var dx = hxdx.dx
+var actions = require('../../reducers/actions')
 
 module.exports = function (state) {
+  actions.logs(state.entry.name)(dx)
   var style = {
     container: {
       width: '55%',
@@ -26,7 +30,7 @@ module.exports = function (state) {
   return hx`
   <div style=${style.container}>
     <div style=${style.logs}>
-      ${state}
+      ${state.logs.msgs}
     </div>
   </div>`
 }

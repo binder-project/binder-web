@@ -9,6 +9,11 @@ module.exports = {
     loading: false,
     success: true,
     entry: null,
-    logs: []
+    logs: {
+      loading: false,
+      success: true,
+      stream: null,
+      msgs: ''
+    }
   }
 }
