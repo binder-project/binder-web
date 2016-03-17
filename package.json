@@ -4,8 +4,8 @@
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -t brfs site/index.js -o public/index.js",
-    "start": "watchify -t brfs site/index.js -o public/index.js & node server/index.js"
+    "build": "browserify -t brfs site/index.js -o public/index.js; browserify -t brfs site/loading.js -o public/loading.js;",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "lodash.filter": "^4.2.1",
     "lodash.map": "^4.2.1",
     "lodash.partial": "^4.1.2",
+    "lodash.startswith": "^4.0.0",
     "object-assign": "^4.0.1",
     "redux": "^3.0.0",
     "request": "^2.69.0",

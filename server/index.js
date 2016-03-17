@@ -19,6 +19,14 @@ app.get('/', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
+app.get('/:templateName', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'loading.html'))
+})
+
+app.get('/:templateName/status', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'index.html'))
+})
+
 /*
  * Display a loading screen for a building binder
  */
@@ -31,11 +39,20 @@ app.get('/loading/:imageName', function (req, res) {
 })
 
 /*
- * Deploy a binder
+ * Deploy a binder and get information about a deployment
  */
-app.get('/:templateName', function (req, res) {
+app.get('/api/deploy/:templateName', function (req, res) {
   var name = req.params.templateName
   binder.deployBinder(name, function (err, status) {
+    if (err) return res.status(500).end()
+    return res.json(status)
+  })
+})
+
+app.get('/api/apps/:templateName/:id', function (req, res) {
+  var name = req.params.templateName
+  var id = req.params.id
+  binder.getDeployStatus(name, id, function (err, status) {
     if (err) return res.status(500).end()
     return res.json(status)
   })
