@@ -1,11 +1,11 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
-var ax = require('../../reducers/actions')
+var actions = require('../../reducers/actions')
 
 module.exports = function () { 
   function onclick () {
     var value = document.querySelector('#submission').value
-    ax.submit(value)(dx)
+    actions.submit(value)(dx)
   }
 
   var styles = {

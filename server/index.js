@@ -2,8 +2,11 @@ var path = require('path')
 
 var binder = require('./binder')
 var express = require('express')
+var expressWs = require('express-ws')
 var bodyParser = require('body-parser')
 var app = express()
+var http = require('http').Server(app)
+var io = require('socket.io')(http)
 
 var port = 3000
 var staticPath = path.join(__dirname, '../public')
@@ -72,6 +75,36 @@ app.post('/api/builds', function (req, res) {
   })
 })
 
-console.log('Listening on port', port, '...')
-app.listen(port)
+io.on('connection', function (ws) {
+  // TODO: probably don't need any auth here, but double-check
+  console.log('got a connection')
+  var stream = null
+  ws.on('message', function incoming(msg) {
+    console.log('received message: ' + msg)
+    try {
+      var json = JSON.parse(msg)
+      var app = json.app
+      var after = json.after
+      if (app) {
+        console.log('streaming build logs for', app, 'after', after)
+        stream = binder.streamBuildLogs(app, after)
+        stream.on('data', function (data) {
+          ws.send(data)
+        })
+      }
+    } catch (e) {
+      console.error('build logs websocket failed: ' + e)
+    }
+  })
+  ws.on('error', function (err) {
+    console.error('build logs websocket failed: ' + e)
+    if (stream) stream.destroy()
+  })
+  ws.on('close', function () {
+    if (stream) stream.destroy()
+  })
+})
 
+http.listen(port, function () {
+  console.log('Listening on port', port, '...')
+})

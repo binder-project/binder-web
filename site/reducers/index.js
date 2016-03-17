@@ -25,16 +25,16 @@ var selection = function (state, action) {
       return assign({}, state, {loading: false, success: action.success, entry: action.entry})
 
     case o.STOP_LOGS:
-      var stream = state.logs.stream
-      if (stream) stream.destroy()
-      return assign({}, state, {logs: {loading: false, success: false, stream: null, msgs: ''}})
+      var ws = state.logs.ws
+      if (ws) ws.close()
+      return assign({}, state, {logs: {loading: false, success: false, ws: null, msgs: ''}})
 
     case o.LOGS_SEND:
-      return assign({}, state, {logs: {loading: true, success: false, stream: action.stream, msgs: ''}})
+      return assign({}, state, {logs: {loading: true, success: false, ws: action.ws, msgs: ''}})
 
     case o.LOGS_RCV:
       var msg = (action.data) ? action.data : ''
-      var newMsgs = state.logs.msgs + msg
+      var newMsgs = state.logs.msgs + '\n' + msg
       return assign({}, state, {logs: {loading: false, success: action.success, msgs: newMsgs}})
 
     default:

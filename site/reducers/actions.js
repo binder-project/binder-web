@@ -1,5 +1,6 @@
 var request = require('request')
-var getReader = require('binder-logging/lib/reader')
+var url = require('url')
+var SocketIO = require('socket.io-client')
 
 var constants = {
   SHOW_DETAIL: 'SHOW_DETAIL',
@@ -26,14 +27,15 @@ var constants = {
  */
 
 // TODO: config?
-var host = 'http://localhost:3000'
 var apiServer = '104.197.23.111'
+var port = 3000
+var host = 'http://' + apiServer
 
 function fetch () {
   return function (dx) {
     dx({ type: constants.OVERVIEW_SEND })
     request({
-      url: host + '/api/overview',
+      url: url.resolve(host, '/api/overview'),
       json: true
     }, function (err, rsp, body) {
       if (err) {
@@ -57,21 +59,30 @@ function fetch () {
   }
 }
 
-function logs (app) {
+function logs (app, after) {
   return function (dx) {
-    var reader = getReader({ host: apiServer })
-    var stream = reader.streamLogs({ app: app })
-    dx({ type: constants.LOGS_SEND,
-         stream: stream
+    console.log('opening websocket to', host)
+    var socket = SocketIO(host)
+    dx({ 
+      type: constants.LOGS_SEND,
+      ws: socket
     })
-    stream.on('data', function (data) {
+    socket.on('connect', function () {
+      console.log('connection opened')
+      socket.send(JSON.stringify({
+        app: app,
+        after: after
+      }))
+    })
+    socket.on('message', function (data, flags) {
+      console.log('receiving message')
       return dx({
         type: constants.LOGS_RCV,
         success: true,
         data: data
       })
     })
-    stream.on('error', function (err) {
+    socket.on('error', function (err) {
       return dx({
         type: constants.LOGS_RCV,
         success: false
@@ -85,7 +96,7 @@ function submit (value) {
     dx({ type: constants.BUILD_SEND })
     request({
       method: 'POST',
-      url: host + '/api/builds',
+      url: url.resolve(host, '/api/builds'),
       json: true,
       body: { 'repo': value }
     }, function (err, rsp, body) {
@@ -99,14 +110,14 @@ function submit (value) {
         type: constants.BUILD_RCV,
         success: true,
         entry: {
-          name: body['image-name'],
+          name: body['name'],
           stage: 'building',
-          visible: 'true'
+          visible: 'true',
+          startTime: body['start-time']
           // TODO: other information?
         }
       })
     })
-    // TODO: resume here
   }
 }
 

@@ -5,7 +5,6 @@ var ax = require('../../reducers/actions')
 module.exports = function (entry) {
   function onclick () {
     dx({ type: 'SHOW_DETAIL', entry: entry })
-    ax.logs()(dx)
   }
 
   var color = function (stage) {

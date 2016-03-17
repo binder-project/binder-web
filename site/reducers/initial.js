@@ -12,7 +12,7 @@ module.exports = {
     logs: {
       loading: false,
       success: true,
-      stream: null,
+      ws: null,
       msgs: ''
     }
   }

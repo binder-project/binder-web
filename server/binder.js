@@ -4,6 +4,8 @@ var filter = require('lodash.filter')
 var partial = require('lodash.partial')
 var assign = require('object-assign')
 var binder = require('binder-cli')
+var getReader = require('binder-logging/lib/reader')
+var es = require('event-stream')
 
 // TODO: set these parameters according to your production environment
 var buildOpts = {
@@ -39,24 +41,9 @@ function getTemplateInfo (templateName, cb) {
       return next(null, numDeployed)
     })
   }
-  function getImageName (next) {
-    var opts = assign({}, registryOpts, { 'template-name': templateName })
-    binder.registry.fetch(opts, function (err, status) {
-      if (err) return next(err)
-      return next(null, status['image-name'])
-    })
-  }
   async.parallel([
     getStatuses,
-    function getStatus (next) {
-      async.waterfall([
-        getImageName,
-        getBuildStatus
-      ], function (err, res) {
-        if (err) return next(err)
-        return next(null, res)
-      })
-    }
+    partial(getBuildStatus, templateName)
   ], function (err, res) {
     if (err) return cb(err)
     return cb(null, {
@@ -68,9 +55,10 @@ function getTemplateInfo (templateName, cb) {
 }
 
 function getOverview (cb) {
-  binder.registry.fetchAll(registryOpts, function (err, templates) {
+  binder.build.statusAll(buildOpts, function (err, builds) {
+    console.log('builds: ' + JSON.stringify(builds))
     if (err) return cb(err)
-    async.map(map(templates, 'name'), getTemplateInfo, function (err, infos) {
+    async.map(map(builds, 'name'), getTemplateInfo, function (err, infos) {
       console.log('infos: ' + JSON.stringify(infos))
       if (err) return cb(err)
       return cb(null, infos)
@@ -119,6 +107,20 @@ function deployBinder (templateName, cb) {
   })
 }
 
+function streamBuildLogs (templateName, startTime) {
+  var reader = getReader({ host: buildOpts.host })
+  console.log('startTime: ' + startTime)
+  var rawStream = reader.streamLogs({ app: templateName })
+  var mapStream = es.map(function (data, cb) {
+    if (!data || !data.message) {
+      return cb(null)
+    }
+    return cb(null, message)
+  })
+  rawStream.pipe(mapStream)
+  return mapStream
+}
+
 module.exports = {
   startBuild: startBuild,
   getOverview: getOverview,
@@ -126,7 +128,6 @@ module.exports = {
   getBuildStatus: getBuildStatus,
   getFullTemplate: getFullTemplate,
   deployBinder: deployBinder,
-  getDeployStatus: getDeployStatus
+  getDeployStatus: getDeployStatus,
+  streamBuildLogs: streamBuildLogs
 }
-
-
