@@ -30,32 +30,37 @@ var constants = {
 var apiServer = '104.197.23.111'
 var port = 3000
 var host = 'http://' + apiServer
+var pollPeriod = 1000
 
 function fetch () {
   return function (dx) {
     dx({ type: constants.OVERVIEW_SEND })
-    request({
-      url: url.resolve(host, '/api/overview'),
-      json: true
-    }, function (err, rsp, body) {
-      if (err) {
+    var poller = setInterval(function () {
+      request({
+        url: url.resolve(host, '/api/overview'),
+        json: true
+      }, function (err, rsp, body) {
+        if (err) {
+          return dx({
+            type: constants.OVERVIEW_RCV,
+            poller: poller,
+            success: false
+          })
+        }
+        var templates = body
+        // for now, make them all visible
+        templates.map(function (t) {
+          t.visible = true
+          t.stage = t.build.status
+        })
         return dx({
           type: constants.OVERVIEW_RCV,
-          success: false
+          success: true,
+          poller: poller,
+          entries: templates
         })
-      }
-      var templates = body
-      // for now, make them all visible
-      templates.map(function (t) {
-        t.visible = true
-        t.stage = t.build.status
       })
-      return dx({
-        type: constants.OVERVIEW_RCV,
-        success: true,
-        entries: templates
-      })
-    })
+    }, pollPeriod)
   }
 }
 
@@ -89,6 +94,60 @@ function logs (app, after) {
       })
     })
   }
+}
+
+function _postBuild (repo) {
+ request({
+    method: 'POST',
+    url: url.resolve(host, '/api/builds'),
+    json: true,
+    body: { 'repo': repo }
+  }, function (err, rsp, body) {
+    if (err) {
+      return dx({
+        type: constants.BUILD_RCV,
+        success: false
+      })
+    }
+    return dx({
+      type: constants.BUILD_RCV,
+      success: true,
+      entry: {
+        name: body['name'],
+        stage: 'building',
+        visible: 'true',
+        startTime: body['start-time']
+        // TODO: other information?
+      }
+    })
+  })
+}
+
+function _queryBuild (repo) {
+  request({
+    method: 'GET',
+    url: url.resolve(host, '/api/builds/' + repo),
+    json: true,
+    body: { 'repo': value }
+  }, function (err, rsp, body) {
+    if (err) {
+      return dx({
+        type: constants.BUILD_RCV,
+        success: false
+      })
+    }
+    return dx({
+      type: constants.BUILD_RCV,
+      success: true,
+      entry: {
+        name: body['name'],
+        stage: 'building',
+        visible: 'true',
+        startTime: body['start-time']
+        // TODO: other information?
+      }
+    })
+  })
 }
 
 function submit (value) {
