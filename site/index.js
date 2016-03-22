@@ -9,4 +9,4 @@ var components = require('./components')
 var store = createStore(reducer, initial, dev)
 hxdx.render(components, store)
 
-actions.fetch()(hxdx.dx)
+actions.showOverview()(hxdx.dx)

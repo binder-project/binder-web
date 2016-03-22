@@ -19,12 +19,17 @@ var selection = function (state, action) {
       return assign({}, state, {loading: true}, {entry: {}})
 
     case o.BUILD_SEND:
-      return assign({}, state, {loading: true, entry: {}, success: false})
+      return assign({}, state, {loading: true, entry: {}, success: false, poller: action.poller})
 
     case o.BUILD_RCV:
-      return assign({}, state, {loading: false, success: action.success, entry: action.entry})
+      return assign({}, state, {loading: false, poller: action.poller, success: action.success, 
+                    entry: action.entry})
 
-    case o.STOP_LOGS:
+    case o.BUILD_STOP:
+      if (state.poller) clearInterval(state.poller)
+      return assign({}, state, {poller: null})
+
+    case o.LOGS_STOP:
       var ws = state.logs.ws
       if (ws) ws.close()
       return assign({}, state, {logs: {loading: false, success: false, ws: null, msgs: ''}})
@@ -61,12 +66,16 @@ var collection = function (state, action) {
       return assign({}, state, {entries: filtered})
 
     case o.OVERVIEW_SEND:
-      return assign({}, state, {loading: true, entries: [], success: false})
+      return assign({}, state, {loading: true, entries: [], success: false, poller: action.poller})
 
     case o.OVERVIEW_RCV:
-      console.log('action.entries: ' + JSON.stringify(action.entries))
-      return assign({}, state, {loading: false, entries: action.entries, success: action.success})
+      return assign({}, state, {loading: false, poller: action.poller, entries: action.entries, 
+                    success: action.success})
 
+    case o.OVERVIEW_STOP:
+      console.log('state.poller: ' + state.poller)
+      if (state.poller) clearInterval(state.poller)
+      return assign({}, state, {poller: null})
 
     default:
       return state

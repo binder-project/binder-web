@@ -62,7 +62,6 @@ app.get('/api/apps/:templateName/:id', function (req, res) {
 
 app.get('/api/overview', function (req, res) {
   binder.getOverview(function (err, overview) {
-    console.log('err: ' + err)
     if (err) return res.status(500).send('could not get overview list')
     return res.json(overview)
   })

@@ -1,16 +1,20 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
-var ax = require('../../reducers/actions')
+var actions = require('../../reducers/actions')
 
 module.exports = function (entry) {
   function onclick () {
-    dx({ type: 'SHOW_DETAIL', entry: entry })
+    actions.showDetail(entry)(dx)
   }
 
   var color = function (stage) {
     switch (stage) {
       case 'building':
         return 'rgb(243,162,83)'
+      case 'pending':
+        return 'rgb(100, 80, 160)'
+      case 'loading':
+        return 'rgb(30, 30, 220)'
       case 'completed':
         return 'rgb(91,186,71)'
       case 'error':

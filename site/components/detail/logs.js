@@ -6,11 +6,6 @@ var actions = require('../../reducers/actions')
 module.exports = function (state) {
   console.log('startTime: ' + state.entry.startTime)
 
-  var onload = function () {
-    var entry = state.entry
-    return actions.logs(entry.name, entry.startTime)(dx)
-  }
-
   var style = {
     container: {
       width: '55%',
@@ -36,7 +31,6 @@ module.exports = function (state) {
 
   return hx`
   <div style=${style.container}>
-    <button onclick=${onload}>Start logs</button>
     <div style=${style.logs}>
       ${state.logs.msgs}
     </div>

@@ -5,7 +5,7 @@ var actions = require('../../reducers/actions')
 module.exports = function () { 
   function onclick () {
     var value = document.querySelector('#submission').value
-    actions.submit(value)(dx)
+    actions.submitBuild(value)(dx)
   }
 
   var styles = {
