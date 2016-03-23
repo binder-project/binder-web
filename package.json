@@ -4,8 +4,7 @@
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -t brfs site/index.js -o public/index.js; browserify -t brfs site/loading.js -o public/loading.js;",
-    "start": "node server/index.js"
+    "start": "watchify site/index.js -o public/index.js & watchify site/loading.js -o public/loading.js & node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,11 @@
     "react",
     "redux"
   ],
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
+  },
   "author": "freeman-lab",
   "license": "MIT",
   "bugs": {
