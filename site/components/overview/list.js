@@ -23,6 +23,6 @@ module.exports = function (collection) {
     </div>`
   } else {
     return hx`
-    <div style=${style.list}>loading</div>`
+    <div style=${style.list}><div style='text-align: center'><div className='three-quarters-loader'></div></div></div>`
   } 
 }

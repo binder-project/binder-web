@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 @font-face {
     font-family: ClearSans-Thin;
     src: url(./assets/fonts/clearsans-1.00/WOFF/ClearSans-Thin.woff);
@@ -20,10 +24,7 @@
 }
 
 
-html {
-  height: 100%;
-  width: 100%;
-}
+html { width: 100vw; }
 
 body {
   width: 100%;
@@ -36,6 +37,14 @@ body {
 
 input:focus {
   outline: none;
+}
+
+#submission {
+  transition: all 0.25s;
+}
+
+#submission:focus {
+  box-shadow: 0 0 0 2px rgb(150, 150, 150);
 }
 
 .button:hover {
@@ -64,4 +73,55 @@ input:focus {
 
 .label:active {
  color: rgb(10,10,10); 
+}
+
+@-moz-keyframes three-quarters-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes three-quarters-loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes three-quarters-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* :not(:required) hides this rule from IE9 and below */
+.three-quarters-loader:not(:required) {
+  -moz-animation: three-quarters-loader 1250ms infinite linear;
+  -webkit-animation: three-quarters-loader 1250ms infinite linear;
+  animation: three-quarters-loader 1250ms infinite linear;
+  border: 8px solid rgb(190, 190, 190);
+  border-right-color: transparent;
+  border-radius: 24px;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 48px;
+  height: 48px;
 }

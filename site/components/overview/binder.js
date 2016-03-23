@@ -14,7 +14,7 @@ module.exports = function (entry) {
       case 'pending':
         return 'rgb(100, 80, 160)'
       case 'loading':
-        return 'rgb(30, 30, 220)'
+        return 'rgb(87, 154, 203)'
       case 'completed':
         return 'rgb(91,186,71)'
       case 'failed':
@@ -45,13 +45,13 @@ module.exports = function (entry) {
       width: '20px',
       height: '20px',
       display: 'inline-block',
-      marginRight: '10px',
-      verticalAlign: 'bottom'
+      marginRight: '14px'
     },
     deployed: {
       fontFamily: 'ClearSans-Medium',
-      marginRight: '10px',
-      width: '20px'
+      marginRight: '14px',
+      width: '20px',
+      verticalAlign: 'super'
     },
     rebuild: {
       marginRight: '10px',
@@ -67,8 +67,8 @@ module.exports = function (entry) {
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.stage}></span>
-      <span style=${style.rebuild}>R</span>
-      <span style=${style.launch}>L</span>
+      <span style=${style.rebuild}><img src='assets/images/refresh.svg'></span>
+      <span style=${style.launch}><img src='assets/images/launch.svg'></span>
     </div>
   </div>`
 }

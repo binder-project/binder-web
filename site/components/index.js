@@ -7,7 +7,8 @@ module.exports = function (state) {
     overview: {
       width: '50%',
       marginLeft: '25%',
-      marginRight: '25%'
+      marginRight: '25%',
+      marginBottom: '75px'
     },
     detail: {
       width: '80%',

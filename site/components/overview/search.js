@@ -18,7 +18,8 @@ module.exports = function () {
       fontSize: '120%',
       height: '60%',
       width: '85%',
-      paddingLeft: '12px'
+      paddingLeft: '12px',
+      color: 'rgb(130,130,130)'
     },
     icon: {
       width: '30px',

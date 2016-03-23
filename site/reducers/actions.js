@@ -29,7 +29,7 @@ var constants = {
  */
 
 // TODO: config?
-var apiServer = '104.197.23.111'
+var apiServer = 'localhost:3000'
 var port = 3000
 var host = 'http://' + apiServer
 var pollPeriod = 2000
