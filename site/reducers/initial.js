@@ -1,21 +1,24 @@
 module.exports = {
-  collection: {
-    entries: [],
-    loading: false,
-    poller: null,
-    success: true
+  model: {
+    entries: {},
+    build: {
+      loading: true,
+      poller: null,
+      success: true
+    },
+    overview: {
+      loading: true, 
+      poller: null,
+      success: true
+    },
+    logs: {
+      loading: true,
+      ws: null,
+      success: true
+    }
   },
 
-  selection: {
-    loading: false,
-    success: true,
-    poller: null,
-    entry: null,
-    logs: {
-      loading: false,
-      success: true,
-      ws: null,
-      msgs: ''
-    }
-  }
+  filter: {},
+  selection: null
+
 }

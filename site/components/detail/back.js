@@ -2,7 +2,7 @@ var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
 
-module.exports = function (state) {
+module.exports = function () {
   function onclick () {
     actions.showOverview()(dx)
   }

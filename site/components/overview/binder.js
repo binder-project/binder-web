@@ -4,7 +4,7 @@ var actions = require('../../reducers/actions')
 
 module.exports = function (entry) {
   function onclick () {
-    actions.showDetail(entry)(dx)
+    actions.showDetail(entry.name)(dx)
   }
 
   var color = function (stage) {
@@ -17,6 +17,8 @@ module.exports = function (entry) {
         return 'rgb(30, 30, 220)'
       case 'completed':
         return 'rgb(91,186,71)'
+      case 'running':
+        return 'rgb(243,162,83)'
       case 'failed':
         return 'rgb(208,102,129)'
     }
@@ -24,7 +26,7 @@ module.exports = function (entry) {
 
   var style = {
     container: {
-      display: entry.visible ? '' : 'none',
+      display: '',
       marginBottom: '2%',
       position: 'relative'
     },

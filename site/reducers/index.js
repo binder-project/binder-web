@@ -1,4 +1,5 @@
 var combine = require('redux').combineReducers
+var find = require('lodash.find')
 var actions = require('./actions')
 var initial = require('./initial')
 var assign = require('object-assign')
@@ -10,82 +11,115 @@ var selection = function (state, action) {
   switch (action.type) {
 
     case o.SHOW_DETAIL:
-      return assign({}, state, {loading: false}, {entry: action.entry})
+      console.log('selection is now: ' + action.id)
+      return action.id
 
     case o.HIDE_DETAIL:
-      return assign({}, state, {entry: null})
-
-    case o.SHOW_LOADING:
-      return assign({}, state, {loading: true}, {entry: {}})
-
-    case o.BUILD_SEND:
-      return assign({}, state, {loading: true, entry: {}, success: false, poller: action.poller})
-
-    case o.BUILD_RCV:
-      if (state.entry) {
-        console.log('VIEW: poller: ' + action.poller)
-        var newEntry = assign({}, state.entry, action.entry)
-        var newPoller = state.poller || action.poller
-        return assign({}, state, {loading: false, poller: newPoller, success: action.success, 
-                      entry: newEntry})
-      } else {
-        console.log('NO VIEW: poller: ' + action.poller)
-        if (action.poller) clearInterval(action.poller)
-      }
-      return state
-
-    case o.BUILD_STOP:
-      console.log('clearing interval for: ' + state.poller)
-      clearInterval(state.poller)
-      return assign({}, state, {poller: null})
-
-    case o.LOGS_STOP:
-      var ws = state.logs.ws
-      if (ws) ws.close()
-      return assign({}, state, {logs: {loading: false, success: false, ws: null, msgs: ''}})
-
-    case o.LOGS_SEND:
-      return assign({}, state, {logs: {loading: true, success: false, ws: action.ws, msgs: ''}})
-
-    case o.LOGS_RCV:
-      var msg = (action.data) ? action.data : ''
-      var newMsgs = state.logs.msgs + '\n' + msg
-      return assign({}, state, {logs: {loading: false, success: action.success, msgs: newMsgs}})
+      return null
 
     default:
       return state
   }
 }
 
-var collection = function (state, action) {
-  if (typeof state === 'undefined') state = initial.collection
+var filter = function (state, action) {
+  if (typeof state === 'undefined') state = initial.filter
 
   switch (action.type) {
 
-    case o.SHOW_ALL:
-      var all = state.entries.map(function (item) {
-        return assign({}, item, {visible: true})
-      })
-      return assign({}, state, {entries: all})
-
     case o.FILTER:
-      var filtered = state.entries.map(function (item) {
-        var found = item.name.indexOf(action.props.value) > -1
-        return assign({}, item, {visible: found || action.props.value === ''})
+      var filtered = action.all.filter(function (item) {
+        return item.indexOf(action.value) > -1
       })
-      return assign({}, state, {entries: filtered})
+      var set = {}
+      for (var i in filtered) {
+        set[filtered[i]] = true
+      }
+      return set
+
+    default:
+      return state
+  }
+}
+
+// this function mutates state (state should be created with assign before calling)
+function updateEntries(state, action) {
+  if (action.entries) {
+    for (var key in action.entries) {
+      if (key in state.entries) {
+        assign(state.entries[key], action.entries[key])
+      } else {
+        state.entries[key] = action.entries[key]
+      }
+    }
+  }
+  return state
+}
+
+function sendState (state, action, key) {
+  var newState = assign({}, state)
+  var newPoller = action.poller || state[key].poller
+  newState[key] = assign({}, state[key], {loading: true, success: false, poller: newPoller})
+  return newState
+}
+
+function receiveState (state, action, key) {
+  var newState = assign({}, state)
+  var newPoller = action.poller || state[key].poller
+  newState[key] = assign({}, state[key], {loading: false, success: action.success, poller: newPoller})
+  return newState
+}
+
+function stopPolling (state, action, key) {
+  var newState = assign({}, state)
+  clearInterval(state[key].poller)
+  if (state[key].ws) {
+    state[key].ws.close()
+  }
+  newState[key] = assign({}, state[key], {poller: null, ws: null})
+  return newState
+}
+
+var model = function (state, action) {
+  if (typeof state === 'undefined') state = initial.model
+
+  switch (action.type) {
+
+    case o.BUILD_SEND:
+      return sendState(state, action, 'build')
 
     case o.OVERVIEW_SEND:
-      return assign({}, state, {loading: true, entries: [], success: false, poller: action.poller})
+      return sendState(state, action, 'overview')
+
+    case o.LOGS_SEND:
+      return sendState(state, action, 'logs')
+
+    case o.BUILD_RCV:
+      var newState = receiveState(state, action, 'build')
+      return updateEntries(newState, action)
 
     case o.OVERVIEW_RCV:
-      return assign({}, state, {loading: false, poller: action.poller, entries: action.entries, 
-                    success: true})
+      var newState = receiveState(state, action, 'overview')
+      return updateEntries(newState, action)
+
+    case o.LOGS_RCV:
+      // TODO resume here
+      var newState = receiveState(state, action, 'logs')
+      if (action.entry) {
+        newState.entries = updateEn
+      }
+      var msg = (action.data) ? action.data : ''
+      var newMsgs = state.logs.msgs + '\n' + msg
+      return assign({}, state, {logs: {loading: false, success: action.success, msgs: newMsgs}})
+
+    case o.BUILD_STOP:
+      return stopPolling(state, action, 'build')
 
     case o.OVERVIEW_STOP:
-      console.log('clearing interval for: ' + state.poller)
-      clearInterval(state.poller)
-      return assign({}, state, {poller: null})
+      return stopPolling(state, action, 'overview')
+
+    case o.LOGS_STOP:
+      return stopPolling(state, action, 'logs')
 
     default:
       return state
@@ -94,5 +128,6 @@ var collection = function (state, action) {
 
 module.exports = combine({
   selection: selection,
-  collection: collection
+  filter: filter,
+  model: model
 })

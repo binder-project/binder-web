@@ -1,9 +1,14 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
+var connect = require('hxdx').connect
 
-module.exports = function () { 
+var search = function (state) { 
   function oninput (event) {
-    dx({ type: 'FILTER', props: {value: event.target.value} })
+    dx({ 
+      type: 'FILTER', 
+      all: Object.keys(state.model.entries), 
+      value: event.target.value
+    })
   }
 
   var style = {
@@ -32,3 +37,5 @@ module.exports = function () {
     <input style=${style.input} oninput=${oninput}>
   </div>`
 }
+
+module.exports = connect({ model: 'model' }, search)

@@ -3,8 +3,8 @@ var hx = hxdx.hx
 var dx = hxdx.dx
 var actions = require('../../reducers/actions')
 
-module.exports = function (state) {
-  console.log('startTime: ' + state.entry.startTime)
+module.exports = function (item) {
+  console.log('startTime: ' + item.startTime)
 
   var style = {
     container: {
@@ -32,7 +32,7 @@ module.exports = function (state) {
   return hx`
   <div style=${style.container}>
     <div style=${style.logs}>
-      ${state.logs.msgs}
+      ${(item.logs) ? item.logs.msgs : 'No logs to display'}
     </div>
   </div>`
 }

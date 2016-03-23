@@ -1,7 +1,7 @@
 var hx = require('hxdx').hx
 var binder = require('./binder')
 
-module.exports = function (collection) {
+module.exports = function (filter, model) {
   var style = {
     list: {
       width: '93%',
@@ -14,12 +14,22 @@ module.exports = function (collection) {
     }
   }
 
-  if (!collection.loading) {
+  var getBinders = function () {
+    var binders = []
+    if (Object.keys(filter).length !== 0) {
+      binders = Object.keys(filter)
+    } else {
+      binders = Object.keys(model.entries)
+    }
+    return binders.map(function (name) {
+      return binder(model.entries[name])
+    })
+  }
+
+  if (!model.overview.loading) {
     return hx`
     <div style=${style.list}>
-    ${collection.entries.map(function (entry) {
-      return binder(entry)
-    })}
+    ${getBinders()}
     </div>`
   } else {
     return hx`

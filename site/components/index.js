@@ -32,12 +32,13 @@ module.exports = function (state) {
     <img style=${style.logo} src='./assets/images/logo.svg'></img>
   </div>`
 
-  if (state.selection.entry) {
+  console.log('selection: ' + state.selection)
+  if (state.selection) {
     return hx`
     <div>
       ${logo}
       <div style=${style.detail}>
-        ${detail(state.selection)}
+        ${detail()}
       </div>
     </div>
     `
@@ -46,7 +47,7 @@ module.exports = function (state) {
     <div>
       ${logo}
       <div style=${style.overview}>
-        ${overview(state.collection)}
+        ${overview()}
       </div>
     </div>
     `

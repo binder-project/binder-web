@@ -1,4 +1,6 @@
 var hx = require('hxdx').hx
+var connect = require('hxdx').connect
+
 var back = require('./back')
 var more = require('./more')
 var logs = require('./logs')
@@ -7,7 +9,7 @@ var badge = require('./badge')
 var template = require('./template')
 var info = require('./info')
 
-module.exports = function (selection) {
+var detail = function (state) {
   var style = {
     container: {
       width: '100%',
@@ -27,20 +29,28 @@ module.exports = function (selection) {
     }
   }
 
+  var id = state.selection
+  var item = state.entries[id]
+
   return hx`
   <div style=${style.container}>
     <div style=${style.top}>
       ${back()}
-      ${info(selection)}
+      ${info(item)}
       ${more()}
     </div>
     <div style=${style.bottom}>
-      ${progress(selection)}
-      ${logs(selection)}
+      ${progress(item)}
+      ${logs(item)}
       <div style=${style.side}>
-        ${badge(selection)}
-        ${template(selection)}
+        ${badge(item)}
+        ${template(item)}
       </div>
     </div>
   </div>`
 }
+
+module.exports = connect({ 
+  selection: 'selection',
+  entries: 'model.entries'
+}, detail)

@@ -1,13 +1,13 @@
 var request = require('request')
 var url = require('url')
 var SocketIO = require('socket.io-client')
+var map = require('lodash.map')
+var zipObject = require('lodash.zipobject')
 
 var constants = {
   SHOW_DETAIL: 'SHOW_DETAIL',
   HIDE_DETAIL: 'HIDE_DETAIL',
-  SHOW_LOADING: 'SHOW_LOADING',
   SHOW_ALL: 'SHOW_ALL',
-  APPEND_LOG: 'APPEND_LOG',
   FILTER: 'FILTER',
 
   OVERVIEW_STOP: 'OVERVIEW_STOP',
@@ -34,14 +34,12 @@ var port = 3000
 var host = 'http://' + apiServer
 var pollPeriod = 2000
 
-function showDetail (entry) {
+function showDetail (id) {
   return function (dx) {
     dx({ type: constants.OVERVIEW_STOP })
-    if (entry) {
-      dx({ type: constants.SHOW_DETAIL, entry: entry })
-      buildStatus(entry.name)(dx)
-      logs(entry.name, entry.startTime)(dx)
-    }
+    dx({ type: constants.SHOW_DETAIL, id: id })
+    buildStatus(id)(dx)
+    //logs(id)(dx)
   }
 }
 
@@ -50,7 +48,6 @@ function showOverview () {
     dx({ type: constants.LOGS_STOP })
     dx({ type: constants.BUILD_STOP })
     dx({ type: constants.HIDE_DETAIL })
-    dx({ type: constants.SHOW_ALL })
     templateList()(dx)
   }
 }
@@ -58,7 +55,8 @@ function showOverview () {
 function templateList () {
   return function (dx) {
     dx({ type: constants.OVERVIEW_SEND })
-    var poller = setInterval(function () {
+    var poller = null
+    var pollFunc = function () {
       request({
         url: url.resolve(host, '/api/overview'),
         json: true
@@ -72,26 +70,28 @@ function templateList () {
         }
         if (rsp.statusCode === 200 || rsp.statusCode === 304) {
           var templates = body
-          // for now, make them all visible
           templates.map(function (t) {
-            t.visible = true
             t.stage = t.build.status
           })
+          var entries = zipObject(map(templates, 'name'), templates)
           return dx({
             type: constants.OVERVIEW_RCV,
             success: true,
             poller: poller,
-            entries: templates
+            entries: entries
           })
         }
       })
-    }, pollPeriod)
+    } 
+    poller = setInterval(pollFunc, pollPeriod)
+    pollFunc()
   }
 }
 
 function buildStatus (name) {
   return function (dx) {
-    var poller = setInterval(function () {
+    var poller = null
+    var pollFunc = function () {
       request({
         method: 'GET',
         url: url.resolve(host, '/api/builds/' + name),
@@ -105,22 +105,59 @@ function buildStatus (name) {
             success: false
           })
         }
-        var entry = {
-            name: body['name'],
-            stage: body['status'],
-            visible: 'true',
-            startTime: body['start-time']
+        var name = body['name']
+        var entries = {}
+        entries[name] = {
+          name: name,
+          stage: body['status'],
+          startTime: body['start-time']
         }
         return dx({
           type: constants.BUILD_RCV,
           success: true,
           poller: poller,
-          entry: entry
+          entries: entries
         })
       })
-    }, pollPeriod)
+    }
+    poller = setInterval(pollFunc, pollPeriod)
+    pollFunc()
   }
 }
+
+function submitBuild (repo) {
+  return function (dx) {
+   dx({ type: constants.BUILD_SEND })
+   request({
+      method: 'POST',
+      url: url.resolve(host, '/api/builds'),
+      json: true,
+      body: { 'repo': repo }
+    }, function (err, rsp, body) {
+      if (err) {
+        return dx({
+          type: constants.BUILD_RCV,
+          success: false
+        })
+      }
+      var name = body['name']
+      var entries = {}
+      entries[name] = {
+        name: name,
+        stage: 'building',
+        visible: 'true',
+        startTime: body['start-time']
+      }
+      dx({
+        type: constants.BUILD_RCV,
+        success: true,
+        entries: entries
+      })
+      showDetail(name)(dx)
+    })
+  }
+}
+
 
 function logs (app, after) {
   return function (dx) {
@@ -154,36 +191,6 @@ function logs (app, after) {
   }
 }
 
-function submitBuild (repo) {
-  return function (dx) {
-   dx({ type: constants.BUILD_SEND })
-   request({
-      method: 'POST',
-      url: url.resolve(host, '/api/builds'),
-      json: true,
-      body: { 'repo': repo }
-    }, function (err, rsp, body) {
-      if (err) {
-        return dx({
-          type: constants.BUILD_RCV,
-          success: false
-        })
-      }
-      var entry = {
-        name: body['name'],
-        stage: 'building',
-        visible: 'true',
-        startTime: body['start-time']
-      }
-      dx({
-        type: constants.BUILD_RCV,
-        success: true,
-        entry: entry       
-      })
-      showDetail(entry)(dx)
-    })
-  }
-}
 
 module.exports = {
   constants: constants,

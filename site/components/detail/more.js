@@ -1,7 +1,7 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 
-module.exports = function (state) {
+module.exports = function (item) {
   var style = {
     container: {
       width: '12%',

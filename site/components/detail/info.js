@@ -1,7 +1,7 @@
 var hx = require('hxdx').hx
 var binder = require('../overview/binder')
 
-module.exports = function (selection) { 
+module.exports = function (item) { 
   var style = {
     container: {
       width: '55%',
@@ -16,13 +16,8 @@ module.exports = function (selection) {
     }
   }
 
-  if (!selection.loading) {
-    return hx`
-    <div style=${style.container}>
-      ${binder(selection.entry)}
-    </div>`
-  } else {
-    return hx`
-    <div style=${style.container}>loading</div>`
-  }
+  return hx`
+  <div style=${style.container}>
+    ${binder(item)}
+  </div>`
 }
