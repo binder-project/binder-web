@@ -22,11 +22,21 @@ var selection = function (state, action) {
       return assign({}, state, {loading: true, entry: {}, success: false, poller: action.poller})
 
     case o.BUILD_RCV:
-      return assign({}, state, {loading: false, poller: action.poller, success: action.success, 
-                    entry: action.entry})
+      if (state.entry) {
+        console.log('VIEW: poller: ' + action.poller)
+        var newEntry = assign({}, state.entry, action.entry)
+        var newPoller = state.poller || action.poller
+        return assign({}, state, {loading: false, poller: newPoller, success: action.success, 
+                      entry: newEntry})
+      } else {
+        console.log('NO VIEW: poller: ' + action.poller)
+        if (action.poller) clearInterval(action.poller)
+      }
+      return state
 
     case o.BUILD_STOP:
-      if (state.poller) clearInterval(state.poller)
+      console.log('clearing interval for: ' + state.poller)
+      clearInterval(state.poller)
       return assign({}, state, {poller: null})
 
     case o.LOGS_STOP:
@@ -70,11 +80,11 @@ var collection = function (state, action) {
 
     case o.OVERVIEW_RCV:
       return assign({}, state, {loading: false, poller: action.poller, entries: action.entries, 
-                    success: action.success})
+                    success: true})
 
     case o.OVERVIEW_STOP:
-      console.log('state.poller: ' + state.poller)
-      if (state.poller) clearInterval(state.poller)
+      console.log('clearing interval for: ' + state.poller)
+      clearInterval(state.poller)
       return assign({}, state, {poller: null})
 
     default:

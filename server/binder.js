@@ -24,7 +24,7 @@ var deployOpts = {
   'api-key': '880df8bbabdf4b48f412208938c220fe'
 }
 
-var buildTimeout = 60 * 10 * 1000
+var buildTimeout = 60 * 30 * 1000
 var buildInterval = 10000
 
 function startBuild (repo, cb) {
@@ -123,9 +123,7 @@ function getBuildStatus (imageName, cb) {
     } else if ((status.phase === 'finished') && (status.status === 'completed')) {
       status.status = 'pending'
       var opts = assign({}, deployOpts, { 'template-name': imageName })
-      console.log('getting preload status')
       binder.deploy._preloadStatus(opts, function (err, preStatus) {
-        console.log('preloadStatus: ' + JSON.stringify(preStatus))
         if (err) return cb(err)
         if (preStatus.status === 'completed') {
           // the image is both built and preloaded -- build has fully completed
@@ -166,14 +164,20 @@ function streamBuildLogs (templateName, startTime) {
   var reader = getReader({ host: buildOpts.host })
   console.log('startTime: ' + startTime)
   var rawStream = reader.streamLogs({ app: templateName })
-  var mapStream = es.map(function (data, cb) {
-    if (!data || !data.message) {
-      return cb(null)
-    }
-    return cb(null, message)
+  rawStream.on('data', function (data) {
+    console.log(data)
   })
-  rawStream.pipe(mapStream)
-  return mapStream
+  /*
+  var msgStream = es.mapSync(function (data) {
+    if (data) {
+      console.log('data.message: ' + data.message)
+      return data.message
+    }
+    return null
+  })
+  rawStream.pipe(msgStream)
+  */
+  return rawStream
 }
 
 module.exports = {

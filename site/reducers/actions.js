@@ -47,8 +47,8 @@ function showDetail (entry) {
 
 function showOverview () {
   return function (dx) {
-    dx({ type: constants.BUILD_STOP })
     dx({ type: constants.LOGS_STOP })
+    dx({ type: constants.BUILD_STOP })
     dx({ type: constants.HIDE_DETAIL })
     dx({ type: constants.SHOW_ALL })
     templateList()(dx)

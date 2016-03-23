@@ -17,7 +17,7 @@ module.exports = function (entry) {
         return 'rgb(30, 30, 220)'
       case 'completed':
         return 'rgb(91,186,71)'
-      case 'error':
+      case 'failed':
         return 'rgb(208,102,129)'
     }
   }
