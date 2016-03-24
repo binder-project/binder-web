@@ -3,8 +3,9 @@ var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
 
 module.exports = function (entry) {
+
   function onclick () {
-    actions.showDetail(entry.name)(dx)
+    actions.showDetail(entry.name, entry.build['start-time'])(dx)
   }
 
   var color = function (stage) {

@@ -91,6 +91,15 @@ app.post('/api/builds', function (req, res) {
   })
 })
 
+app.get('/api/logs/:templateName/:after', function (req, res) {
+  var name = req.params.templateName
+  var after = req.params.after
+  binder.getLogs(name, after, function (err, logs) {
+    if (err) return res.status(500).send('could not fetch logs')
+    return res.json(logs)
+  })
+})
+
 io.on('connection', function (ws) {
   // TODO: probably don't need any auth here, but double-check
   console.log('got a connection')

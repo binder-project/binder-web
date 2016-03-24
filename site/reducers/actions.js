@@ -29,23 +29,22 @@ var constants = {
  */
 
 // TODO: config?
-var apiServer = 'localhost:3000'
+var apiServer = '104.197.23.111'
 var port = 3000
 var host = 'http://' + apiServer
 var pollPeriod = 2000
 
-function showDetail (id) {
+function showDetail (id, after) {
   return function (dx) {
     dx({ type: constants.OVERVIEW_STOP })
     dx({ type: constants.SHOW_DETAIL, id: id })
     buildStatus(id)(dx)
-    //logs(id)(dx)
+    getLogs(id, after)(dx)
   }
 }
 
 function showOverview () {
   return function (dx) {
-    dx({ type: constants.LOGS_STOP })
     dx({ type: constants.BUILD_STOP })
     dx({ type: constants.HIDE_DETAIL })
     templateList()(dx)
@@ -82,7 +81,7 @@ function templateList () {
           })
         }
       })
-    } 
+    }
     poller = setInterval(pollFunc, pollPeriod)
     pollFunc()
   }
@@ -153,17 +152,45 @@ function submitBuild (repo) {
         success: true,
         entries: entries
       })
-      showDetail(name)(dx)
+      showDetail(name, body['start-time'])(dx)
     })
   }
 }
 
+function getLogs (app, after) {
+  return function (dx) {
+    dx({ type: constants.LOGS_SEND })
+    request({
+      method: 'GET',
+      url: url.resolve(host, '/api/logs/' + app + '/' + after),
+      json: true
+    }, function (err, rsp, body) {
+      if (err) {
+        return dx({
+          type: constants.LOGS_RCV,
+          success: false
+        })
+      }
+      var entries = {}
+      entries[app] = {
+        logs: body.map(function (msg) {
+          return msg['_source'].message
+        })
+      }
+      dx({
+        type: constants.LOGS_RCV,
+        success: true,
+        entries: entries
+      })
+    })
+  }
+}
 
-function logs (app, after) {
+function streamLogs (app, after) {
   return function (dx) {
     console.log('opening websocket to', host)
     var socket = SocketIO(host)
-    dx({ 
+    dx({
       type: constants.LOGS_SEND,
       ws: socket
     })
@@ -179,7 +206,7 @@ function logs (app, after) {
       return dx({
         type: constants.LOGS_RCV,
         success: true,
-        data: data
+        message: data
       })
     })
     socket.on('error', function (err) {

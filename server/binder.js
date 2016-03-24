@@ -30,7 +30,6 @@ var buildInterval = 10000
 function startBuild (repo, cb) {
   var opts = assign({}, buildOpts, { repository: repo })
   binder.build.start(opts, function (err, body) {
-    console.log('in build start, body: ' + JSON.stringify(body))
     if (err) return cb(err)
     // immediately send the http response
     cb(null, body)
@@ -40,7 +39,6 @@ function startBuild (repo, cb) {
       async.retry(opts, function (next) {
         var opts = assign({}, buildOpts, { 'image-name': imageName })
         binder.build.status(opts, function (err, body) {
-          console.log('error: ' + err)
           if (err) return next(err)
           if (body.status === 'failed') {
             return next(new Error('build failed'))
@@ -57,7 +55,6 @@ function startBuild (repo, cb) {
       })
     }
     var preload = function (cb) {
-      console.log('preloading...')
       var opts = assign({}, deployOpts, { 'template-name': imageName })
       binder.deploy._preload(opts, function (err) {
         return cb(err)
@@ -68,7 +65,6 @@ function startBuild (repo, cb) {
       preload
     ], function (err) {
       if (err) return console.error('could not build image: ' + imageName, err)
-      console.log('finished building/preloading: ' + imageName)
     })
   })
 }
@@ -136,7 +132,7 @@ function getBuildStatus (imageName, cb) {
         return cb(null, status)
       })
     } else {
-      return cb(null, status) 
+      return cb(null, status)
     }
   })
 }
@@ -160,24 +156,27 @@ function deployBinder (templateName, cb) {
   })
 }
 
+function getLogs (templateName, startTime, cb) {
+  var reader = getReader({ host: buildOpts.host })
+  reader.getLogs({ app: templateName, after: startTime }).then(function (logs) {
+    return cb(null, logs)
+  }, function (err) {
+    return cb(err)
+  })
+}
+
 function streamBuildLogs (templateName, startTime) {
   var reader = getReader({ host: buildOpts.host })
-  console.log('startTime: ' + startTime)
   var rawStream = reader.streamLogs({ app: templateName })
-  rawStream.on('data', function (data) {
-    console.log(data)
-  })
-  /*
   var msgStream = es.mapSync(function (data) {
     if (data) {
-      console.log('data.message: ' + data.message)
       return data.message
     }
     return null
   })
   rawStream.pipe(msgStream)
-  */
-  return rawStream
+  rawStream.resume()
+  return msgStream
 }
 
 module.exports = {
@@ -188,5 +187,6 @@ module.exports = {
   getFullTemplate: getFullTemplate,
   deployBinder: deployBinder,
   getDeployStatus: getDeployStatus,
-  streamBuildLogs: streamBuildLogs
+  streamBuildLogs: streamBuildLogs,
+  getLogs: getLogs
 }

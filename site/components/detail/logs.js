@@ -4,7 +4,6 @@ var dx = hxdx.dx
 var actions = require('../../reducers/actions')
 
 module.exports = function (item) {
-  console.log('startTime: ' + item.startTime)
 
   var style = {
     container: {
@@ -29,10 +28,20 @@ module.exports = function (item) {
     }
   }
 
+  function generateMessages () {
+    if ((item.stage === 'completed') || (item.stage === 'failed')) {
+      if (item.logs) {
+        return hx`${item.logs.join('\n')}`
+      }
+      return 'Loading logs...'
+    }
+    return hx`<span>Logs will be displayed once building has finished.</span>`
+  }
+
   return hx`
   <div style=${style.container}>
     <div style=${style.logs}>
-      ${(item.logs) ? item.logs.msgs : 'No logs to display'}
+      ${generateMessages()}
     </div>
   </div>`
 }

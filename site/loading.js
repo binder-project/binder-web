@@ -3,7 +3,7 @@ var startsWith = require('lodash.startswith')
 var request = require('request')
 
 // TODO: extract to config file
-var apiServer = 'http://localhost:3000'
+var apiServer = 'http://104.197.23.111'
 
 var templateName = window.location.pathname
 

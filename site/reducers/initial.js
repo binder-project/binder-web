@@ -13,7 +13,7 @@ module.exports = {
     },
     logs: {
       loading: true,
-      ws: null,
+      poller: null,
       success: true
     }
   },

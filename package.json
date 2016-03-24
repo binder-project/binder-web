@@ -1,5 +1,5 @@
 {
-  "name": "binder-web-react",
+  "name": "binder-web-redux",
   "version": "1.0.0",
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
@@ -8,13 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/binder-project/binder-web-react.git"
+    "url": "git+https://github.com/binder-project/binder-web-redux.git"
   },
   "keywords": [
     "jupyter",
     "spark",
     "kubernetes",
-    "react",
     "redux"
   ],
   "browserify": {
@@ -25,7 +24,7 @@
   "author": "freeman-lab",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/binder-project/binder-web-react/issues"
+    "url": "https://github.com/binder-project/binder-web-redux/issues"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
@@ -49,5 +48,5 @@
     "budo": "^8.0.4",
     "through2": "^2.0.1"
   },
-  "homepage": "https://github.com/binder-project/binder-web-react#readme"
+  "homepage": "https://github.com/binder-project/binder-web-redux#readme"
 }

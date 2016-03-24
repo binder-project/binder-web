@@ -56,17 +56,29 @@ function updateEntries(state, action) {
   return state
 }
 
+// this function mutates state (state should be created with assign before calling)
+function updateLogs(state, action) {
+  if (action.message) {
+    state.log = state.log.concat(action.message.message)
+  }
+  return state
+}
+
 function sendState (state, action, key) {
   var newState = assign({}, state)
   var newPoller = action.poller || state[key].poller
-  newState[key] = assign({}, state[key], {loading: true, success: false, poller: newPoller})
+  var newWs = action.ws || state[key].ws
+  newState[key] = assign({}, state[key], {loading: true, success: false, poller: newPoller,
+                         ws: newWs})
   return newState
 }
 
 function receiveState (state, action, key) {
   var newState = assign({}, state)
   var newPoller = action.poller || state[key].poller
-  newState[key] = assign({}, state[key], {loading: false, success: action.success, poller: newPoller})
+  var newWs = action.ws || state[key].ws
+  newState[key] = assign({}, state[key], {loading: false, success: action.success, poller: newPoller,
+                          ws: newWs})
   return newState
 }
 
@@ -103,23 +115,14 @@ var model = function (state, action) {
       return updateEntries(newState, action)
 
     case o.LOGS_RCV:
-      // TODO resume here
       var newState = receiveState(state, action, 'logs')
-      if (action.entry) {
-        newState.entries = updateEn
-      }
-      var msg = (action.data) ? action.data : ''
-      var newMsgs = state.logs.msgs + '\n' + msg
-      return assign({}, state, {logs: {loading: false, success: action.success, msgs: newMsgs}})
+      return updateEntries(newState, action)
 
     case o.BUILD_STOP:
       return stopPolling(state, action, 'build')
 
     case o.OVERVIEW_STOP:
       return stopPolling(state, action, 'overview')
-
-    case o.LOGS_STOP:
-      return stopPolling(state, action, 'logs')
 
     default:
       return state
