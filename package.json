@@ -30,6 +30,7 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "brfs": "^1.4.3",
+    "dom-css": "^2.0.0",
     "event-stream": "^3.3.2",
     "express": "^4.13.4",
     "express-ws": "^1.0.0",
