@@ -37,3 +37,4 @@ node_modules
 .un~
 
 public/index.js
+public/loading.js

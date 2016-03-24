@@ -75,6 +75,14 @@ input:focus {
  color: rgb(10,10,10); 
 }
 
+.template-link {
+  color: rgb(150,150,150); 
+}
+
+.template-link:hover {
+  color: rgb(90,90,90); 
+}
+
 @-moz-keyframes three-quarters-loader {
   0% {
     -moz-transform: rotate(0deg);
@@ -109,7 +117,21 @@ input:focus {
     transform: rotate(360deg);
   }
 }
-/* :not(:required) hides this rule from IE9 and below */
+
+.three-quarters-loader-big {
+  -moz-animation: three-quarters-loader 3000ms infinite linear;
+  -webkit-animation: three-quarters-loader 3000ms infinite linear;
+  animation: three-quarters-loader 3000ms infinite linear;
+  border: 30px solid rgb(190, 190, 190);
+  border-right-color: transparent;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  transition: border 0.7s;
+}
+
 .three-quarters-loader:not(:required) {
   -moz-animation: three-quarters-loader 1250ms infinite linear;
   -webkit-animation: three-quarters-loader 1250ms infinite linear;
@@ -124,4 +146,5 @@ input:focus {
   text-indent: -9999px;
   width: 48px;
   height: 48px;
+  transition: border 0.7s;
 }
