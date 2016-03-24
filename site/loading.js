@@ -148,7 +148,7 @@ async.waterfall([
     })
   },
   function (deployId, next) {
-    async.retry({ times: 4, interval: 1000 }, function (next) {
+    async.retry({ times: 60, interval: 1000 }, function (next) {
       makeProgress()
       request({ 
         url: apiServer + '/api/apps' + templateName + '/' + deployId,
@@ -171,7 +171,6 @@ async.waterfall([
   }
 ], function (err) {
   if (err) {
-    makeSuccess()
-    //makeError(err)
+    makeError(err)
   }
 })
