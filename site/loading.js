@@ -104,7 +104,7 @@ messageContainer.appendChild(messageDots)
 var footer = document.createElement('div')
 var template = document.createElement('a')
 css(footer, style.footer)
-template.innerHTML = 'binder-project/example-requirements'
+template.innerHTML = templateName
 template.href = templateName
 template.className = 'template-link'
 css(template, style.template)
