@@ -28,10 +28,17 @@ var constants = {
  * TODO: move into a separate file
  */
 
+function getOrigin () {
+  var port = window.location.port
+  var origin = window.location.hostname
+  if (port) {
+    origin = origin + ':' + port
+  }
+  return origin
+}
+
 // TODO: config?
-var apiServer = 'localhost:3000'
-var port = 3000
-var host = 'http://' + apiServer
+var host = getOrigin()
 var pollPeriod = 2000
 
 function showDetail (id, after) {

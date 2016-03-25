@@ -4,7 +4,8 @@
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "start": "browserify site/index.js -o public/index.js & browserify site/loading.js -o public/loading.js & node start.js start"
+    "start": "browserify site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node start.js start",
+    "start:debug": "watchify site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node start.js start"
   },
   "repository": {
     "type": "git",

@@ -38,8 +38,8 @@ var style = {
     width: '350px'
   },
   loader: {
-    width: height * 0.5 + 'px', 
-    height: height * 0.5 + 'px', 
+    width: height * 0.5 + 'px',
+    height: height * 0.5 + 'px',
     borderRadius: height * 0.25 + 'px'
   },
   messageContainer: {
@@ -66,8 +66,16 @@ var style = {
   }
 }
 
-// TODO: extract to config file
-var apiServer = 'http://localhost:3000'
+function getOrigin () {
+  var port = window.location.port
+  var origin = window.location.hostname
+  if (port) {
+    origin = origin + ':' + port
+  }
+  return 'http://' + origin
+}
+
+var apiServer = getOrigin()
 
 var templateName = window.location.pathname.replace('/repo', '')
 
@@ -137,7 +145,7 @@ var makeSuccess = function () {
 
 async.waterfall([
   function (next) {
-    request({ 
+    request({
       url: apiServer + '/api/deploy' + templateName,
       json: true
     }, function (err, res, json) {
@@ -150,7 +158,7 @@ async.waterfall([
   function (deployId, next) {
     async.retry({ times: 60, interval: 1000 }, function (next) {
       makeProgress()
-      request({ 
+      request({
         url: apiServer + '/api/apps' + templateName + '/' + deployId,
         json: true
       }, function (err, res, json) {

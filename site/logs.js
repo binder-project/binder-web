@@ -13,8 +13,15 @@ var style = {
   },
 }
 
-var apiServer = 'localhost:3000'
-var host = 'http://' + apiServer
+function getOrigin () {
+  var port = window.location.port
+  var origin = window.location.hostname
+  if (port) {
+    origin = origin + ':' + port
+  }
+  return 'http://' + origin
+}
+var host = getOrigin()
 
 var params = window.location.pathname.replace('/logs/', '')
 var parts = params.split('/')

@@ -3,7 +3,15 @@ var hx = hxdx.hx
 var dx = hxdx.dx
 var actions = require('../../reducers/actions')
 
-var apiServer = 'http://localhost:3000'
+var getOrigin = function () {
+  var port = window.location.port
+  var origin = window.location.hostname
+  if (port) {
+    origin = origin + ':' + port
+  }
+  return 'http://' + origin
+}
+var apiServer = getOrigin()
 
 module.exports = function (item) {
 
