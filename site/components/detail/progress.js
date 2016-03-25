@@ -55,7 +55,7 @@ module.exports = function (entry) {
   // EXCEPT
   // for all of the above, if status is failed, show red instead of green
 
-  // entry.status = 'building' | 'loading' | 'completed' | 'failed'
+  // entry.status = 'building' | 'loading' | 'pending' | completed' | 'failed'
   // entry.phase = 'fetching' | 'building' | 'finished'
 
   function height () {
