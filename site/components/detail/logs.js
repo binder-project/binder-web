@@ -3,6 +3,8 @@ var hx = hxdx.hx
 var dx = hxdx.dx
 var actions = require('../../reducers/actions')
 
+var apiServer = 'http://localhost:3000'
+
 module.exports = function (item) {
 
   var style = {
@@ -15,33 +17,41 @@ module.exports = function (item) {
       display: 'inline-block',
       verticalAlign: 'top',
       borderRadius: '8px',
-      border: 'solid 5px rgb(210, 210, 210)',
-      fontFamily: 'Hack'
+      border: 'solid 5px rgb(210, 210, 210)'
     },
     logs: {
       fontSize: '90%',
+      marginTop: '5px',
       marginLeft: '2.5%',
       width: '95%',
-      height: '100%',
+      height: '95%',
       overflowY: 'auto',
-      whiteSpace: 'pre'
+      fontFamily: 'Hack',
+      color: 'rgb(80,80,80)',
+      wordWrap: 'break-word'
+    },
+    iframe: {
+      border: 'none',
+      width: '100%',
+      height: '95%'
     }
   }
 
   function generateMessages () {
     if ((item.stage === 'completed') || (item.stage === 'failed')) {
       if (item.logs) {
-        return hx`${item.logs.join('\n')}`
+        return hx`<div style=${style.logs}>
+          ${hx`<pre style='white-space: pre-wrap; margin: 0'>${item.logs.join('\n')}</pre>`}
+        </div>`
       }
-      return 'Loading logs...'
+      return hx`<div style=${style.logs}>loading logs...</div>`
     }
-    return hx`<span>Logs will be displayed once building has finished.</span>`
+    var src = apiServer + '/logs/' + item.name + '/' + item.startTime
+    return hx`<iframe style=${style.iframe} src=${src}></iframe>`
   }
 
   return hx`
   <div style=${style.container}>
-    <div style=${style.logs}>
-      ${generateMessages()}
-    </div>
+    ${generateMessages()}
   </div>`
 }

@@ -8,8 +8,11 @@ module.exports = function (entry) {
     actions.showDetail(entry.name, entry.build['start-time'])(dx)
   }
 
-  var color = function (stage) {
-    switch (stage) {
+  console.log('status for color')
+  console.log(entry.status)
+
+  var color = function (status) {
+    switch (status) {
       case 'building':
         return 'rgb(243,162,83)'
       case 'pending':
@@ -22,6 +25,8 @@ module.exports = function (entry) {
         return 'rgb(243,162,83)'
       case 'failed':
         return 'rgb(208,102,129)'
+      default:
+        return 'rgb(243,162,83)'
     }
   }
 
@@ -42,8 +47,8 @@ module.exports = function (entry) {
       display: 'inline-block',
       cursor: 'pointer'
     },
-    stage: {
-      backgroundColor: color(entry.stage),
+    status: {
+      backgroundColor: color(entry.status),
       borderRadius: '8px',
       width: '20px',
       height: '20px',
@@ -69,7 +74,7 @@ module.exports = function (entry) {
     <div style=${style.name} className='label' onclick=${onclick}>${entry.name}</div>
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
-      <span style=${style.stage}></span>
+      <span style=${style.status}></span>
       <span style=${style.rebuild}><img src='assets/images/refresh.svg'></span>
       <span style=${style.launch}><img src='assets/images/launch.svg'></span>
     </div>

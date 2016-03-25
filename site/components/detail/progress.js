@@ -43,26 +43,32 @@ module.exports = function (entry) {
     }
   }
 
-  console.log(entry)
+  // entry.status = 'building' | 'loading' | 'completed' | 'failed'
+  // entry.phase = 'fetching' | 'building' | 'finished'
+
+  console.log(entry.phase)
+  console.log(entry.status)
 
   function height () {
-    if (entry.stage === 'building') return '5%'
-    if (entry.stage === 'loading') return '38.5%'
-    if (entry.stage === 'completed') return '72%'
+    if (entry.phase === 'fetching') return '5%'
+    if (entry.phase === 'building') return '38.5%'
+    if (entry.phase === 'finished' && entry.status === 'completed') return '72%'
+    if (entry.phase === 'finished' && entry.status === 'failed') return '5%'
+    return '5%'
   }
 
   function color1 () {
-    if (entry.stage === 'failed') return 'rgb(208,102,129)'
+    if (entry.status === 'failed') return 'rgb(208,102,129)'
     else return 'rgb(243,162,83)'
   }
 
   function color2 () {
-    if (entry.stage === 'loading' || entry.stage === 'completed' ) return 'rgb(87, 154, 203)'
+    if ((entry.phase === 'building' || entry.phase === 'finished' ) && entry.status !== 'failed') return 'rgb(87, 154, 203)'
     else return 'white'
   }
 
   function color3 () {
-    if (entry.stage === 'completed' ) return 'rgb(91,186,71)'
+    if (entry.phase === 'finished' && entry.status === 'completed') return 'rgb(91,186,71)'
     else return 'white'
   }
 

@@ -19,23 +19,17 @@ app.get('/', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-app.get('/:templateName', function (req, res) {
+app.get('/logs/:templateName/:startTime', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'logs.html'))
+})
+
+app.get('/repo/:templateName', function (req, res) {
+  console.log('template endpoint')
   return res.sendFile(path.join(staticPath, 'loading.html'))
 })
 
-app.get('/:templateName/status', function (req, res) {
+app.get('/repo/:templateName/status', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
-})
-
-/*
- * Display a loading screen for a building binder
- */
-app.get('/loading/:imageName', function (req, res) {
-  var name = req.params.imageName
-  binder.getBuildStatus(name, function (err, status) {
-    if (err) return res.status(500).end()
-    return res.json(status)
-  })
 })
 
 /*

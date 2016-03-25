@@ -67,14 +67,14 @@ var style = {
 }
 
 // TODO: extract to config file
-var apiServer = 'http://104.197.23.111'
+var apiServer = 'http://localhost:3000'
 
 var templateName = window.location.pathname
 
 // add logo
 var header = document.createElement('div')
 var img = document.createElement('img')
-img.src='./assets/images/logo.svg'
+img.src='../assets/images/logo.svg'
 css(header, style.header)
 css(img, style.logo)
 document.body.appendChild(header)
@@ -129,7 +129,7 @@ var makeError = function (err) {
 }
 
 var makeSuccess = function () {
-  message.innerHTML = 'launching!'
+  message.innerHTML = 'ready!'
   messageDots.innerHTML = ''
   css(message, {color: 'rgb(91,186,71)'})
   css(loader, {border: '30px solid rgb(91,186,71)'})

@@ -29,7 +29,7 @@ var constants = {
  */
 
 // TODO: config?
-var apiServer = '104.197.23.111'
+var apiServer = 'localhost:3000'
 var port = 3000
 var host = 'http://' + apiServer
 var pollPeriod = 2000
@@ -70,7 +70,8 @@ function templateList () {
         if (rsp.statusCode === 200 || rsp.statusCode === 304) {
           var templates = body
           templates.map(function (t) {
-            t.stage = t.build.status
+            t.status = t.build.status
+            t.phase = t.build.phase
           })
           var entries = zipObject(map(templates, 'name'), templates)
           return dx({
@@ -108,7 +109,8 @@ function buildStatus (name) {
         var entries = {}
         entries[name] = {
           name: name,
-          stage: body['status'],
+          status: body['status'],
+          phase: body['phase'],
           startTime: body['start-time']
         }
         return dx({

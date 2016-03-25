@@ -10,12 +10,13 @@ module.exports = function () {
   var style = {
     container: {
       width: '12%',
+      textAlign: 'right',
       left: '0%',
       height: '26%',
       paddingTop: '1.5%',
       paddingBottom: '2.5%',
       paddingLeft: '2%',
-      paddingRight: '2%',
+      paddingRight: '2.5%',
       display: 'inline-block',
       verticalAlign: 'top',
       background: 'rgb(210, 210, 210)',
@@ -34,7 +35,7 @@ module.exports = function () {
 
   return hx`
   <div style=${style.container}>
-    <span style='margin-left: 25%; margin-right: 10%'>go</span>
+    <span style='margin-left: 10%; margin-right: 5%'>go</span>
     <button style=${style.button} className='button' onclick=${onclick}>back</button>
   </div>`
 }

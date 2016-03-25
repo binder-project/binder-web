@@ -3,6 +3,8 @@ var overview = require('./overview')
 var detail = require('./detail')
 
 module.exports = function (state) {
+  var width = window.innerWidth
+
   var style = {
     overview: {
       width: '50%',
@@ -11,9 +13,9 @@ module.exports = function (state) {
       marginBottom: '75px'
     },
     detail: {
-      width: '80%',
-      marginLeft: '10%',
-      marginRight: '10%'
+      width: (width < 1200) ? '90%' : '80%',
+      marginLeft: (width < 1200) ? '5%' : '10%',
+      marginRight: (width < 1200) ? '5%' : '10%'
     },
     header: {
       width: '80%',
