@@ -1,6 +1,7 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
+var theme = require('../../theme')
 
 module.exports = function (entry) {
 
@@ -11,19 +12,19 @@ module.exports = function (entry) {
   var color = function (status) {
     switch (status) {
       case 'building':
-        return 'rgb(243,162,83)'
+        return theme.ORANGE
       case 'pending':
-        return 'rgb(100, 80, 160)'
+        return theme.ORANGE
       case 'loading':
-        return 'rgb(87, 154, 203)'
+        return theme.ORANGE
       case 'completed':
-        return 'rgb(91,186,71)'
+        return theme.GREEN
       case 'running':
-        return 'rgb(243,162,83)'
+        return theme.ORANGE
       case 'failed':
-        return 'rgb(208,102,129)'
+        return theme.RED
       default:
-        return 'rgb(243,162,83)'
+        return theme.ORANGE
     }
   }
 
