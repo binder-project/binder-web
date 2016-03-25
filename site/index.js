@@ -9,4 +9,6 @@ var components = require('./components')
 var store = createStore(reducer, initial, dev)
 hxdx.render(components, store)
 
+var id = window.location.pathname.replace('/repo/', '').replace('/status', '')
+
 actions.showOverview()(hxdx.dx)
