@@ -3,9 +3,17 @@ var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
 
 module.exports = function () { 
-  function onclick () {
+  function submit () {
     var value = document.querySelector('#submission').value
     actions.submitBuild(value)(dx)
+  }
+
+  function onclick () {
+    submit()
+  }
+
+  function onkeydown (e) {
+    if (e.keyCode == 13) submit()
   }
 
   var styles = {
@@ -48,7 +56,7 @@ module.exports = function () {
 
   return hx`<div style=${styles.container}>
     <div style=${styles.message}>build a repository</div>
-    <input id='submission' style=${styles.input}'>
+    <input type='text' id='submission' style=${styles.input} onkeydown=${onkeydown}'>
     <button onclick=${onclick} className='button' style=${styles.button}>submit</button>
   </div>`
 }
