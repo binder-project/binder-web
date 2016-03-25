@@ -4,7 +4,7 @@
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "start": "watchify site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node server/index.js"
+    "start": "browserify site/index.js -o public/index.js & browserify site/loading.js -o public/loading.js & node start.js start"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "event-stream": "^3.3.2",
     "express": "^4.13.4",
     "express-ws": "^1.0.0",
+    "jsonfile": "^2.2.3",
     "lodash.filter": "^4.2.1",
     "lodash.find": "^4.2.0",
     "lodash.map": "^4.2.1",
@@ -42,6 +43,7 @@
     "object-assign": "^4.0.1",
     "redux": "^3.0.0",
     "request": "^2.69.0",
+    "shelljs": "^0.6.0",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.5"
   },

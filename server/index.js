@@ -1,12 +1,14 @@
 var path = require('path')
 
-var binder = require('./binder')
 var express = require('express')
 var expressWs = require('express-ws')
 var bodyParser = require('body-parser')
 var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
+var assign = require('object-assign')
+
+var settings = require('./settings')
 
 var port = 3000
 var staticPath = path.join(__dirname, '../public')
@@ -16,6 +18,9 @@ app.use(bodyParser.json())
 app.use('/js', express.static(path.join(__dirname, '../public/js')))
 app.use('/css', express.static(path.join(__dirname, '../public/css')))
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')))
+
+// set once the server is started
+var binder = null
 
 // Public endpoints
 
@@ -57,6 +62,7 @@ app.get('/api/apps/:templateName/:id', function (req, res) {
 
 app.get('/api/overview', function (req, res) {
   binder.getOverview(function (err, overview) {
+    console.log(err)
     if (err) return res.status(500).send('could not get overview list')
     return res.json(overview)
   })
@@ -111,6 +117,7 @@ io.on('connection', function (ws) {
         stream.on('data', function (data) {
           ws.send(data)
         })
+        stream.resume()
       }
     } catch (e) {
       console.error('build logs websocket failed: ' + e)
@@ -125,6 +132,33 @@ io.on('connection', function (ws) {
   })
 })
 
-http.listen(port, function () {
-  console.log('Listening on port', port, '...')
-})
+var processOptions = function (name, options) {
+  if (!options) {
+    return {}
+  }
+  if (name in options) {
+    var limited = options[name]
+    limited.logging = options.logging
+    limited.db = options.db
+    limited.name = name
+    for (var key in options) {
+      if (!(typeof options[key] === 'object') && key !== name) {
+        limited[key] = options[key]
+      }
+    }
+    return limited
+  }
+  return options
+}
+
+var start = function (opts) {
+  var self = this
+  this.opts = assign(settings, processOptions('binder-web', opts))
+  console.log('this.opts:', this.opts)
+  binder = require('./binder')(this.opts)
+  http.listen(this.opts.port, function () {
+    console.log('Listening on port', self.opts.port, '...')
+  })
+}
+
+module.exports = start
