@@ -15,8 +15,10 @@ app.use(express.static(staticPath))
 app.use(bodyParser.json())
 app.use('/js', express.static(path.join(__dirname, '../public/js')))
 app.use('/css', express.static(path.join(__dirname, '../public/css')))
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')))
 
 // Public endpoints
+
 app.get('/', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
@@ -34,9 +36,8 @@ app.get('/repo/:templateName/status', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-/*
- * Deploy a binder and get information about a deployment
- */
+// API endpoints
+
 app.get('/api/deploy/:templateName', function (req, res) {
   var name = req.params.templateName
   binder.deployBinder(name, function (err, status) {
@@ -53,8 +54,6 @@ app.get('/api/apps/:templateName/:id', function (req, res) {
     return res.json(status)
   })
 })
-
-// API endpoints
 
 app.get('/api/overview', function (req, res) {
   binder.getOverview(function (err, overview) {
