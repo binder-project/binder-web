@@ -1,0 +1,15 @@
+{
+  "port": 3000,
+  "build": {
+    "host": "localhost",
+    "port": 8082
+  },
+  "registry": {
+    "host": "localhost",
+    "port": 8082
+  },
+  "deploy": {
+    "host": "localhost",
+    "port": 8084
+  }
+}
