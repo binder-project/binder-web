@@ -4,23 +4,18 @@ body {
 
 @font-face {
     font-family: ClearSans-Thin;
-    src: url(./assets/fonts/clearsans-1.00/WOFF/ClearSans-Thin.woff);
+    src: url(/assets/fonts/clearsans-1.00/WOFF/ClearSans-Thin.woff);
 }
 
 @font-face {
     font-family: ClearSans-Light;
-    src: url(./assets/fonts/clearsans-1.00/WOFF/ClearSans-Light.woff);
+    src: url(/assets/fonts/clearsans-1.00/WOFF/ClearSans-Light.woff);
 }
 
 
 @font-face {
     font-family: ClearSans-Medium;
-    src: url(./assets/fonts/clearsans-1.00/WOFF/ClearSans-Medium.woff);
-}
-
-@font-face {
-    font-family: Inconsolata;
-    src: url(./assets/fonts/inconsolata.woff);
+    src: url(/assets/fonts/clearsans-1.00/WOFF/ClearSans-Medium.woff);
 }
 
 

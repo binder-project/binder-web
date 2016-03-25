@@ -32,13 +32,12 @@ app.get('/logs/:templateName/:startTime', function (req, res) {
   return res.sendFile(path.join(staticPath, 'logs.html'))
 })
 
-app.get('/repo/:templateName', function (req, res) {
-  console.log('template endpoint')
-  return res.sendFile(path.join(staticPath, 'loading.html'))
-})
-
 app.get('/repo/:templateName/status', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
+})
+
+app.get('/repo/:templateName', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'loading.html'))
 })
 
 // API endpoints

@@ -36,5 +36,6 @@ node_modules
 .swp
 .un~
 
-public/index.js
-public/loading.js
+public/js/index.js
+public/js/loading.js
+public/js/logs.js
