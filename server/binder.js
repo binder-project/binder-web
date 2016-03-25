@@ -178,7 +178,7 @@ Binder.prototype.getLogs = function (templateName, startTime, cb) {
 Binder.prototype.streamBuildLogs = function (templateName, startTime) {
   var self = this
   var reader = getReader({ host: self.buildOpts.host })
-  var rawStream = reader.streamLogs({ app: templateName })
+  var rawStream = reader.streamLogs({ app: templateName, after: startTime })
   var msgStream = es.mapSync(function (data) {
     if (data) {
       return data.message
