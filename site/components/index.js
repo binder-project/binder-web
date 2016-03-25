@@ -35,7 +35,6 @@ module.exports = function (state) {
     <img style=${style.logo} src='/assets/images/logo.svg'></img>
   </div>`
 
-  console.log('selection: ' + state.selection)
   if (state.selection) {
     return hx`
     <div>
