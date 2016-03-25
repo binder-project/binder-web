@@ -72,8 +72,8 @@ module.exports = function (entry) {
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>
-      <span style=${style.rebuild}><img src='assets/images/refresh.svg'></span>
-      <span style=${style.launch}><img src='assets/images/launch.svg'></span>
+      <span style=${style.rebuild}><img src='/assets/images/refresh.svg'></span>
+      <span style=${style.launch}><img src='/assets/images/launch.svg'></span>
     </div>
   </div>`
 }

@@ -34,7 +34,7 @@ var search = function (state) {
 
   return hx`
   <div style=${style.container}>
-    <img style=${style.icon} src='./assets/images/search.svg'>
+    <img style=${style.icon} src='/assets/images/search.svg'>
     <input style=${style.input} oninput=${oninput}>
   </div>`
 }

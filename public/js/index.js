@@ -71320,7 +71320,7 @@ module.exports = function (state) {
 
   var logo = hx`
   <div style=${style.header}>
-    <img style=${style.logo} src='./assets/images/logo.svg'></img>
+    <img style=${style.logo} src='/assets/images/logo.svg'></img>
   </div>`
 
   console.log('selection: ' + state.selection)
@@ -71420,8 +71420,8 @@ module.exports = function (entry) {
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>
-      <span style=${style.rebuild}><img src='assets/images/refresh.svg'></span>
-      <span style=${style.launch}><img src='assets/images/launch.svg'></span>
+      <span style=${style.rebuild}><img src='/assets/images/refresh.svg'></span>
+      <span style=${style.launch}><img src='/assets/images/launch.svg'></span>
     </div>
   </div>`
 }
@@ -71581,7 +71581,7 @@ var search = function (state) {
 
   return hx`
   <div style=${style.container}>
-    <img style=${style.icon} src='./assets/images/search.svg'>
+    <img style=${style.icon} src='/assets/images/search.svg'>
     <input style=${style.input} oninput=${oninput}>
   </div>`
 }

@@ -32,7 +32,7 @@ module.exports = function (state) {
 
   var logo = hx`
   <div style=${style.header}>
-    <img style=${style.logo} src='./assets/images/logo.svg'></img>
+    <img style=${style.logo} src='/assets/images/logo.svg'></img>
   </div>`
 
   console.log('selection: ' + state.selection)
