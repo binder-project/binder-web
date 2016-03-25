@@ -13,6 +13,8 @@ var staticPath = path.join(__dirname, '../public')
 
 app.use(express.static(staticPath))
 app.use(bodyParser.json())
+app.use('/js', express.static(path.join(__dirname, '../public/js')))
+app.use('/css', express.static(path.join(__dirname, '../public/css')))
 
 // Public endpoints
 app.get('/', function (req, res) {

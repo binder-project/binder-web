@@ -38,7 +38,7 @@ module.exports = function (item) {
   }
 
   function generateMessages () {
-    if ((item.stage === 'completed') || (item.stage === 'failed')) {
+    if ((item.status === 'completed') || (item.status === 'failed')) {
       if (item.logs) {
         return hx`<div style=${style.logs}>
           ${hx`<pre style='white-space: pre-wrap; margin: 0'>${item.logs.join('\n')}</pre>`}

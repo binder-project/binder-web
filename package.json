@@ -4,7 +4,7 @@
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "start": "watchify site/index.js -o public/index.js & watchify site/loading.js -o public/loading.js & watchify site/logs.js -o public/logs.js & node server/index.js"
+    "start": "watchify site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node server/index.js"
   },
   "repository": {
     "type": "git",

@@ -69,7 +69,7 @@ var style = {
 // TODO: extract to config file
 var apiServer = 'http://localhost:3000'
 
-var templateName = window.location.pathname
+var templateName = window.location.pathname.replace('/repo', '')
 
 // add logo
 var header = document.createElement('div')
@@ -104,7 +104,7 @@ messageContainer.appendChild(messageDots)
 var footer = document.createElement('div')
 var template = document.createElement('a')
 css(footer, style.footer)
-template.innerHTML = templateName
+template.innerHTML = templateName.slice(1, templateName.length)
 template.href = templateName
 template.className = 'template-link'
 css(template, style.template)
