@@ -19,7 +19,7 @@ function getOrigin () {
   if (port) {
     origin = origin + ':' + port
   }
-  return 'http://' + origin
+  return origin
 }
 var host = getOrigin()
 

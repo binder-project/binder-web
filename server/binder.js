@@ -185,9 +185,8 @@ Binder.prototype.streamBuildLogs = function (templateName, startTime) {
     }
     return null
   })
-  rawStream.on('data', function (data) {
-    msgStream.push(data)
-  })
+  rawStream.pipe(msgStream)
+  rawStream.resume()
   return msgStream
 }
 

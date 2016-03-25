@@ -64,7 +64,7 @@ function templateList () {
     var poller = null
     var pollFunc = function () {
       request({
-        url: url.resolve(host, '/api/overview'),
+        url: url.resolve('http://' + host, '/api/overview'),
         json: true
       }, function (err, rsp, body) {
         if (err) {
@@ -101,7 +101,7 @@ function buildStatus (name) {
     var pollFunc = function () {
       request({
         method: 'GET',
-        url: url.resolve(host, '/api/builds/' + name),
+        url: url.resolve('http://' + host, '/api/builds/' + name),
         json: true,
         body: { 'repo': name }
       }, function (err, rsp, body) {
@@ -138,7 +138,7 @@ function submitBuild (repo) {
    dx({ type: constants.BUILD_SEND })
    request({
       method: 'POST',
-      url: url.resolve(host, '/api/builds'),
+      url: url.resolve('http://' + host, '/api/builds'),
       json: true,
       body: { 'repo': repo }
     }, function (err, rsp, body) {
@@ -171,7 +171,7 @@ function getLogs (app, after) {
     dx({ type: constants.LOGS_SEND })
     request({
       method: 'GET',
-      url: url.resolve(host, '/api/logs/' + app + '/' + after),
+      url: url.resolve('http://' + host, '/api/logs/' + app + '/' + after),
       json: true
     }, function (err, rsp, body) {
       if (err) {
