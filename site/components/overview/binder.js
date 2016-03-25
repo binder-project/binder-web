@@ -8,9 +8,6 @@ module.exports = function (entry) {
     actions.showDetail(entry.name, entry.build['start-time'])(dx)
   }
 
-  console.log('status for color')
-  console.log(entry.status)
-
   var color = function (status) {
     switch (status) {
       case 'building':

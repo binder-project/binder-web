@@ -16,7 +16,7 @@ module.exports = function () {
       paddingTop: '1.5%',
       paddingBottom: '2.5%',
       paddingLeft: '2%',
-      paddingRight: '2.5%',
+      paddingRight: '2%',
       display: 'inline-block',
       verticalAlign: 'top',
       background: 'rgb(210, 210, 210)',

@@ -31,7 +31,8 @@ module.exports = function () {
       width: '70%',
       marginRight: '5%',
       paddingLeft: '12px',
-      fontSize: '110%',
+      fontSize: '16px',
+      fontFamily: 'ClearSans-Light',
       color: 'rgb(50,50,50)'
     },
     button: {
@@ -47,7 +48,7 @@ module.exports = function () {
 
   return hx`<div style=${styles.container}>
     <div style=${styles.message}>build a repository</div>
-    <input id='submission' onchange=${onclick} style=${styles.input}'>
+    <input id='submission' style=${styles.input}'>
     <button onclick=${onclick} className='button' style=${styles.button}>submit</button>
   </div>`
 }

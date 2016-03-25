@@ -1,5 +1,6 @@
 var hx = require('hxdx').hx
 var assign = require('object-assign')
+var theme = require('../../theme')
 
 module.exports = function (entry) {
   var style = {
@@ -43,32 +44,46 @@ module.exports = function (entry) {
     }
   }
 
+
+  // if phase is fetching -> line is at the top
+  // if phase is building -> line is at the middle
+  // if phase is finished -> line is at the bottom
+
+  // if phase is fetching -> first circle is green, second and third are white
+  // if phase is building -> first and second circle are green, third is white
+  // if phase is finished -> all circles are green
+  // EXCEPT
+  // for all of the above, if status is failed, show red instead of green
+
   // entry.status = 'building' | 'loading' | 'completed' | 'failed'
   // entry.phase = 'fetching' | 'building' | 'finished'
-
-  console.log(entry.phase)
-  console.log(entry.status)
 
   function height () {
     if (entry.phase === 'fetching') return '5%'
     if (entry.phase === 'building') return '38.5%'
-    if (entry.phase === 'finished' && entry.status === 'completed') return '72%'
-    if (entry.phase === 'finished' && entry.status === 'failed') return '5%'
-    return '5%'
+    if (entry.phase === 'finished') return '72%'
   }
 
   function color1 () {
-    if (entry.status === 'failed') return 'rgb(208,102,129)'
-    else return 'rgb(243,162,83)'
+    if ((entry.phase === 'fetching' || entry.phase === 'building') && entry.status !== 'failed') return theme.ORANGE
+    if (entry.phase === 'finished' && entry.status !== 'failed') return theme.GREEN
+    if (entry.status === 'failed') return theme.RED
+    else return theme.WHITE
   }
 
   function color2 () {
-    if ((entry.phase === 'building' || entry.phase === 'finished' ) && entry.status !== 'failed') return 'rgb(87, 154, 203)'
-    else return 'white'
+    if (entry.phase === 'fetching') return theme.WHITE
+    if (entry.phase === 'building' && entry.status !== 'failed') return theme.ORANGE
+    if (entry.phase === 'finished' && entry.status !== 'failed') return theme.GREEN
+    if ((entry.phase === 'building' || entry.phase === 'finished') && entry.status === 'failed') return theme.RED
+    else return theme.WHITE
   }
 
   function color3 () {
-    if (entry.phase === 'finished' && entry.status === 'completed') return 'rgb(91,186,71)'
+    if (entry.phase === 'fetching') return theme.WHITE
+    if (entry.phase === 'building') return theme.WHITE
+    if (entry.phase === 'finished' && entry.status !== 'failed') return theme.GREEN
+    if (entry.phase === 'finished' && entry.status === 'failed') return theme.RED
     else return 'white'
   }
 
