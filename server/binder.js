@@ -7,28 +7,33 @@ var binder = require('binder-cli')
 var getReader = require('binder-logging/lib/reader')
 var es = require('event-stream')
 
-// TODO: set these parameters according to your production environment
-var buildOpts = {
-  host: '104.197.23.111',
-  port: '8082',
-  'api-key': '880df8bbabdf4b48f412208938c220fe'
-}
-var registryOpts = {
-  host: '104.197.23.111',
-  port: '8082',
-  'api-key': '880df8bbabdf4b48f412208938c220fe'
-}
-var deployOpts = {
-  host: '104.197.23.111',
-  port: '8084',
-  'api-key': '880df8bbabdf4b48f412208938c220fe'
-}
-
 var buildTimeout = 60 * 30 * 1000
 var buildInterval = 10000
 
-function startBuild (repo, cb) {
-  var opts = assign({}, buildOpts, { repository: repo })
+function Binder(opts) {
+  if (!(this instanceof Binder)) return new Binder(opts)
+
+  var apiKey = opts.apiKey || process.env['BINDER_API_KEY']
+  this.buildOpts = {
+    host: opts.build.host,
+    port: opts.build.port,
+    'api-key': apiKey
+  }
+  this.registryOpts = {
+    host: opts.registry.host,
+    port: opts.registry.port,
+    'api-key': apiKey
+  }
+  this.deployOpts = {
+    host: opts.deploy.host,
+    port: opts.deploy.port,
+    'api-key': apiKey
+  }
+}
+
+Binder.prototype.startBuild = function (repo, cb) {
+  var self = this
+  var opts = assign({}, self.buildOpts, { repository: repo })
   binder.build.start(opts, function (err, body) {
     if (err) return cb(err)
     // immediately send the http response
@@ -37,7 +42,7 @@ function startBuild (repo, cb) {
     var queryBuild = function (cb) {
       var opts = { times: buildTimeout / buildInterval, interval: buildInterval }
       async.retry(opts, function (next) {
-        var opts = assign({}, buildOpts, { 'image-name': imageName })
+        var opts = assign({}, self.buildOpts, { 'image-name': imageName })
         binder.build.status(opts, function (err, body) {
           if (err) return next(err)
           if (body.status === 'failed') {
@@ -55,7 +60,7 @@ function startBuild (repo, cb) {
       })
     }
     var preload = function (cb) {
-      var opts = assign({}, deployOpts, { 'template-name': imageName })
+      var opts = assign({}, self.deployOpts, { 'template-name': imageName })
       binder.deploy._preload(opts, function (err) {
         return cb(err)
       })
@@ -69,9 +74,10 @@ function startBuild (repo, cb) {
   })
 }
 
-function getTemplateInfo (templateName, cb) {
+Binder.prototype.getTemplateInfo = function (templateName, cb) {
+  var self = this
   function getStatuses (next) {
-    var opts = assign({}, deployOpts, { 'template-name': templateName })
+    var opts = assign({}, self.deployOpts, { 'template-name': templateName })
     binder.deploy.statusAll(opts, function (err, statuses) {
       if (err) return next(err)
       var numDeployed = filter(statuses, { status: 'deployed' }).length
@@ -80,7 +86,7 @@ function getTemplateInfo (templateName, cb) {
   }
   async.parallel([
     getStatuses,
-    partial(getBuildStatus, templateName)
+    partial(self.getBuildStatus.bind(self), templateName)
   ], function (err, res) {
     if (err) return cb(err)
     return cb(null, {
@@ -91,26 +97,29 @@ function getTemplateInfo (templateName, cb) {
   })
 }
 
-function getOverview (cb) {
-  binder.build.statusAll(buildOpts, function (err, builds) {
+Binder.prototype.getOverview = function (cb) {
+  var self = this
+  binder.build.statusAll(self.buildOpts, function (err, builds) {
     if (err) return cb(err)
-    async.map(map(builds, 'name'), getTemplateInfo, function (err, infos) {
+    async.map(map(builds, 'name'), self.getTemplateInfo.bind(self), function (err, infos) {
       if (err) return cb(err)
       return cb(null, infos)
     })
   })
 }
 
-function getFullTemplate (templateName, cb) {
-  var opts = assign({}, registryOpts, { 'template-name': templateName })
+Binder.prototype.getFullTemplate = function (templateName, cb) {
+  var self = this
+  var opts = assign({}, self.registryOpts, { 'template-name': templateName })
   binder.registry.fetch(opts, function (err, template) {
     if (err) return cb(err)
     return cb(null, template)
   })
 }
 
-function getBuildStatus (imageName, cb) {
-  var opts = assign({}, buildOpts, { 'image-name': imageName })
+Binder.prototype.getBuildStatus = function (imageName, cb) {
+  var self = this
+  var opts = assign({}, self.buildOpts, { 'image-name': imageName })
   binder.build.status(opts, function (err, status) {
     if (err) return cb(err)
     if ((status.phase === 'building') && (status.status === 'running')) {
@@ -118,15 +127,13 @@ function getBuildStatus (imageName, cb) {
       return cb(null, status)
     } else if ((status.phase === 'finished') && (status.status === 'completed')) {
       status.status = 'pending'
-      var opts = assign({}, deployOpts, { 'template-name': imageName })
+      var opts = assign({}, self.deployOpts, { 'template-name': imageName })
       binder.deploy._preloadStatus(opts, function (err, preStatus) {
         if (err) return cb(err)
         if (preStatus.status === 'completed') {
           // the image is both built and preloaded -- build has fully completed
-          console.log('preload status completed')
           status.status = 'completed'
         } else if (preStatus.status === 'loading') {
-          console.log('preload status loading')
           status.status = 'loading'
         }
         return cb(null, status)
@@ -137,8 +144,9 @@ function getBuildStatus (imageName, cb) {
   })
 }
 
-function getDeployStatus (templateName, id, cb) {
-  var opts = assign({}, deployOpts, {
+Binder.prototype.getDeployStatus = function (templateName, id, cb) {
+  var self = this
+  var opts = assign({}, self.deployOpts, {
     'template-name': templateName,
     id: id
   })
@@ -148,16 +156,18 @@ function getDeployStatus (templateName, id, cb) {
   })
 }
 
-function deployBinder (templateName, cb) {
-  var opts = assign({}, deployOpts, { 'template-name': templateName })
+Binder.prototype.deployBinder = function (templateName, cb) {
+  var self = this
+  var opts = assign({}, self.deployOpts, { 'template-name': templateName })
   binder.deploy.deploy(opts, function (err, status) {
     if (err) return cb(err)
     return cb(null, status)
   })
 }
 
-function getLogs (templateName, startTime, cb) {
-  var reader = getReader({ host: buildOpts.host })
+Binder.prototype.getLogs = function (templateName, startTime, cb) {
+  var self = this
+  var reader = getReader({ host: self.buildOpts.host })
   reader.getLogs({ app: templateName, after: startTime }).then(function (logs) {
     return cb(null, logs)
   }, function (err) {
@@ -165,8 +175,9 @@ function getLogs (templateName, startTime, cb) {
   })
 }
 
-function streamBuildLogs (templateName, startTime) {
-  var reader = getReader({ host: buildOpts.host })
+Binder.prototype.streamBuildLogs = function (templateName, startTime) {
+  var self = this
+  var reader = getReader({ host: self.buildOpts.host })
   var rawStream = reader.streamLogs({ app: templateName })
   var msgStream = es.mapSync(function (data) {
     if (data) {
@@ -174,19 +185,10 @@ function streamBuildLogs (templateName, startTime) {
     }
     return null
   })
-  rawStream.pipe(msgStream)
-  rawStream.resume()
+  rawStream.on('data', function (data) {
+    msgStream.push(data)
+  })
   return msgStream
 }
 
-module.exports = {
-  startBuild: startBuild,
-  getOverview: getOverview,
-  getTemplateInfo: getTemplateInfo,
-  getBuildStatus: getBuildStatus,
-  getFullTemplate: getFullTemplate,
-  deployBinder: deployBinder,
-  getDeployStatus: getDeployStatus,
-  streamBuildLogs: streamBuildLogs,
-  getLogs: getLogs
-}
+module.exports = Binder
