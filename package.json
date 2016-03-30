@@ -1,5 +1,5 @@
 {
-  "name": "binder-web-redux",
+  "name": "binder-web",
   "version": "1.0.0",
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
