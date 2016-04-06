@@ -3,7 +3,7 @@ var map = require('lodash.map')
 var filter = require('lodash.filter')
 var partial = require('lodash.partial')
 var assign = require('object-assign')
-var binder = require('binder-cli')
+var binder = require('binder-client')
 var getReader = require('binder-logging/lib/reader')
 var es = require('event-stream')
 

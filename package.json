@@ -1,6 +1,6 @@
 {
   "name": "binder-web",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,9 @@
     "url": "https://github.com/binder-project/binder-web/issues"
   },
   "dependencies": {
+    "binder-client": "^1.0.1",
+    "binder-logging": "^1.0.0",
+    "binder-utils": "^1.0.0",
     "body-parser": "^1.15.0",
     "brfs": "^1.4.3",
     "dom-css": "^2.0.0",
