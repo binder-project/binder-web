@@ -1,4 +1,4 @@
-# binder-web-react
+# binder-web
 
 Front-end web app for binder deployments made with redux.
 
