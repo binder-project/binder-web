@@ -37,8 +37,6 @@ var makeCommands = function () {
       program
         .description('Start the binder-web server')
         .option('-a, --api-key <key>', 'Binder API key')
-        .option('-c, --config <file>', 'module configuration file')
-        .option('-p, --port <port>', 'binder-web server port')
       return program
     }, function (options) {
       console.log('Starting the binder-web server...')
@@ -73,6 +71,11 @@ var setupProgram = function (commands, program) {
     command = cmd.cli(command)
     command.action(cmd.action)
   })
+  program
+    .command('help', { isDefault: true })
+    .action(function () {
+      program.help()
+    })
 }
 
 var pm2CLI = function (program) {

@@ -7,6 +7,7 @@ var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 var assign = require('object-assign')
+var merge = require('lodash.merge')
 
 var settings = require('./settings')
 
@@ -131,28 +132,9 @@ io.on('connection', function (ws) {
   })
 })
 
-var processOptions = function (name, options) {
-  if (!options) {
-    return {}
-  }
-  if (name in options) {
-    var limited = options[name]
-    limited.logging = options.logging
-    limited.db = options.db
-    limited.name = name
-    for (var key in options) {
-      if (!(typeof options[key] === 'object') && key !== name) {
-        limited[key] = options[key]
-      }
-    }
-    return limited
-  }
-  return options
-}
-
 var start = function (opts) {
   var self = this
-  this.opts = assign(settings, processOptions('binder-web', opts))
+  this.opts = merge(opts, settings)
   console.log('this.opts:', this.opts)
   binder = require('./binder')(this.opts)
   http.listen(this.opts.port, function () {
