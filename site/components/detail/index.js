@@ -14,18 +14,13 @@ var detail = function (state) {
     container: {
       width: '100%',
       borderRadius: '8px',
-      height: '450px'
+      height: '500px'
     },
     top: {
       height: '25%'
     },
     bottom: {
       height: '75%'
-    },
-    side: {
-      width: '15.5%',
-      height: '100%',
-      display: 'inline-block'
     }
   }
 
@@ -42,10 +37,7 @@ var detail = function (state) {
     <div style=${style.bottom}>
       ${progress(item)}
       ${logs(item)}
-      <div style=${style.side}>
-        ${badge(item)}
-        ${template(item)}
-      </div>
+      ${badge(item)}
     </div>
   </div>`
 }

@@ -4,10 +4,9 @@ var dx = require('hxdx').dx
 module.exports = function (state) {
   var style = {
     container: {
-      width: '100%',
-      height: '35%',
+      width: '12%',
+      height: '82%',
       padding: '2%',
-      marginBottom: '20%',
       display: 'inline-block',
       verticalAlign: 'top',
       background: 'rgb(210, 210, 210)',

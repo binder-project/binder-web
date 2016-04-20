@@ -1,10 +1,9 @@
-# binder-web-react
+# binder-web
 
-Front-end web app for binder deployments made with redux.
+Client-side web app for managing binder deployments.
 
 ## install
 
 ```
-npm install binder-web-redux
-npm start
+npm install binder-web
 ```
