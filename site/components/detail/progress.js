@@ -40,7 +40,8 @@ module.exports = function (entry) {
     },
     label: {
       position: 'absolute',
-      right: '53%'
+      right: '53%',
+      color: 'rgb(50,50,50)'
     }
   }
 

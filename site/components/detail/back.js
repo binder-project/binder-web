@@ -29,13 +29,17 @@ module.exports = function () {
       padding: '12px',
       border: 'none',
       fontSize: '100%',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      verticalAlign: 'top'
+    },
+    icon: {
+      width: '40px'
     }
   }
 
   return hx`
   <div style=${style.container}>
-    <span style='margin-left: 10%; margin-right: 5%'>go</span>
-    <button style=${style.button} className='button' onclick=${onclick}>back</button>
+    <img style=${style.icon} src='/assets/images/back.svg'>
+    <button style=${style.button} className='button' onclick=${onclick}> go back</button>
   </div>`
 }

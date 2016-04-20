@@ -60,10 +60,10 @@ module.exports = function (entry) {
       verticalAlign: 'super'
     },
     rebuild: {
-      marginRight: '10px',
+      marginRight: '10px'
     },
     launch: {
-      marginRight: '5px',
+      marginRight: '5px'
     }
   }
 
@@ -73,8 +73,8 @@ module.exports = function (entry) {
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>
-      <span style=${style.rebuild}><img src='/assets/images/refresh.svg'></span>
-      <span style=${style.launch}><img src='/assets/images/launch.svg'></span>
+      <a href='#' style=${style.rebuild}><img className='action-icon' src='/assets/images/refresh.svg'></a>
+      <a href='#' style=${style.launch}><img className='action-icon' src='/assets/images/launch.svg'></a>
     </div>
   </div>`
 }
