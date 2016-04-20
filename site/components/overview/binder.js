@@ -67,14 +67,22 @@ module.exports = function (entry) {
     }
   }
 
+  var launchUrl = function () {
+    return '/repo/' + entry.name
+  }
+
+  var rebuild = function () {
+    actions.submitBuild(entry.build.repository)(dx)
+  }
+
   return hx`
   <div style=${style.container}>
     <div style=${style.name} className='label' onclick=${onclick}>${entry.name}</div>
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>
-      <a href='#' style=${style.rebuild}><img className='action-icon' src='/assets/images/refresh.svg'></a>
-      <a href='#' style=${style.launch}><img className='action-icon' src='/assets/images/launch.svg'></a>
+      <span onclick=${rebuild} style=${style.rebuild}><img className='action-icon' src='/assets/images/refresh.svg'></span>
+      <a href='${launchUrl()}' style=${style.launch}><img className='action-icon' src='/assets/images/launch.svg'></a>
     </div>
   </div>`
 }

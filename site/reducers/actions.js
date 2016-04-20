@@ -4,6 +4,8 @@ var SocketIO = require('socket.io-client')
 var map = require('lodash.map')
 var zipObject = require('lodash.zipobject')
 
+var util = require('../util')
+
 var constants = {
   SHOW_DETAIL: 'SHOW_DETAIL',
   HIDE_DETAIL: 'HIDE_DETAIL',
@@ -23,22 +25,8 @@ var constants = {
   LOGS_RCV: 'LOGS_RCV'
 }
 
-/*
- * Binder client functions
- * TODO: move into a separate file
- */
-
-function getOrigin () {
-  var port = window.location.port
-  var origin = window.location.hostname
-  if (port) {
-    origin = origin + ':' + port
-  }
-  return origin
-}
-
 // TODO: config?
-var host = getOrigin()
+var host = util.getOrigin()
 var pollPeriod = 2000
 
 function showDetail (id, after) {
@@ -116,6 +104,7 @@ function buildStatus (name) {
         var entries = {}
         entries[name] = {
           name: name,
+          repo: body['repository'],
           status: body['status'],
           phase: body['phase'],
           startTime: body['start-time']
@@ -134,6 +123,7 @@ function buildStatus (name) {
 }
 
 function submitBuild (repo) {
+  console.log('in submitBuild, repo:', repo)
   return function (dx) {
    dx({ type: constants.BUILD_SEND })
    request({
@@ -152,6 +142,7 @@ function submitBuild (repo) {
       var entries = {}
       entries[name] = {
         name: name,
+        repo: body['repository'],
         stage: 'building',
         visible: 'true',
         startTime: body['start-time']
