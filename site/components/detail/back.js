@@ -9,14 +9,14 @@ module.exports = function () {
 
   var style = {
     container: {
-      width: '12%',
+      width: '15%',
       textAlign: 'right',
       left: '0%',
       height: '26%',
       paddingTop: '1.5%',
       paddingBottom: '2.5%',
-      paddingLeft: '2%',
-      paddingRight: '2%',
+      paddingLeft: '0%',
+      paddingRight: '1%',
       display: 'inline-block',
       verticalAlign: 'top',
       background: 'rgb(210, 210, 210)',
@@ -40,6 +40,6 @@ module.exports = function () {
   return hx`
   <div style=${style.container}>
     <img style=${style.icon} src='/assets/images/back.svg'>
-    <button style=${style.button} className='button' onclick=${onclick}> go back</button>
+    <button style=${style.button} className='button' onclick=${onclick}>go back</button>
   </div>`
 }

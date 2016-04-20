@@ -14,7 +14,7 @@ var detail = function (state) {
     container: {
       width: '100%',
       borderRadius: '8px',
-      height: '450px'
+      height: '500px'
     },
     top: {
       height: '25%'
