@@ -72,11 +72,11 @@ module.exports = function (entry) {
   }
 
   var rebuild = function () {
-    actions.submitBuild(entry.build.repository)(dx)
+    return actions.submitBuild(entry.repo)(dx)
   }
 
   var displayName = function () {
-    return entry.build['display-name']
+    return (entry['display-name']) ? entry['display-name'] : ''
   }
 
   return hx`

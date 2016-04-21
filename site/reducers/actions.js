@@ -107,7 +107,8 @@ function buildStatus (name) {
           repo: body['repository'],
           status: body['status'],
           phase: body['phase'],
-          startTime: body['start-time']
+          'display-name': body['display-name'],
+          'start-time': body['start-time']
         }
         return dx({
           type: constants.BUILD_RCV,
@@ -145,7 +146,8 @@ function submitBuild (repo) {
           repo: body['repository'],
           stage: 'building',
           visible: 'true',
-          startTime: body['start-time']
+          'display-name': body['display-name'],
+          'start-time': body['start-time']
         }
         dx({
           type: constants.BUILD_RCV,

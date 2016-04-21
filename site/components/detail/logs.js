@@ -54,7 +54,7 @@ module.exports = function (item) {
       }
       return hx`<div style=${style.logs}>loading logs...</div>`
     }
-    var src = apiServer + '/logs/' + item.name + '/' + item.startTime
+    var src = apiServer + '/logs/' + item.name + '/' + item['start-time']
     return hx`<iframe style=${style.iframe} src=${src}></iframe>`
   }
 
