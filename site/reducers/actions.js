@@ -123,7 +123,6 @@ function buildStatus (name) {
 }
 
 function submitBuild (repo) {
-  console.log('in submitBuild, repo:', repo)
   return function (dx) {
    dx({ type: constants.BUILD_SEND })
    request({
@@ -138,21 +137,23 @@ function submitBuild (repo) {
           success: false
         })
       }
-      var name = body['name']
-      var entries = {}
-      entries[name] = {
-        name: name,
-        repo: body['repository'],
-        stage: 'building',
-        visible: 'true',
-        startTime: body['start-time']
+      if (body) {
+        var name = body['name']
+        var entries = {}
+        entries[name] = {
+          name: name,
+          repo: body['repository'],
+          stage: 'building',
+          visible: 'true',
+          startTime: body['start-time']
+        }
+        dx({
+          type: constants.BUILD_RCV,
+          success: true,
+          entries: entries
+        })
+        showDetail(name, body['start-time'])(dx)
       }
-      dx({
-        type: constants.BUILD_RCV,
-        success: true,
-        entries: entries
-      })
-      showDetail(name, body['start-time'])(dx)
     })
   }
 }

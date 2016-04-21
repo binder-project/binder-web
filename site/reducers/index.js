@@ -67,6 +67,9 @@ function updateLogs(state, action) {
 function sendState (state, action, key) {
   var newState = assign({}, state)
   var newPoller = action.poller || state[key].poller
+  if (action.poller && state[key].poller) {
+    clearInterval(state[key].poller)
+  }
   var newWs = action.ws || state[key].ws
   newState[key] = assign({}, state[key], {loading: true, success: false, poller: newPoller,
                          ws: newWs})

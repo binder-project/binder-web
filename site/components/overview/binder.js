@@ -75,9 +75,13 @@ module.exports = function (entry) {
     actions.submitBuild(entry.build.repository)(dx)
   }
 
+  var displayName = function () {
+    return entry.build['display-name']
+  }
+
   return hx`
   <div style=${style.container}>
-    <div style=${style.name} className='label' onclick=${onclick}>${entry.name}</div>
+    <div style=${style.name} className='label' onclick=${onclick}>${displayName()}</div>
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>

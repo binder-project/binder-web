@@ -35,6 +35,9 @@ Binder.prototype.startBuild = function (repo, cb) {
   var self = this
   var opts = assign({}, self.buildOpts, { repository: repo })
   binder.build.start(opts, function (err, body) {
+    if (err && err.message.search('alreadyBuilding') !== -1) {
+      return cb(null)
+    }
     if (err) return cb(err)
     // immediately send the http response
     cb(null, body)
