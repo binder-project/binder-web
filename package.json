@@ -1,12 +1,12 @@
 {
   "name": "binder-web",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
     "start": "browserify site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node start.js start",
     "start:debug": "watchify site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node start.js start",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "browserify site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node scripts/postinstall.js"
   },
   "repository": {
     "type": "git",
