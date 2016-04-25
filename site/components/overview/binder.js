@@ -72,7 +72,12 @@ module.exports = function (entry) {
   }
 
   var rebuild = function () {
-    return actions.submitBuild(entry.repo)(dx)
+    if (entry.repo) {
+      return actions.submitBuild(entry.repo)(dx)
+    }
+    if (entry.build) {
+      return actions.submitBuild(entry.build.repository)(dx)
+    }
   }
 
   var displayName = function () {
