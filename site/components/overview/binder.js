@@ -76,7 +76,13 @@ module.exports = function (entry) {
   }
 
   var displayName = function () {
-    return (entry['display-name']) ? entry['display-name'] : ''
+    if (entry['display-name']) {
+      return entry['display-name']
+    }
+    if (entry.build) {
+      return entry.build['display-name']
+    }
+    return ''
   }
 
   return hx`

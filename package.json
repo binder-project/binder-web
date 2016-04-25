@@ -1,6 +1,6 @@
 {
   "name": "binder-web",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
