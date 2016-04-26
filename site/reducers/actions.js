@@ -138,7 +138,7 @@ function submitBuild (repo) {
           success: false
         })
       }
-      if (body) {
+      if (body && (typeof body === 'object')) {
         var name = body['name']
         var entries = {}
         entries[name] = {
