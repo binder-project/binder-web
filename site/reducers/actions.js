@@ -125,6 +125,7 @@ function buildStatus (name) {
 
 function submitBuild (repo) {
   return function (dx) {
+   dx({ type: constants.BUILD_STOP })
    dx({ type: constants.BUILD_SEND })
    request({
       method: 'POST',

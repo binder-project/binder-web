@@ -46,14 +46,6 @@ module.exports = function (item) {
   }
 
   function generateMessages () {
-    if ((item.status === 'completed') || (item.status === 'failed')) {
-      if (item.logs) {
-        return hx`<div style=${style.logs}>
-          ${hx`<pre style='white-space: pre-wrap; margin: 0'>${item.logs.join('\n')}</pre>`}
-        </div>`
-      }
-      return hx`<div style=${style.logs}>loading logs...</div>`
-    }
     var src = apiServer + '/logs/' + item.name + '/' + item['start-time']
     return hx`<iframe style=${style.iframe} src=${src}></iframe>`
   }

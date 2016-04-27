@@ -70,28 +70,21 @@ function sendState (state, action, key) {
   if (action.poller && state[key].poller) {
     clearInterval(state[key].poller)
   }
-  var newWs = action.ws || state[key].ws
-  newState[key] = assign({}, state[key], {loading: true, success: false, poller: newPoller,
-                         ws: newWs})
+  newState[key] = assign({}, state[key], {loading: true, success: false, poller: newPoller})
   return newState
 }
 
 function receiveState (state, action, key) {
   var newState = assign({}, state)
   var newPoller = action.poller || state[key].poller
-  var newWs = action.ws || state[key].ws
-  newState[key] = assign({}, state[key], {loading: false, success: action.success, poller: newPoller,
-                          ws: newWs})
+  newState[key] = assign({}, state[key], {loading: false, success: action.success, poller: newPoller})
   return newState
 }
 
 function stopPolling (state, action, key) {
   var newState = assign({}, state)
   clearInterval(state[key].poller)
-  if (state[key].ws) {
-    state[key].ws.close()
-  }
-  newState[key] = assign({}, state[key], {poller: null, ws: null})
+  newState[key] = assign({}, state[key], {poller: null})
   return newState
 }
 

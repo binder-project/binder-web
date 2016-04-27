@@ -7,7 +7,7 @@ module.exports = {
       success: true
     },
     overview: {
-      loading: true, 
+      loading: true,
       poller: null,
       success: true
     },
