@@ -60,7 +60,8 @@ module.exports = function (entry) {
       verticalAlign: 'super'
     },
     rebuild: {
-      marginRight: '10px'
+      marginRight: '10px',
+      cursor: 'pointer'
     },
     launch: {
       marginRight: '5px'

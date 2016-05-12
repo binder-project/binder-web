@@ -39,6 +39,7 @@
     "event-stream": "^3.3.2",
     "express": "^4.13.4",
     "express-ws": "^1.0.0",
+    "github-url-analyzer": "^0.1.1",
     "hxdx": "^1.0.0",
     "jsonfile": "^2.2.3",
     "lodash.filter": "^4.2.1",

@@ -1,18 +1,39 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
+var analyzer = require('github-url-analyzer')
+var css = require('dom-css')
+var theme = require('../../theme')
 
 module.exports = function () { 
   function submit () {
-    var value = document.querySelector('#submission').value
-    actions.submitBuild(value)(dx)
+    var input = document.querySelector('#submission')
+    var value = input.value
+    var parsed = analyzer(value)
+    if (parsed) {
+      actions.submitBuild(parsed.repo)(dx)
+    } else {
+      input.value = ''
+      css(input, {
+        boxShadow: '0 0 0 2px ' + theme.RED
+      })
+    }
   }
 
-  function onclick () {
-    submit()
+  function focus () {
+    css(document.querySelector('#submission'), {
+      boxShadow: '0 0 0 2px rgb(200,200,200)'
+    })
+  }
+
+  function blur () {
+    css(document.querySelector('#submission'), {
+      boxShadow: '0 0 0 0px rgb(200,200,200)'
+    })
   }
 
   function onkeydown (e) {
+    focus()
     if (e.keyCode == 13) submit()
   }
 
@@ -56,7 +77,7 @@ module.exports = function () {
 
   return hx`<div style=${styles.container}>
     <div style=${styles.message}>build a repository</div>
-    <input type='text' id='submission' style=${styles.input} onkeydown=${onkeydown}'>
-    <button onclick=${onclick} className='button' style=${styles.button}>submit</button>
+    <input type='text' id='submission' style=${styles.input} onclick=${focus} onfocus=${focus} onblur=${blur} onkeydown=${onkeydown}'>
+    <button onclick=${submit} className='button' style=${styles.button}>submit</button>
   </div>`
 }
