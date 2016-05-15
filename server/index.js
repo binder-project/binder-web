@@ -29,6 +29,10 @@ app.get('/', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
+app.get('/status/:project/:repo', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'index.html'))
+})
+
 app.get('/logs/:templateName/:startTime', function (req, res) {
   return res.sendFile(path.join(staticPath, 'logs.html'))
 })

@@ -93,7 +93,7 @@ module.exports = function (entry) {
 
   return hx`
   <div style=${style.container}>
-    <div style=${style.name} className='label' onclick=${onclick}>${displayName()}</div>
+    <a href=${'/status/' + displayName()}><div style=${style.name} className='label' onclick=${onclick}>${displayName()}</div></a>
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>

@@ -40,6 +40,6 @@ module.exports = function () {
   return hx`
   <div style=${style.container}>
     <img style=${style.icon} src='/assets/images/back.svg'>
-    <button style=${style.button} className='button' onclick=${onclick}>go back</button>
+    <a href='/'><button style=${style.button} className='button' onclick=${onclick}>go back</button></a>
   </div>`
 }

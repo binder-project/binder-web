@@ -34,7 +34,6 @@ function showDetail (id, after) {
     dx({ type: constants.OVERVIEW_STOP })
     dx({ type: constants.SHOW_DETAIL, id: id })
     buildStatus(id)(dx)
-    getLogs(id, after)(dx)
   }
 }
 
@@ -160,68 +159,6 @@ function submitBuild (repo) {
     })
   }
 }
-
-function getLogs (app, after) {
-  return function (dx) {
-    dx({ type: constants.LOGS_SEND })
-    request({
-      method: 'GET',
-      url: url.resolve('http://' + host, '/api/logs/' + app + '/' + after),
-      json: true
-    }, function (err, rsp, body) {
-      if (err) {
-        return dx({
-          type: constants.LOGS_RCV,
-          success: false
-        })
-      }
-      var entries = {}
-      entries[app] = {
-        logs: body.map(function (msg) {
-          return msg['_source'].message
-        })
-      }
-      dx({
-        type: constants.LOGS_RCV,
-        success: true,
-        entries: entries
-      })
-    })
-  }
-}
-
-function streamLogs (app, after) {
-  return function (dx) {
-    console.log('opening websocket to', host)
-    var socket = SocketIO(host)
-    dx({
-      type: constants.LOGS_SEND,
-      ws: socket
-    })
-    socket.on('connect', function () {
-      console.log('connection opened')
-      socket.send(JSON.stringify({
-        app: app,
-        after: after
-      }))
-    })
-    socket.on('message', function (data, flags) {
-      console.log('receiving message')
-      return dx({
-        type: constants.LOGS_RCV,
-        success: true,
-        message: data
-      })
-    })
-    socket.on('error', function (err) {
-      return dx({
-        type: constants.LOGS_RCV,
-        success: false
-      })
-    })
-  }
-}
-
 
 module.exports = {
   constants: constants,

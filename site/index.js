@@ -3,12 +3,21 @@ var createStore = require('redux').createStore
 var reducer = require('./reducers')
 var initial = require('./reducers/initial')
 var actions = require('./reducers/actions')
-var dev = window.devToolsExtension ? window.devToolsExtension() : undefined
 var components = require('./components')
+var sheetRouter = require('sheet-router')
 
-var store = createStore(reducer, initial, dev)
+var store = createStore(reducer, initial)
 hxdx.render(components, store)
 
-var id = window.location.pathname.replace('/repo/', '').replace('/status', '')
+var router = sheetRouter('/', function (route) {
+  return [
+    route('/', function (params){ 
+      actions.showOverview()(hxdx.dx)
+    }),
+    route('/status/:project/:repo', function (params) {
+      actions.showDetail(params.project + '-' + params.repo)(hxdx.dx)
+    })
+  ]
+})
 
-actions.showOverview()(hxdx.dx)
+router(window.location.pathname)
