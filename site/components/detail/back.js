@@ -1,10 +1,12 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
+var href = require('sheet-router/href')
+var router = require('../../router')
 var actions = require('../../reducers/actions')
 
 module.exports = function () {
   function onclick () {
-    actions.showOverview()(dx)
+    href(function (link) {router(link)})
   }
 
   var style = {
