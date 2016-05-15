@@ -46,8 +46,11 @@ module.exports = function (item) {
   }
 
   function generateMessages () {
-    var src = apiServer + '/logs/' + item.name + '/' + item['start-time']
-    return hx`<iframe style=${style.iframe} src=${src}></iframe>`
+    if (item['start-time']) {
+      console.log('start-time:', item['start-time'])
+      var src = apiServer + '/logs/' + item.name + '/' + item['start-time']
+      return hx`<iframe style=${style.iframe} src=${src}></iframe>`
+    }
   }
 
   return hx`

@@ -30,7 +30,10 @@ var after = parts[1]
 
 var container = document.createElement('div')
 css(container, style.container)
+container.innerHTML = 'Loading logs'
 document.body.appendChild(container)
+
+var firstTime = true
 
 var socket = SocketIO(host)
 socket.on('connect', function () {
@@ -42,6 +45,10 @@ socket.on('connect', function () {
 })
 
 socket.on('message', function (data, flags) {
+  if (firstTime) {
+    container.innerHTML = ''
+    firstTime = false
+  }
   var line = document.createElement('div')
   css(line, style.logs)
   line.innerHTML = data
@@ -49,6 +56,10 @@ socket.on('message', function (data, flags) {
 })
 
 socket.on('error', function (err) {
+  if (firstTime) {
+    container.innerHTML = ''
+    firstTime = false
+  }
   var line = document.createElement('div')
   css(line, style.logs)
   line.innerHTML = 'error retrieving logs'
