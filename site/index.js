@@ -3,12 +3,10 @@ var createStore = require('redux').createStore
 var reducer = require('./reducers')
 var initial = require('./reducers/initial')
 var actions = require('./reducers/actions')
-var dev = window.devToolsExtension ? window.devToolsExtension() : undefined
 var components = require('./components')
+var router = require('./router')
 
-var store = createStore(reducer, initial, dev)
+var store = createStore(reducer, initial)
 hxdx.render(components, store)
 
-var id = window.location.pathname.replace('/repo/', '').replace('/status', '')
-
-actions.showOverview()(hxdx.dx)
+router(window.location.pathname)

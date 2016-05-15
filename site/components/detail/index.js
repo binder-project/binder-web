@@ -10,6 +10,7 @@ var template = require('./template')
 var info = require('./info')
 
 var detail = function (state) {
+
   var style = {
     container: {
       width: '100%',
@@ -27,19 +28,31 @@ var detail = function (state) {
   var id = state.selection
   var item = state.entries[id]
 
-  return hx`
-  <div style=${style.container}>
-    <div style=${style.top}>
-      ${back()}
-      ${info(item)}
-      ${more()}
+  if (!item) {
+    return hx`
+    <div style=${style.container}>
+      <div style=${style.top}>
+        <div style='text-align: center'>
+          <div style='margin-top: 175px;' className='three-quarters-loader'></div>
+        </div>
+      </div>
     </div>
-    <div style=${style.bottom}>
-      ${progress(item)}
-      ${logs(item)}
-      ${badge(item)}
-    </div>
-  </div>`
+    `
+  } else {
+    return hx`
+    <div style=${style.container}>
+      <div style=${style.top}>
+        ${back()}
+        ${info(item)}
+        ${more()}
+      </div>
+      <div style=${style.bottom}>
+        ${progress(item)}
+        ${logs(item)}
+        ${badge(item)}
+      </div>
+    </div>`
+  }
 }
 
 module.exports = connect({ 

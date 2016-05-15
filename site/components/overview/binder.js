@@ -1,12 +1,14 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
+var href = require('sheet-router/href')
+var router = require('../../router')
 var theme = require('../../theme')
 
 module.exports = function (entry) {
 
   function onclick () {
-    actions.showDetail(entry.name, entry.build['start-time'])(dx)
+    href(function (link) {router(link)})
   }
 
   var color = function (status) {
@@ -93,7 +95,7 @@ module.exports = function (entry) {
 
   return hx`
   <div style=${style.container}>
-    <div style=${style.name} className='label' onclick=${onclick}>${displayName()}</div>
+    <a href=${'/status/' + displayName()}><div style=${style.name} className='label' onclick=${onclick}>${displayName()}</div></a>
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>
