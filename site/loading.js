@@ -82,7 +82,7 @@ var displayName = window.location.pathname.replace('/repo', '').slice(1)
 // add logo
 var header = document.createElement('div')
 var img = document.createElement('img')
-img.src='../assets/images/logo.svg'
+img.src='/assets/images/logo.svg'
 css(header, style.header)
 css(img, style.logo)
 document.body.appendChild(header)
