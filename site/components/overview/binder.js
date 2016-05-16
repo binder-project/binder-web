@@ -71,7 +71,7 @@ module.exports = function (entry) {
   }
 
   var launchUrl = function () {
-    return '/repo/' + entry.name
+    return '/repo/' + displayName()
   }
 
   var submitUrl = function () {

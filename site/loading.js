@@ -77,7 +77,7 @@ function getOrigin () {
 
 var apiServer = getOrigin()
 
-var templateName = window.location.pathname.replace('/repo', '')
+var displayName = window.location.pathname.replace('/repo', '').slice(1)
 
 // add logo
 var header = document.createElement('div')
@@ -112,8 +112,8 @@ messageContainer.appendChild(messageDots)
 var footer = document.createElement('div')
 var template = document.createElement('a')
 css(footer, style.footer)
-template.innerHTML = templateName.slice(1, templateName.length)
-template.href = templateName
+template.innerHTML = displayName
+template.href = displayName
 template.className = 'template-link'
 css(template, style.template)
 document.body.appendChild(footer)
@@ -143,10 +143,11 @@ var makeSuccess = function () {
   css(loader, {border: '30px solid rgb(91,186,71)'})
 }
 
+var templateName = displayName.replace(/\//g, '-')
 async.waterfall([
   function (next) {
     request({
-      url: apiServer + '/api/deploy' + templateName,
+      url: apiServer + '/api/deploy/' + templateName,
       json: true
     }, function (err, res, json) {
       if (err) {
@@ -159,7 +160,7 @@ async.waterfall([
     async.retry({ times: 60, interval: 1000 }, function (next) {
       makeProgress()
       request({
-        url: apiServer + '/api/apps' + templateName + '/' + deployId,
+        url: apiServer + '/api/apps/' + templateName + '/' + deployId,
         json: true
       }, function (err, res, json) {
         var location  = json['location']
