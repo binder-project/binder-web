@@ -4,10 +4,12 @@ var css = require('dom-css')
 var style = {
   container: {
     marginLeft: '2.5%',
-    marginTop: '5px'
+    marginRight: '5%',
+    marginTop: '5px',
+    wordWrap: 'break-word'
   },
   logs: {
-    fontSize: '90%',
+    fontSize: '80%',
     fontFamily: 'Hack',
     color: 'rgb(80,80,80)'
   },

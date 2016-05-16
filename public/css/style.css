@@ -183,3 +183,65 @@ input:focus {
   height: 48px;
   transition: border 0.7s;
 }
+
+/* buttons */
+
+.btn {
+  max-width: 120px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  margin: 2px;
+  padding: 6px;
+  transition: all 0.1s;
+  outline: none;
+  font-size: 14px;
+  font-family: ClearSans-Thin;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+ 
+.btn:hover { 
+  color: rgb(80,80,80);
+  background-color: rgb(180,180,180);
+  cursor: pointer;
+}
+
+.btn:focus {
+  background-color: white;
+}
+
+.btn:active {
+  background-color: rgb(180,180,180);
+  color: rgb(80,80,80);
+}
+
+.btn-copy {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 14px;
+  margin: 0px;
+  padding: 8px;
+  color: rgb(150,150,150);
+  transition: all 0.05s;
+}
+
+.btn-copy-left {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.btn-copy-right {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.btn-copy-active {
+  background-color: rgb(180,180,180);
+  color: rgb(80,80,80);
+}
