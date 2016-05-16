@@ -1,6 +1,8 @@
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
+var href = require('sheet-router/href')
+var router = require('../../router')
 var analyzer = require('github-url-analyzer')
 var css = require('dom-css')
 var theme = require('../../theme')
@@ -8,10 +10,16 @@ var theme = require('../../theme')
 module.exports = function () { 
   function submit () {
     var input = document.querySelector('#submission')
+    var link = document.querySelector('#submission-link')
     var value = input.value
     var parsed = analyzer(value)
     if (parsed) {
       actions.submitBuild(parsed.repo)(dx)
+      link.href = '/status/' + parsed.repo.replace('https://github.com/', '')
+      link.onclick = function () {
+        href(function (link) {router(link)})
+      }
+      link.click()
     } else {
       input.value = ''
       css(input, {
@@ -78,6 +86,7 @@ module.exports = function () {
   return hx`<div style=${styles.container}>
     <div style=${styles.message}>build a repository</div>
     <input type='text' id='submission' style=${styles.input} onclick=${focus} onfocus=${focus} onblur=${blur} onkeydown=${onkeydown}'>
+    <a id='submission-link' style='display: none'></a>
     <button onclick=${submit} className='button' style=${styles.button}>submit</button>
   </div>`
 }
