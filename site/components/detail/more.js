@@ -9,14 +9,18 @@ module.exports = function (item) {
       padding: '2%',
       display: 'inline-block',
       verticalAlign: 'top',
-      background: 'rgb(210, 210, 210)',
+      background: 'white',
       borderRadius: '8px',
       border: 'solid 5px rgb(210, 210, 210)',
+    },
+    message: {
+      fontSize: '120%',
+      color: 'rgb(190,190,190)'
     }
   }
 
   return hx`
   <div style=${style.container}>
-    <span>more info</span>
+    <span style=${style.message}>BUILD STATUS</span>
   </div>`
 }

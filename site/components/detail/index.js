@@ -22,25 +22,27 @@ var detail = function (state) {
     },
     bottom: {
       height: '75%'
+    },
+    loader: {
+      textAlign: 'center',
+      paddingTop: '100px'
     }
   }
 
   var id = state.selection
   var item = state.entries[id]
 
-  if (!item) {
-    return hx`
-    <div style=${style.container}>
+  function content () {
+    if (!item) {
+      return hx`<span>
       <div style=${style.top}>
-        <div style='text-align: center'>
-          <div style='margin-top: 175px;' className='three-quarters-loader'></div>
+        <div style=${style.loader}>
+          <div className='three-quarters-loader'></div>
         </div>
-      </div>
-    </div>
-    `
-  } else {
-    return hx`
-    <div style=${style.container}>
+      </div></span>`
+    } else {
+      return hx`
+      <span>
       <div style=${style.top}>
         ${back()}
         ${info(item)}
@@ -51,8 +53,13 @@ var detail = function (state) {
         ${logs(item)}
         ${badge(item)}
       </div>
-    </div>`
+      </span>`
+    }
   }
+
+  return hx`<div style=${style.container}>
+    ${content()}
+  </div>`
 }
 
 module.exports = connect({ 

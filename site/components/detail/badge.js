@@ -17,7 +17,7 @@ module.exports = function (state) {
     badgeContainer: {
       width: '80%',
       background: 'white',
-      fontSize: '65%',
+      fontSize: '70%',
       padding: '10px',
       display: 'none',
       borderRadius: '5px',

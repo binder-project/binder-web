@@ -11,6 +11,9 @@ module.exports = function (filter, model) {
       textAlign: 'left',
       padding: '3%',
       paddingBottom: '2%'
+    },
+    loader: {
+      textAlign: 'center'
     }
   }
 
@@ -33,6 +36,6 @@ module.exports = function (filter, model) {
     </div>`
   } else {
     return hx`
-    <div style=${style.list}><div style='text-align: center'><div className='three-quarters-loader'></div></div></div>`
+    <div style=${style.list}><div style=${style.loader}><div className='three-quarters-loader'></div></div></div>`
   } 
 }
