@@ -30,7 +30,7 @@ var after = parts[1]
 
 var container = document.createElement('div')
 css(container, style.container)
-container.innerHTML = 'Loading logs'
+container.innerHTML = "<div style='text-align: center; margin-top: 20%;'><div class='three-quarters-loader'></div></div>"
 document.body.appendChild(container)
 
 var firstTime = true

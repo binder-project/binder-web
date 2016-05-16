@@ -74,7 +74,12 @@ module.exports = function (entry) {
     return '/repo/' + displayName()
   }
 
+  var submitUrl = function () {
+    return '/status/' + displayName()
+  }
+
   var rebuild = function () {
+    href(function (link) {router(link)})
     if (entry.repo) {
       return actions.submitBuild(entry.repo)(dx)
     }
@@ -99,7 +104,7 @@ module.exports = function (entry) {
     <div style=${style.group}>
       <span style=${style.deployed}>${entry.deployed}</span>
       <span style=${style.status}></span>
-      <span onclick=${rebuild} style=${style.rebuild}><img className='action-icon' src='/assets/images/refresh.svg'></span>
+      <a href='${submitUrl()}'><span onclick=${rebuild} style=${style.rebuild}><img className='action-icon' src='/assets/images/refresh.svg'></span></a>
       <a href='${launchUrl()}' style=${style.launch}><img className='action-icon' src='/assets/images/launch.svg'></a>
     </div>
   </div>`
