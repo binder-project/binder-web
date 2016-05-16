@@ -245,3 +245,23 @@ input:focus {
   background-color: rgb(180,180,180);
   color: rgb(80,80,80);
 }
+
+.btn-download {
+  color: rgb(160,160,160);
+  background-color: rgb(230,231,232);
+  right: 15px;
+  bottom: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  position: absolute;
+}
+
+.btn-download:hover {
+  background-color: rgb(200,200,200);
+  color: rgb(100,100,100);
+}
+
+.btn-download:active {
+  background-color: rgb(160,160,160);
+  color: rgb(100,100,100);
+}

@@ -8,7 +8,7 @@ module.exports = sheetRouter('/', function (route) {
       actions.showOverview()(hxdx.dx)
     }),
     route('/repo/:org/:repo', function (params) {
-      var baseURL = 'http://' + window.location.hostname + ':' + window.location.port
+      var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port
       window.location.href =  baseURL + '/repo/' + params.org + '/' + params.repo
     }),
     route('/status/:project/:repo', function (params) {

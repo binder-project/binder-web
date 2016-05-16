@@ -2,6 +2,7 @@ var hxdx = require('hxdx')
 var hx = hxdx.hx
 var dx = hxdx.dx
 var actions = require('../../reducers/actions')
+var request = require('request')
 
 var getOrigin = function () {
   var port = window.location.port
@@ -9,7 +10,7 @@ var getOrigin = function () {
   if (port) {
     origin = origin + ':' + port
   }
-  return 'http://' + origin
+  return window.location.protocol + '//' + origin
 }
 var apiServer = getOrigin()
 
@@ -25,7 +26,8 @@ module.exports = function (item) {
       display: 'inline-block',
       verticalAlign: 'top',
       borderRadius: '8px',
-      border: 'solid 5px rgb(210, 210, 210)'
+      border: 'solid 5px rgb(210, 210, 210)',
+      position: 'relative'
     },
     logs: {
       fontSize: '90%',
@@ -45,9 +47,25 @@ module.exports = function (item) {
     }
   }
 
-  function generateMessages () {
+  function download () {
+    request({
+      method: 'GET',
+      url: apiServer + '/api/logs/' + item.name + '/' + item['start-time'],
+      json: true
+    }, function (err, rsp, body) {
+      var payload = []
+      rsp.body.forEach(function (log) {
+        if (!(log._source.message == '')) payload.push(log._source.message)
+      })
+      var el = document.querySelector('#logs-download-link')
+      el.download = item['display-name'] + '.txt'
+      el.href = 'data:application/text,' + encodeURIComponent(payload.join('\r\n'))
+      el.click()
+    })
+  }
+
+  function generate () {
     if (item['start-time']) {
-      console.log('start-time:', item['start-time'])
       var src = apiServer + '/logs/' + item.name + '/' + item['start-time']
       return hx`<iframe style=${style.iframe} src=${src}></iframe>`
     }
@@ -55,6 +73,8 @@ module.exports = function (item) {
 
   return hx`
   <div style=${style.container}>
-    ${generateMessages()}
+    ${generate()}
+    <span onclick=${download} className='btn btn-download' id='logs-download'>download</span>
+    <a style='display: none' id='logs-download-link'></a>
   </div>`
 }
