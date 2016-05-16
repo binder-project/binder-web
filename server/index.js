@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-app.get('/status/:project/:repo', function (req, res) {
+app.get('/status/:org/:repo', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
@@ -37,11 +37,11 @@ app.get('/logs/:templateName/:startTime', function (req, res) {
   return res.sendFile(path.join(staticPath, 'logs.html'))
 })
 
-app.get('/repo/:templateName/status', function (req, res) {
+app.get('/repo/:org/:repo/status', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-app.get('/repo/:templateName', function (req, res) {
+app.get('/repo/:org/:repo', function (req, res) {
   return res.sendFile(path.join(staticPath, 'loading.html'))
 })
 
