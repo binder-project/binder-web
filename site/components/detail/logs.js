@@ -71,10 +71,19 @@ module.exports = function (item) {
     }
   }
 
+  function button () {
+    if (item.phase == 'finished' && item.status == 'completed') {
+      return hx`
+      <div>
+        <span onclick=${download} className='btn btn-download' id='logs-download'>download</span>
+        <a style='display: none' id='logs-download-link'></a>
+      </div>`
+    }
+  }
+
   return hx`
   <div style=${style.container}>
     ${generate()}
-    <span onclick=${download} className='btn btn-download' id='logs-download'>download</span>
-    <a style='display: none' id='logs-download-link'></a>
+    ${button()}
   </div>`
 }
