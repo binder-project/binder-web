@@ -173,8 +173,8 @@ async.waterfall([
           window.location.href = location
         } else if (status === 'failed') {
           makeError()
-          return next('try again')
         }
+        return next('try again')
       })
     }, function (err) {
       return next(new Error('deployment timed out'))
