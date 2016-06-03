@@ -14,8 +14,10 @@ module.exports = function () {
     var value = input.value
     var parsed = analyzer(value)
     if (parsed) {
-      actions.submitBuild(parsed.repo)(dx)
-      link.href = '/status/' + parsed.repo.replace('https://github.com/', '').toLowerCase()
+      // github repos are not case-sensitive
+      var repo = parsed.repo.toLowerCase()
+      actions.submitBuild(repo)(dx)
+      link.href = '/status/' + repo.replace('https://github.com/', '')
       link.onclick = function () {
         href(function (link) {router(link)})
       }
