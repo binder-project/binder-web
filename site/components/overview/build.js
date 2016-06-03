@@ -7,7 +7,7 @@ var analyzer = require('github-url-analyzer')
 var css = require('dom-css')
 var theme = require('../../theme')
 
-module.exports = function () { 
+module.exports = function () {
   function submit () {
     var input = document.querySelector('#submission')
     var link = document.querySelector('#submission-link')
@@ -15,7 +15,7 @@ module.exports = function () {
     var parsed = analyzer(value)
     if (parsed) {
       actions.submitBuild(parsed.repo)(dx)
-      link.href = '/status/' + parsed.repo.replace('https://github.com/', '')
+      link.href = '/status/' + parsed.repo.replace('https://github.com/', '').toLowerCase()
       link.onclick = function () {
         href(function (link) {router(link)})
       }
