@@ -164,14 +164,15 @@ async.waterfall([
         json: true
       }, function (err, res, json) {
         var location  = json['location']
+        var status = json['status']
         if (location) {
           if (!startsWith(location, 'http://')) {
             location = 'http://' + location
           }
           makeSuccess()
           window.location.href = location
-        } else {
-          return next('retrying')
+        } else if (status === 'failed') {
+          makeError()
         }
       })
     }, function (err) {
