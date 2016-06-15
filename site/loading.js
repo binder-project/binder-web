@@ -143,7 +143,7 @@ var makeSuccess = function () {
   css(loader, {border: '30px solid rgb(91,186,71)'})
 }
 
-var templateName = displayName.replace(/\//g, '-')
+var templateName = displayName.replace(/\//g, '-').toLowerCase()
 async.waterfall([
   function (next) {
     request({
@@ -174,6 +174,7 @@ async.waterfall([
         } else if (status === 'failed') {
           makeError()
         }
+        return next('try again')
       })
     }, function (err) {
       return next(new Error('deployment timed out'))

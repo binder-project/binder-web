@@ -4,7 +4,7 @@ var sheetRouter = require('sheet-router')
 
 module.exports = sheetRouter('/', function (route) {
   return [
-    route('/', function (params){ 
+    route('/', function (params){
       actions.showOverview()(hxdx.dx)
     }),
     route('/repo/:org/:repo', function (params) {
