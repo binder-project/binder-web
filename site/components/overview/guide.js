@@ -76,13 +76,13 @@ module.exports = function () {
     <div style=${styles.step}>
       <div style=${styles.label}><span style=${assign(styles.orange, styles.number)}>1</span></div>
       <div style=${styles.description}>
-        <h2 style=${styles.medium}>In the field above enter a GitHub repository that contains Jupyter notebooks. If it includes an index.ipynb file, that’s where it’ll start. Any extra files or folders will be included (e.g. data). See an example.</h2>
+        <h2 style=${styles.medium}>In the field above, enter a GitHub repository that contains Jupyter notebooks, and click Submit to start the build. All files will be included, and if there's an index.ipynb notebook it will load first. Check out an <a href='https://github.com/binder-project/example-requirements' className='welcome-link'>example</a>.</h2>
       </div>
     </div>
     <div style=${styles.step}>
       <div style=${styles.label}><span style=${assign(styles.red, styles.number)}>2</span></div>
       <div style=${styles.description}>
-        <h2 style=${styles.medium}>We’ll search your repository for dependency files, in the following preference order: Dockerfile, requirements.txt (for Python), environment.yml (for Conda). We'll use the one we find to build an image. See examples for different kinds of builds.</h2>
+        <h2 style=${styles.medium}>We’ll search your repository for dependency files, in the following preference order: Dockerfile, requirements.txt (for Python), environment.yml (for Conda). The first one found will be used to build an image. See the <a href='https://github.com/binder-project?query=example' className='welcome-link'>examples</a> for different kinds of builds.</h2>
       </div>
     </div>
     <div style=${styles.step}>
