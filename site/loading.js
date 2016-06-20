@@ -143,7 +143,7 @@ var makeSuccess = function () {
   css(loader, {border: '30px solid rgb(91,186,71)'})
 }
 
-var templateName = displayName.replace(/\//g, '-')
+var templateName = displayName.replace(/\//g, '-').toLowerCase()
 async.waterfall([
   function (next) {
     request({
@@ -164,15 +164,17 @@ async.waterfall([
         json: true
       }, function (err, res, json) {
         var location  = json['location']
+        var status = json['status']
         if (location) {
           if (!startsWith(location, 'http://')) {
             location = 'http://' + location
           }
           makeSuccess()
           window.location.href = location
-        } else {
-          return next('retrying')
+        } else if (status === 'failed') {
+          makeError()
         }
+        return next('try again')
       })
     }, function (err) {
       return next(new Error('deployment timed out'))

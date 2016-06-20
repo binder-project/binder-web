@@ -6,10 +6,10 @@ var search = require('./search.js')
 var welcome = require('./welcome.js')
 var guide = require('./guide.js')
 var list = require('./list.js')
-var config = require('./../../config.js')
+var conf = require('../../../conf/main.json')
 
 var overview = function (state) {
-  if (config.public) {
+  if (conf.public) {
     return hx`
     <div>
       ${welcome()}

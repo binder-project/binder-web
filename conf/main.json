@@ -1,5 +1,6 @@
 {
   "port": 3000,
+  "public": true,
   "build": {
     "host": "localhost",
     "port": 8082

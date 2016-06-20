@@ -8,15 +8,17 @@ var analyzer = require('github-url-analyzer')
 var css = require('dom-css')
 var theme = require('../../theme')
 
-module.exports = function () { 
+module.exports = function () {
   function submit () {
     var input = document.querySelector('#submission')
     var link = document.querySelector('#submission-link')
     var value = input.value
     var parsed = analyzer(value)
     if (parsed) {
-      actions.submitBuild(parsed.repo)(dx)
-      link.href = '/status/' + parsed.repo.replace('https://github.com/', '')
+      // github repos are not case-sensitive
+      var repo = parsed.repo.toLowerCase()
+      actions.submitBuild(repo)(dx)
+      link.href = '/status/' + repo.replace('https://github.com/', '')
       link.onclick = function () {
         href(function (link) {router(link)})
       }
