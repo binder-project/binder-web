@@ -26,7 +26,7 @@ module.exports = function (item) {
       display: 'inline-block',
       verticalAlign: 'top',
       borderRadius: '8px',
-      border: 'solid 5px rgb(210, 210, 210)',
+      border: 'solid 5px rgb(225, 226, 227)',
       position: 'relative'
     },
     logs: {

@@ -6,7 +6,6 @@ var more = require('./more')
 var logs = require('./logs')
 var progress = require('./progress')
 var badge = require('./badge')
-var template = require('./template')
 var info = require('./info')
 
 var detail = function (state) {

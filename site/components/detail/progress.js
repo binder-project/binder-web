@@ -11,9 +11,9 @@ module.exports = function (entry) {
       padding: '2%',
       display: 'inline-block',
       verticalAlign: 'top',
-      background: 'rgb(210, 210, 210)',
+      background: 'rgb(225, 226, 227)',
       borderRadius: '8px',
-      border: 'solid 5px rgb(210, 210, 210)',
+      border: 'solid 5px rgb(225, 226, 227)',
       position: 'relative',
       textAlign: 'center'
     },

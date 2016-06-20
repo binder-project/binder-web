@@ -65,7 +65,7 @@ input:focus {
 }
 
 #submission:focus {
-  box-shadow: 0 0 0 2px rgb(200,200,200);
+  background: rgb(240,240,240);
 }
 
 .action-icon {
@@ -77,6 +77,25 @@ input:focus {
   opacity: 1.0;
 }
 
+.button-orange:hover {
+  color: rgb(243,162,83);
+  box-shadow: 0 0 0 2px rgb(243,162,83);
+}
+
+.button-orange:focus {
+  outline: none;
+}
+
+.button-orange:active {
+  color: rgb(203,122,33);
+  box-shadow: 0 0 0 2px rgb(203,122,33);
+}
+
+.button-orange {
+  color: rgb(150,150,150);
+  transition: all 0.25s;
+}
+
 .button:hover {
   color: rgb(90,90,90);
   box-shadow: 0 0 0 2px rgb(200,200,200);
@@ -84,7 +103,6 @@ input:focus {
 
 .button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgb(200,200,200);
 }
 
 .button:active {
@@ -116,6 +134,35 @@ input:focus {
 
 .template-link:hover {
   color: rgb(90,90,90); 
+}
+
+.welcome-link {
+  cursor: pointer;
+  color: rgb(120,120,120);
+  border-bottom: dotted 2px rgb(120,120,120);
+  transition: all 0.1s;
+  text-decoration: none;
+}
+
+.welcome-link:hover {
+  color: rgb(30,30,30);
+  border-bottom: dotted 2px rgb(30,30,30);
+}
+
+.welcome-link-pink {
+  color: rgb(230,101,129);
+}
+
+.welcome-link-pink:hover {
+  color: rgb(180,70,100);
+}
+
+.welcome-link-orange {
+  color: rgb(248, 146, 49);
+}
+
+.welcome-link-orange:hover {
+  color: rgb(180, 122, 42);
 }
 
 @-moz-keyframes three-quarters-loader {

@@ -3,6 +3,7 @@ var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
 var href = require('sheet-router/href')
 var router = require('../../router')
+var request = require('browser-request')
 var analyzer = require('github-url-analyzer')
 var css = require('dom-css')
 var theme = require('../../theme')
@@ -30,7 +31,7 @@ module.exports = function () {
 
   function focus () {
     css(document.querySelector('#submission'), {
-      boxShadow: '0 0 0 2px rgb(200,200,200)'
+      boxShadow: '0 0 0 2px ' + theme.ORANGE
     })
   }
 
@@ -48,7 +49,7 @@ module.exports = function () {
   var styles = {
     container: {
       width: '90%',
-      background: 'rgb(210, 210, 210)',
+      background: 'rgb(225, 226, 227)',
       borderRadius: '8px',
       height: '100px',
       textAlign: 'left',
@@ -84,9 +85,9 @@ module.exports = function () {
   }
 
   return hx`<div style=${styles.container}>
-    <div style=${styles.message}>build a repository</div>
+    <div style=${styles.message}>Build a repository</div>
     <input type='text' id='submission' style=${styles.input} onclick=${focus} onfocus=${focus} onblur=${blur} onkeydown=${onkeydown}'>
     <a id='submission-link' style='display: none'></a>
-    <button onclick=${submit} className='button' style=${styles.button}>submit</button>
+    <button onclick=${submit} className='button-orange' style=${styles.button}>submit</button>
   </div>`
 }
