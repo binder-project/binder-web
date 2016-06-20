@@ -31,10 +31,17 @@ function Binder(opts) {
   }
 }
 
-Binder.prototype.startBuild = function (repo, cb) {
+Binder.prototype.startBuild = function (repo, opts, cb) {
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = {}
+  }
   var self = this
-  var opts = assign({}, self.buildOpts, { repository: repo })
-  binder.build.start(opts, function (err, body) {
+  var buildOpts = assign({}, self.buildOpts, { repository: repo })
+  if (opts.force) {
+    buildOpts.force = opts.force
+  }
+  binder.build.start(buildOpts, function (err, body) {
     if (err && err.message.search('alreadyBuilding') !== -1) {
       return cb(null)
     }
