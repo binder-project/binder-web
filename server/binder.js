@@ -5,7 +5,7 @@ var partial = require('lodash.partial')
 var assign = require('object-assign')
 var binder = require('binder-client')
 var getReader = require('binder-logging/lib/reader')
-var es = require('event-stream')
+var map = require('through2-map')
 
 var buildTimeout = 60 * 30 * 1000
 var buildInterval = 10000
@@ -182,13 +182,14 @@ Binder.prototype.streamBuildLogs = function (templateName, startTime) {
   var self = this
   var reader = getReader({ host: self.buildOpts.host })
   var rawStream = reader.streamLogs({ app: templateName, after: startTime })
-  var msgStream = es.mapSync(function (data) {
+  var msgStream = map.obj(function (data) {
     if (data) {
       return data.message
     }
-    return null
   })
-  rawStream.pipe(msgStream)
+  rawStream.on('data', function (data) {
+    msgStream.write(data)
+  })
   rawStream.resume()
   return msgStream
 }
