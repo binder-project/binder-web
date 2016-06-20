@@ -11,7 +11,7 @@ module.exports = function (item) {
       verticalAlign: 'top',
       background: 'white',
       borderRadius: '8px',
-      border: 'solid 5px rgb(210, 210, 210)',
+      border: 'solid 5px rgb(225, 226, 227)',
     },
     message: {
       fontSize: '120%',

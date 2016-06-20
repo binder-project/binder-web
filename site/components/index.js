@@ -26,7 +26,7 @@ module.exports = function (state) {
       marginTop: '3%'
     },
     logo: {
-      width: '350px'
+      width: '375px'
     }
   }
 

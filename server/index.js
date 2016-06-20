@@ -45,6 +45,10 @@ app.get('/repo/:org/:repo', function (req, res) {
   return res.sendFile(path.join(staticPath, 'loading.html'))
 })
 
+app.get('/validate/:name', function (req, res) {
+  console.log(req)
+})
+
 // API endpoints
 
 app.get('/api/deploy/:templateName', function (req, res) {
