@@ -8,6 +8,8 @@ var guide = require('./guide.js')
 var list = require('./list.js')
 var conf = require('../../../conf/main.json')
 
+var conf = require('../../../conf/main.json')
+
 var overview = function (state) {
   if (conf.public) {
     return hx`
@@ -23,7 +25,7 @@ var overview = function (state) {
       ${search()}
       ${list(state.filter, state.model)}
     </div>`
-  } 
+  }
 }
 
 module.exports = connect({
