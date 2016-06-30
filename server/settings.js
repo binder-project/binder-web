@@ -1,5 +1,5 @@
 var path = require('path')
-var jsonfile = require('jsonfile')
+var fs = require('fs')
 
-var confPath = path.join(process.env['HOME'], '.binder/web.conf')
-module.exports = jsonfile.readFileSync(confPath)
+var contents = fs.readFileSync(path.join(process.env['HOME'], '.binder/web.conf'), 'utf8')
+module.exports = JSON.parse(contents)
