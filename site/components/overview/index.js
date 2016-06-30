@@ -6,9 +6,8 @@ var search = require('./search.js')
 var welcome = require('./welcome.js')
 var guide = require('./guide.js')
 var list = require('./list.js')
-var conf = require('../../../conf/main.json')
 
-var conf = require('../../../conf/main.json')
+var conf = require('../../../server/settings')
 
 var overview = function (state) {
   if (conf.public) {
