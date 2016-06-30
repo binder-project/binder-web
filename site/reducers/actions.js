@@ -6,6 +6,8 @@ var zipObject = require('lodash.zipobject')
 
 var util = require('../util')
 
+var conf = require('../../server/settings')
+
 var constants = {
   SHOW_DETAIL: 'SHOW_DETAIL',
   HIDE_DETAIL: 'HIDE_DETAIL',
@@ -41,7 +43,7 @@ function showOverview () {
   return function (dx) {
     dx({ type: constants.BUILD_STOP })
     dx({ type: constants.HIDE_DETAIL })
-    templateList()(dx)
+    if (!conf.public) templateList()(dx)
   }
 }
 
