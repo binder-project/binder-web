@@ -38,9 +38,7 @@ Binder.prototype.startBuild = function (repo, opts, cb) {
   }
   var self = this
   var buildOpts = assign({}, self.buildOpts, { repository: repo })
-  if (opts.force) {
-    buildOpts.force = opts.force
-  }
+  buildOpts.force = opts.force || false
   binder.build.start(buildOpts, function (err, body) {
     if (err && err.message.search('alreadyBuilding') !== -1) {
       return cb(null)
