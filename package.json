@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "browserify -t envify -t brfs site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node start.js start",
-    "start:debug": "watchify site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node start.js start",
-    "postinstall": "browserify site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node scripts/postinstall.js"
+    "start:debug": "watchify -t envify -t brfs site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node start.js start",
+    "postinstall": "browserify -t envify -t brfs site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node scripts/postinstall.js"
   },
   "repository": {
     "type": "git",
