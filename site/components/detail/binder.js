@@ -18,7 +18,7 @@ module.exports = function (entry) {
       case 'pending':
         return theme.ORANGE
       case 'loading':
-        return theme.ORANGE
+        return theme.GREEN
       case 'completed':
         return theme.GREEN
       case 'running':
