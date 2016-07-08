@@ -29,6 +29,10 @@ app.get('/', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
+app.get('/status', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'status.html'))
+})
+
 app.get('/status/:org/:repo', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
