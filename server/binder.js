@@ -171,7 +171,10 @@ Binder.prototype.getDeployStatus = function (templateName, id, cb) {
 
 Binder.prototype.deployBinder = function (templateName, cb) {
   var self = this
-  var opts = assign({}, self.deployOpts, { 'template-name': templateName })
+  var opts = assign({}, self.deployOpts, {
+    'template-name': templateName,
+    'cull-timeout': 60 * 60 * 1000
+  })
   binder.deploy.deploy(opts, function (err, status) {
     if (err) return cb(err)
     return cb(null, status)
