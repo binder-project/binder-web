@@ -91,7 +91,12 @@ css(container, style.container)
 
 function update (entries) {
   var existing = document.querySelectorAll('.row')
-  if (existing) existing.forEach(function (row) {row.remove()})
+  if (existing) {
+    for (var i = 0; i < existing.length; i++) {
+      var row = existing[i]
+      row.remove()
+    }
+  }
   entries.forEach(function (entry) {
     var row = document.createElement('div')
     row.className = 'row'
@@ -116,7 +121,6 @@ function update (entries) {
 }
 
 document.body.appendChild(container)
-
 
 var entries = [
   {
@@ -146,7 +150,7 @@ request({
   url: apiServer + '/api/health',
   json: true
 }, function (err, res, json) {
-  if (!err) {
+  if (!err && json) {
     update(json)
   }
 })

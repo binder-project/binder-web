@@ -12,5 +12,9 @@
   "deploy": {
     "host": "localhost",
     "port": 8084
+  },
+  "health": {
+    "host": "localhost",
+    "port": 8086
   }
 }

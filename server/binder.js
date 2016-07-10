@@ -29,6 +29,11 @@ function Binder(opts) {
     port: opts.deploy.port,
     'api-key': apiKey
   }
+  this.healthOpts = {
+    host: opts.health.host,
+    port: opts.health.port,
+    'api-key': apiKey
+  }
 }
 
 Binder.prototype.startBuild = function (repo, opts, cb) {
