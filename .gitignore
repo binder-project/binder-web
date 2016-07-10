@@ -39,3 +39,4 @@ node_modules
 public/js/index.js
 public/js/loading.js
 public/js/logs.js
+public/js/status.js

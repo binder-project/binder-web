@@ -1,6 +1,8 @@
 var css = require('dom-css')
 var ismobile = require('is-mobile')()
 var request = require('request')
+var extend = require('object-extend')
+var theme = require('./theme')
 
 var style = {
   header: {
@@ -32,7 +34,9 @@ var style = {
     width: ismobile ? '90%' : '50%',
     marginLeft: ismobile ? '5%' : '25%',
     marginTop: '50px',
-    paddingTop: '5px'
+    paddingTop: '5px',
+    position: 'relative',
+    minHeight: '160px'
   },
   row: {
     marginTop: '20px',
@@ -46,30 +50,36 @@ var style = {
     display: 'inline-block',
     textAlign: 'right',
     position: 'absolute',
-    right: '70%',
+    right: '80%',
     textTransform: 'uppercase'
   },
   status: {
-    backgroundColor: 'rgb(0,200,0)',
     width: '30px',
     height: '30px',
     borderRadius: '25px',
     display: 'inline-block',
     position: 'absolute',
-    left: '40%',
+    left: '30%',
     marginTop: ismobile ? '-5px' : '5px'
   },
   label: {
     color: 'rgb(0,200,0)',
     display: 'inline-block',
     position: 'absolute',
-    left: '48%'
+    left: '38%'
   },
   timestamp: {
     color: 'rgb(140,140,140)',
     display: 'inline-block',
     position: 'absolute',
-    left: '70%'
+    left: '60%',
+    fontSize: '90%',
+    marginTop: '4px'
+  },
+  loading: {
+    position: 'absolute',
+    left: '45%',
+    top: '30%'
   }
 }
 
@@ -89,7 +99,18 @@ document.body.appendChild(title)
 var container = document.createElement('div')
 css(container, style.container)
 
+loading = document.createElement('div')
+loading.id = 'loading'
+css(loading, style.loading)
+spinner = document.createElement('div')
+spinner.className = 'three-quarters-loader'
+loading.appendChild(spinner)
+container.appendChild(loading)
+
 function update (entries) {
+  if (!entries) return
+  var isloading = document.querySelector('#loading')
+  if (isloading) isloading.remove()
   var existing = document.querySelectorAll('.row')
   if (existing) {
     for (var i = 0; i < existing.length; i++) {
@@ -105,7 +126,12 @@ function update (entries) {
     name.innerHTML = entry.name
     css(name, style.name)
     var status = document.createElement('div')
-    css(status, style.status)
+    if (entry.status == 'running') {
+      css(status, extend(style.status, {backgroundColor: theme.GREEN}))
+    }
+    if (status == 'down') {
+      css(status, extend(style.status, {backgroundColor: theme.RED}))
+    }
     var label = document.createElement('div')
     label.innerHTML = entry.status
     css(label, style.label)
@@ -125,19 +151,7 @@ function update (entries) {
 
 document.body.appendChild(container)
 
-var entries = [
-  {
-    name: 'build',
-    status: '',
-    timestamp: ''
-  },
-  {
-    name: 'deploy',
-    status: '',
-    timestamp: ''
-  }
-]
-update(entries)
+update()
 
 function getOrigin () {
   var port = window.location.port
