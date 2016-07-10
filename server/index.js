@@ -96,6 +96,13 @@ app.get('/api/builds/:imageName', function (req, res) {
   })
 })
 
+app.get('/api/health', function (req, res) {
+  binder.getHealth(function (err, health) {
+    if (err) return res.status(500).send('could not get health')
+    return res.json(health)
+  })
+})
+
 app.post('/api/builds', function (req, res) {
   var repo = req.body['repo']
   binder.startBuild(repo, function (err, status) {

@@ -199,4 +199,12 @@ Binder.prototype.streamBuildLogs = function (templateName, startTime) {
   return msgStream
 }
 
+Binder.prototype.getHealth = function (cb) {
+  var opts = assign({}, this.healthOpts)
+  binder.health.status(opts, function (err, health) {
+    if (err) return cb(err)
+    return cb(null, health)
+  })
+}
+
 module.exports = Binder

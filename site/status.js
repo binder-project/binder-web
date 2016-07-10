@@ -1,5 +1,6 @@
 var css = require('dom-css')
 var ismobile = require('is-mobile')()
+var request = require('request')
 
 var style = {
   header: {
@@ -116,27 +117,36 @@ function update (entries) {
 
 document.body.appendChild(container)
 
+
 var entries = [
   {
     name: 'build',
-    status: 'running',
-    timestamp: '01:02:03'
+    status: '',
+    timestamp: ''
   },
   {
     name: 'deploy',
-    status: 'running',
-    timestamp: '01:02:03'
-  },
-  {
-    name: 'cluster',
-    status: 'running',
-    timestamp: '02:01:05'
-  },
-  {
-    name: 'database',
-    status: 'running',
-    timestamp: '01:06:03'
+    status: '',
+    timestamp: ''
   }
 ]
-
 update(entries)
+
+function getOrigin () {
+  var port = window.location.port
+  var origin = window.location.hostname
+  if (port) {
+    origin = origin + ':' + port
+  }
+  return 'http://' + origin
+}
+
+var apiServer = getOrigin()
+request({
+  url: apiServer + '/api/health',
+  json: true
+}, function (err, res, json) {
+  if (!err) {
+    update(json)
+  }
+})
