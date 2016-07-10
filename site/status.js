@@ -64,6 +64,12 @@ var style = {
     display: 'inline-block',
     position: 'absolute',
     left: '48%'
+  },
+  timestamp: {
+    color: 'rgb(140,140,140)',
+    display: 'inline-block',
+    position: 'absolute',
+    left: '70%'
   }
 }
 
@@ -105,6 +111,13 @@ function update (entries) {
     css(label, style.label)
     row.appendChild(name)
     row.appendChild(status)
+    if (entry.timestamp) {
+      var timestamp = document.createElement('div')
+      var ts = new Date(entry.timestamp)
+      timestamp.innerHTML = ts.toLocaleDateString() + ' ' + ts.toLocaleTimeString()
+      css(timestamp, style.timestamp)
+      row.appendChild(timestamp)
+    }
     if (!ismobile) row.appendChild(label)
     container.appendChild(row)
   })
