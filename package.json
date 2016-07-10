@@ -1,12 +1,22 @@
 {
   "name": "binder-web",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "client-side web app for managing a binder deployment",
   "main": "index.js",
   "scripts": {
-    "start": "browserify -t envify -t brfs site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node start.js start",
-    "start:debug": "watchify -t envify -t brfs site/index.js -o public/js/index.js & watchify site/loading.js -o public/js/loading.js & watchify site/logs.js -o public/js/logs.js & node start.js start",
-    "postinstall": "browserify -t envify -t brfs site/index.js -o public/js/index.js & browserify site/loading.js -o public/js/loading.js & browserify site/logs.js -o public/js/logs.js & node scripts/postinstall.js"
+    "bundle:index": "browserify -t envify -t brfs site/index.js -o public/js/index.js",
+    "bundle:logs": "browserify site/logs.js -o public/js/logs.js",
+    "bundle:loading": "browserify site/loading.js -o public/js/loading.js",
+    "bundle:status": "browserify site/status.js -o public/js/status.js",
+    "bundle": "npm run bundle:index & npm run bundle:logs & npm run bundle:loading & npm run bundle:status",
+    "watch:index": "watchify -t envify -t brfs site/index.js -o public/js/index.js",
+    "watch:logs": "watchify site/logs.js -o public/js/logs.js",
+    "watch:loading": "watchify site/loading.js -o public/js/loading.js",
+    "watch:status": "watchify site/status.js -o public/js/status.js",
+    "watch": "npm run watch:index & npm run watch:logs & npm run watch:loading & npm run watch:status",
+    "start": "npm run bundle && node start.js start",
+    "start:debug": "npm run watch & node start.js start",
+    "postinstall": "npm run bundle && node scripts/postinstall.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +47,7 @@
     "express-ws": "^1.0.0",
     "github-url-analyzer": "^0.1.1",
     "hxdx": "^1.0.0",
+    "is-mobile": "^0.2.2",
     "jsonfile": "^2.2.3",
     "lodash.filter": "^4.2.1",
     "lodash.find": "^4.2.0",

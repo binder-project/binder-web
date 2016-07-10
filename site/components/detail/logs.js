@@ -72,7 +72,7 @@ module.exports = function (item) {
   }
 
   function button () {
-    if (item.phase == 'finished' && item.status == 'completed') {
+    if (item.phase == 'finished' && item.status !== 'failed') {
       return hx`
       <div>
         <span onclick=${download} className='btn btn-download' id='logs-download'>download</span>

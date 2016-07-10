@@ -1,13 +1,12 @@
 var hx = require('hxdx').hx
-var binder = require('../overview/binder')
+var binder = require('./binder')
 
 module.exports = function (item) { 
   var style = {
     container: {
-      width: '55%',
+      width: '74.2%',
       height: '26%',
       marginLeft: '2%',
-      marginRight: '2%',
       display: 'inline-block',
       verticalAlign: 'top',
       borderRadius: '8px',

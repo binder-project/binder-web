@@ -2,7 +2,6 @@ var hx = require('hxdx').hx
 var connect = require('hxdx').connect
 
 var back = require('./back')
-var more = require('./more')
 var logs = require('./logs')
 var progress = require('./progress')
 var badge = require('./badge')
@@ -17,7 +16,7 @@ var detail = function (state) {
       height: '500px'
     },
     top: {
-      height: '25%'
+      height: '23%'
     },
     bottom: {
       height: '75%'
@@ -45,7 +44,6 @@ var detail = function (state) {
       <div style=${style.top}>
         ${back()}
         ${info(item)}
-        ${more()}
       </div>
       <div style=${style.bottom}>
         ${progress(item)}
