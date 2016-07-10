@@ -64,12 +64,6 @@ var style = {
     display: 'inline-block',
     position: 'absolute',
     left: '48%'
-  },
-  timestamp: {
-    color: 'rgb(140,140,140)',
-    display: 'inline-block',
-    position: 'absolute',
-    left: '70%'
   }
 }
 
@@ -109,13 +103,9 @@ function update (entries) {
     var label = document.createElement('div')
     label.innerHTML = entry.status
     css(label, style.label)
-    var timestamp = document.createElement('div')
-    timestamp.innerHTML = entry.timestamp
-    css(timestamp, style.timestamp)
     row.appendChild(name)
     row.appendChild(status)
     if (!ismobile) row.appendChild(label)
-    row.appendChild(timestamp)
     container.appendChild(row)
   })
 }
