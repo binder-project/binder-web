@@ -77,7 +77,10 @@ function getOrigin () {
 
 var apiServer = getOrigin()
 
-var displayName = window.location.pathname.replace('/repo', '').slice(1)
+var path = window.location.pathname.replace('/repo', '').slice(1)
+var splitted = path.split('/')
+var displayName = splitted.slice(0, 2).join('/')
+var deepLink = '/' + splitted.slice(2).join('/')
 
 // add logo
 var header = document.createElement('div')
@@ -170,7 +173,7 @@ async.waterfall([
             location = 'http://' + location
           }
           makeSuccess()
-          window.location.href = location
+          window.location.href = location + deepLink
         } else if (status === 'failed') {
           makeError()
         }
