@@ -77,10 +77,10 @@ function getOrigin () {
 
 var apiServer = getOrigin()
 
-var path = window.location.pathname.replace('/repo', '').slice(1)
+var path = window.location.pathname.replace('/repo', '')
 var splitted = path.split('/')
 var displayName = splitted.slice(0, 2).join('/')
-var deepLink = '/' + splitted.slice(2).join('/')
+var deepLink = splitted.length > 2 ? '/' + splitted.slice(2).join('/') : ''
 
 // add logo
 var header = document.createElement('div')
