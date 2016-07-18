@@ -126,21 +126,25 @@ function update (entries) {
     name.innerHTML = entry.name
     css(name, style.name)
     var status = document.createElement('div')
+    var label = document.createElement('div')
+    label.innerHTML = entry.status
     if (entry.status == 'running') {
       css(status, extend(style.status, {backgroundColor: theme.GREEN}))
+      css(label, extend(style.label, {color: theme.GREEN}))
     }
     if (entry.status == 'down') {
       css(status, extend(style.status, {backgroundColor: theme.RED}))
+      css(label, extend(style.label, {color: theme.RED}))
     }
-    var label = document.createElement('div')
-    label.innerHTML = entry.status
-    css(label, style.label)
     row.appendChild(name)
     row.appendChild(status)
     if (entry.timestamp) {
       var timestamp = document.createElement('div')
       var ts = new Date(entry.timestamp)
-      timestamp.innerHTML = ts.toLocaleDateString() + ' ' + ts.toLocaleTimeString()
+      var date = ts.getMonth() + '/' + ts.getDate() + '/' + ts.getFullYear()
+      var time = ts.getHours() + ':' + ts.getMinutes() +':' + ts.getSeconds()
+      var datestring = date + ' ' + time
+      timestamp.innerHTML = datestring
       css(timestamp, style.timestamp)
       row.appendChild(timestamp)
     }
