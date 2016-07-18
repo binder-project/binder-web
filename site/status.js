@@ -129,7 +129,7 @@ function update (entries) {
     if (entry.status == 'running') {
       css(status, extend(style.status, {backgroundColor: theme.GREEN}))
     }
-    if (status == 'down') {
+    if (entry.status == 'down') {
       css(status, extend(style.status, {backgroundColor: theme.RED}))
     }
     var label = document.createElement('div')
