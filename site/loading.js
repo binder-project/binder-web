@@ -3,8 +3,7 @@ var css = require('dom-css')
 var startsWith = require('lodash.startswith')
 var request = require('request')
 
-var height = window.innerHeight
-
+var height = window.innerHeight 
 var style = {
   header: {
     width: '80%',
@@ -77,7 +76,10 @@ function getOrigin () {
 
 var apiServer = getOrigin()
 
-var displayName = window.location.pathname.replace('/repo', '').slice(1)
+var path = window.location.pathname.slice(6)
+var split = path.split('/')
+var displayName = split.slice(0, 2).join('/')
+var deepLink = (split.length > 2) ? '/' + split.slice(2).join('/') : ''
 
 // add logo
 var header = document.createElement('div')
@@ -170,7 +172,7 @@ async.waterfall([
             location = 'http://' + location
           }
           makeSuccess()
-          window.location.href = location
+          window.location.href = location + deepLink
         } else if (status === 'failed') {
           makeError()
         }

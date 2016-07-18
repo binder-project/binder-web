@@ -45,7 +45,7 @@ app.get('/repo/:org/:repo/status', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-app.get('/repo/:org/:repo', function (req, res) {
+app.get('/repo/:org/:repo*', function (req, res) {
   return res.sendFile(path.join(staticPath, 'loading.html'))
 })
 
