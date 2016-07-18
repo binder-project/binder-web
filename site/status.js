@@ -75,7 +75,7 @@ var style = {
     position: 'absolute',
     left: ismobile ? '45%' : '60%',
     fontSize: '100%',
-    marginTop: '4px'
+    marginTop: ismobile ? '5px' : '2px'
   },
   loading: {
     position: 'absolute',
