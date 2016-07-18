@@ -50,8 +50,9 @@ var style = {
     display: 'inline-block',
     textAlign: 'right',
     position: 'absolute',
-    right: '80%',
-    textTransform: 'uppercase'
+    right: ismobile ? '75%' : '80%',
+    textTransform: 'uppercase',
+    marginTop: ismobile ? '5px' : '0px'
   },
   status: {
     width: '30px',
@@ -60,7 +61,7 @@ var style = {
     display: 'inline-block',
     position: 'absolute',
     left: '30%',
-    marginTop: ismobile ? '-5px' : '5px'
+    marginTop: ismobile ? '0px' : '5px'
   },
   label: {
     color: 'rgb(0,200,0)',
@@ -72,14 +73,20 @@ var style = {
     color: 'rgb(140,140,140)',
     display: 'inline-block',
     position: 'absolute',
-    left: '60%',
-    fontSize: '90%',
+    left: ismobile ? '45%' : '60%',
+    fontSize: '100%',
     marginTop: '4px'
   },
   loading: {
     position: 'absolute',
     left: '45%',
     top: '30%'
+  },
+  connected: {
+    fontSize: '200%',
+    textAlign: 'center',
+    marginTop: '50px',
+    color: theme.RED
   }
 }
 
@@ -111,12 +118,23 @@ function update (entries) {
   if (!entries) return
   var isloading = document.querySelector('#loading')
   if (isloading) isloading.remove()
+  var isconnected = document.querySelector('#connected')
+  if (isconnected) isconnected.remove()
+  if (isloading) isloading.remove()
   var existing = document.querySelectorAll('.row')
   if (existing) {
     for (var i = 0; i < existing.length; i++) {
       var row = existing[i]
       row.remove()
     }
+  }
+  if (entries == 'could not get health') {
+    var connected = document.createElement('div')
+    connected.innerHTML = 'error fetching status'
+    connected.id = 'connected'
+    css(connected, style.connected)
+    container.appendChild(connected)
+    return
   }
   entries.forEach(function (entry) {
     var row = document.createElement('div')
@@ -141,7 +159,7 @@ function update (entries) {
     if (entry.timestamp) {
       var timestamp = document.createElement('div')
       var ts = new Date(entry.timestamp)
-      var date = ts.getMonth() + '/' + ts.getDate() + '/' + ts.getFullYear()
+      var date = (ts.getMonth() + 1) + '/' + ts.getDate() + '/' + ts.getFullYear()
       var time = ts.getHours() + ':' + ts.getMinutes() +':' + ts.getSeconds()
       var datestring = date + ' ' + time
       timestamp.innerHTML = datestring
