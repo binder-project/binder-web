@@ -2,6 +2,7 @@ var css = require('dom-css')
 var ismobile = require('is-mobile')()
 var request = require('request')
 var extend = require('object-extend')
+var datetime = require('date-and-time')
 var theme = require('./theme')
 
 var style = {
@@ -159,9 +160,7 @@ function update (entries) {
     if (entry.timestamp) {
       var timestamp = document.createElement('div')
       var ts = new Date(entry.timestamp)
-      var date = (ts.getMonth() + 1) + '/' + ts.getDate() + '/' + ts.getFullYear()
-      var time = ts.getHours() + ':' + ts.getMinutes() +':' + ts.getSeconds()
-      var datestring = date + ' ' + time
+      var datestring = datetime.format(ts, 'MM/DD/YY HH:mm:ss')
       timestamp.innerHTML = datestring
       css(timestamp, style.timestamp)
       row.appendChild(timestamp)
