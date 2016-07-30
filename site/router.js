@@ -11,8 +11,10 @@ module.exports = sheetRouter('/', function (route) {
       var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port
       window.location.href =  baseURL + '/repo/' + params.org + '/' + params.repo
     }),
-    route('/status/:project/:repo', function (params) {
-      actions.showDetail(params.project + '-' + params.repo)(hxdx.dx)
+    route('/status/:project/:repo/:branch', function (params) {
+      var imageName = params.project + '-' + params.repo
+      if (params.branch) imageName += '-' + params.branch
+      actions.showDetail(imageName)(hxdx.dx)
     })
   ]
 })
