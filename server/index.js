@@ -37,7 +37,7 @@ app.get('/status/:org/:repo', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-app.get('/status/:org/:repo/:branch', function (req, res) {
+app.get('/status/:org/:repo/tree/:branch', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
@@ -49,7 +49,11 @@ app.get('/repo/:org/:repo/status', function (req, res) {
   return res.sendFile(path.join(staticPath, 'index.html'))
 })
 
-app.get('/repo/:org/:repo*', function (req, res) {
+app.get('/repo/:org/:repo', function (req, res) {
+  return res.sendFile(path.join(staticPath, 'loading.html'))
+})
+
+app.get('/repo/:org/:repo/tree/:branch', function (req, res) {
   return res.sendFile(path.join(staticPath, 'loading.html'))
 })
 

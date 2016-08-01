@@ -78,8 +78,10 @@ var apiServer = getOrigin()
 
 var path = window.location.pathname.slice(6)
 var split = path.split('/')
-var displayName = split.slice(0, 2).join('/')
-var deepLink = (split.length > 2) ? '/' + split.slice(2).join('/') : ''
+console.log('split', split)
+
+var displayName = path
+var deepLink = ''
 
 // add logo
 var header = document.createElement('div')
@@ -145,7 +147,7 @@ var makeSuccess = function () {
   css(loader, {border: '30px solid rgb(91,186,71)'})
 }
 
-var templateName = displayName.replace(/\//g, '-').toLowerCase()
+var templateName = displayName.replace('/tree', '').replace(/\//g, '-').toLowerCase()
 async.waterfall([
   function (next) {
     request({
