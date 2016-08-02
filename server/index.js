@@ -137,7 +137,7 @@ io.on('connection', function (ws) {
           try {
             ws.send(data)
           } catch (e) {
-            console.error(e)
+            console.error('could not send msg over websocket:', e)
           }
         })
         stream.resume()
