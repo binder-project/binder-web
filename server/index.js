@@ -134,7 +134,11 @@ io.on('connection', function (ws) {
         console.log('streaming build logs for', app, 'after', after)
         stream = binder.streamBuildLogs(app, after)
         stream.on('data', function (data) {
-          ws.send(data)
+          try {
+            ws.send(data)
+          } catch (e) {
+            console.error(e)
+          }
         })
         stream.resume()
       }
