@@ -1,24 +1,28 @@
+var url = require('url')
 var hx = require('hxdx').hx
 var dx = require('hxdx').dx
 var actions = require('../../reducers/actions')
 var href = require('sheet-router/href')
 var router = require('../../router')
 var request = require('browser-request')
-var analyzer = require('github-url-analyzer')
 var css = require('dom-css')
 var theme = require('../../theme')
+
+function validUrl (value) {
+  var parsed = url.parse(value)
+  return parsed.hostname === 'github.com'
+}
 
 module.exports = function () {
   function submit () {
     var input = document.querySelector('#submission')
     var link = document.querySelector('#submission-link')
     var value = input.value
-    var parsed = analyzer(value)
-    if (parsed) {
+    if (validUrl(value)) {
       // github repos are not case-sensitive
-      var repo = parsed.repo.toLowerCase()
-      actions.submitBuild(repo)(dx)
-      link.href = '/status/' + repo.replace('https://github.com/', '')
+      value = value.toLowerCase()
+      actions.submitBuild(value)(dx)
+      link.href = '/status/' + value.replace('https://github.com/', '')
       link.onclick = function () {
         href(function (link) {router(link)})
       }
