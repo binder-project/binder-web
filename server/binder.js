@@ -183,7 +183,7 @@ Binder.prototype.deployBinder = function (templateName, cb) {
 
 Binder.prototype.getLogs = function (templateName, startTime, cb) {
   var self = this
-  var reader = getReader({ host: self.buildOpts.host })
+  var reader = getReader()
   reader.getLogs({ app: templateName, after: startTime }).then(function (logs) {
     return cb(null, logs)
   }, function (err) {
@@ -193,7 +193,7 @@ Binder.prototype.getLogs = function (templateName, startTime, cb) {
 
 Binder.prototype.streamBuildLogs = function (templateName, startTime) {
   var self = this
-  var reader = getReader({ host: self.buildOpts.host })
+  var reader = getReader()
   var rawStream = reader.streamLogs({ app: templateName, after: startTime })
   var msgStream = streamMap.obj(function (data) {
     if (data) {
