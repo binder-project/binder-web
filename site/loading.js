@@ -112,10 +112,9 @@ messageContainer.appendChild(messageDots)
 
 // add repo information
 var footer = document.createElement('div')
-var template = document.createElement('a')
+var template = document.createElement('div')
 css(footer, style.footer)
 template.innerHTML = displayName
-template.href = displayName
 template.className = 'template-link'
 css(template, style.template)
 document.body.appendChild(footer)
