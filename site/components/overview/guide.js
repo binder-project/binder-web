@@ -82,7 +82,7 @@ module.exports = function () {
     <div style=${styles.step}>
       <div style=${styles.label}><span style=${assign(styles.red, styles.number)}>2</span></div>
       <div style=${styles.description}>
-        <h2 style=${styles.medium}>We’ll search your repository for dependency files, in the following preference order: Dockerfile, requirements.txt (for Python), environment.yml (for Conda). The first one found will be used to build an image. See the <a href='https://github.com/binder-project?query=example' className='welcome-link'>examples</a> for different kinds of builds.</h2>
+        <h2 style=${styles.medium}>We’ll search your repository for dependency files, in the following preference order: Dockerfile, requirements.txt (for Python), environment.yml (for Conda). The first one found will be used to build an image. See the <a href='https://github.com/binder-project?q=example' className='welcome-link'>examples</a> for different kinds of builds.</h2>
       </div>
     </div>
     <div style=${styles.step}>
