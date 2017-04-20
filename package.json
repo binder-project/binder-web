@@ -34,6 +34,7 @@
     "url": "https://github.com/binder-project/binder-web/issues"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "binder-client": "^1.0.1",
     "binder-logging": "^1.0.0",
     "binder-utils": "^1.0.0",
