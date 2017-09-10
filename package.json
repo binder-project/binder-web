@@ -42,6 +42,7 @@
     "brfs": "^1.4.3",
     "browser-request": "^0.3.3",
     "browserify": "^13.0.0",
+    "cors": "^2.8.1",
     "date-and-time": "^0.3.0",
     "dom-css": "^2.0.0",
     "envify": "^3.4.1",

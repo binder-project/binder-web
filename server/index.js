@@ -5,6 +5,7 @@ var expressWs = require('express-ws')
 var bodyParser = require('body-parser')
 var app = express()
 var http = require('http').Server(app)
+var cors = require('cors');
 var io = require('socket.io')(http)
 var assign = require('object-assign')
 var merge = require('lodash.merge')
@@ -19,6 +20,10 @@ app.use(bodyParser.json())
 app.use('/js', express.static(path.join(__dirname, '../public/js')))
 app.use('/css', express.static(path.join(__dirname, '../public/css')))
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')))
+
+// CORS options
+
+var launchCORSOptions = require('./cors-settings')
 
 // set once the server is started
 var binder = null
@@ -63,7 +68,7 @@ app.get('/validate/:name', function (req, res) {
 
 // API endpoints
 
-app.get('/api/deploy/:templateName', function (req, res) {
+app.get('/api/deploy/:templateName', cors(launchCORSOptions), function (req, res) {
   var name = req.params.templateName
   binder.deployBinder(name, function (err, status) {
     if (err) return res.status(500).end()
@@ -71,7 +76,7 @@ app.get('/api/deploy/:templateName', function (req, res) {
   })
 })
 
-app.get('/api/apps/:templateName/:id', function (req, res) {
+app.get('/api/apps/:templateName/:id', cors(launchCORSOptions), function (req, res) {
   var name = req.params.templateName
   var id = req.params.id
   binder.getDeployStatus(name, id, function (err, status) {
